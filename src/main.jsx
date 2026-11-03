@@ -1,0 +1,16 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import '@fontsource-variable/inter'
+import '@fontsource/poppins/latin-400.css'
+import '@fontsource/poppins/latin-500.css'
+import '@fontsource/poppins/latin-600.css'
+import '@fontsource/poppins/latin-700.css'
+import '@fontsource/poppins/latin-800.css'
+import '@fontsource/noto-sans-tamil/tamil-400.css'
+import '@fontsource/noto-sans-tamil/tamil-600.css'
+import '@fontsource/noto-nastaliq-urdu/arabic-400.css'
+import '@fontsource/noto-nastaliq-urdu/arabic-700.css'
+import './index.css'
+import App from './App'
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />)
