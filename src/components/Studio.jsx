@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   Check,
+  Download,
   FileText,
   Info,
   Loader2,
@@ -15,10 +16,9 @@ import {
   X,
 } from 'lucide-react'
 import { LANGUAGES, VOICES } from '../lib/data'
-import { getStageIndex, simulateConversion, STAGES } from '../lib/conversionApi'
+import { getStageIndex, convertManuscript, STAGES } from '../lib/conversionApi'
 import { formatBytes } from '../lib/utils'
 import useAudioSample from '../hooks/useAudioSample'
-import useManuscriptSpeech from '../hooks/useManuscriptSpeech'
 import { extractManuscript } from '../lib/extractManuscript'
 import Waveform from './Waveform'
 import { Reveal, SectionHeading } from './Reveal'
@@ -35,13 +35,10 @@ export default function Studio() {
   const inputRef = useRef(null)
   const abortRef = useRef(null)
   const audio = useAudioSample()
-  const speech = useManuscriptSpeech()
   const uploadVersion = useRef(0)
   const stopPlayback = useCallback(() => {
     audio.stop()
-    speech.stop()
-    speech.clearError()
-  }, [audio.stop, speech.stop, speech.clearError])
+  }, [audio.stop])
 
   const [file, setFile] = useState(null)
   const [languageId, setLanguageId] = useState('english')
@@ -61,7 +58,7 @@ export default function Studio() {
   const busy = phase === 'converting'
   const complete = phase === 'complete'
   const stageIndex = getStageIndex(progress)
-  const previewing = speech.playing
+  const previewing = audio.playingId === 'studio-preview'
 
   useEffect(() => {
     return () => {
@@ -69,6 +66,12 @@ export default function Studio() {
       uploadVersion.current += 1
     }
   }, [])
+
+  useEffect(() => {
+    return () => {
+      if (result?.previewAudio) URL.revokeObjectURL(result.previewAudio)
+    }
+  }, [result])
 
   const resetConversion = () => {
     abortRef.current?.abort()
@@ -172,7 +175,7 @@ export default function Studio() {
     abortRef.current = controller
 
     try {
-      const output = await simulateConversion({
+      const output = await convertManuscript({
         file,
         language,
         voice,
@@ -180,13 +183,16 @@ export default function Studio() {
         signal: controller.signal,
         onProgress: setProgress,
       })
-      if (controller.signal.aborted) return
+      if (controller.signal.aborted) {
+        URL.revokeObjectURL(output.previewAudio)
+        return
+      }
       setResult(output)
       setPhase('complete')
       setProgress(100)
     } catch (conversionError) {
       if (conversionError?.name !== 'AbortError') {
-        setError('The demo conversion was interrupted. Please try again.')
+        setError(conversionError.message || 'Narration generation failed. Please try again.')
         setPhase('idle')
         setProgress(0)
       }
@@ -201,13 +207,7 @@ export default function Studio() {
   }
 
   const handlePreview = () => {
-    if (!result?.text) return
-    speech.toggle({
-      text: result.text,
-      languageCode: result.manifest.languageCode,
-      narratorName: result.manifest.voice,
-      speed: result.manifest.speed,
-    })
+    if (result?.previewAudio) audio.toggle(result.previewAudio, 'studio-preview')
   }
 
   return (
@@ -320,7 +320,7 @@ export default function Studio() {
                           Drop your manuscript into the light
                         </p>
                         <p className="upload-help mt-2 max-w-sm text-[0.76rem] leading-6 text-smoke">
-                          Drag a book here, or browse your shelf. Up to 50 MB. Your file never leaves this demo.
+                          Drag a book here, or browse your shelf. Up to 50 MB. Extracted text is sent for narration when you convert.
                         </p>
                         <span className="mt-6 inline-flex items-center gap-2 border-b border-gold/40 pb-1 text-[0.56rem] font-semibold uppercase tracking-[0.16em] text-gold transition-colors group-hover/zone:border-orange group-hover/zone:text-orange">
                           Browse files
@@ -526,7 +526,7 @@ export default function Studio() {
 
                 <div className="mt-7 border-t border-bone/[0.08] pt-6">
                   <AnimatePresence>
-                    {error || audio.error || speech.error ? (
+                    {error || audio.error ? (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
@@ -535,13 +535,12 @@ export default function Studio() {
                         role="status"
                       >
                         <p className="border-l border-orange bg-orange/[0.06] px-3 py-2 text-[0.65rem] leading-5 text-orange/90">
-                          {error || audio.error || speech.error}
+                          {error || audio.error}
                           <button
                             type="button"
                             onClick={() => {
                               setError('')
                               audio.setError('')
-                              speech.clearError()
                             }}
                             className="ml-3 underline underline-offset-2"
                           >
@@ -575,7 +574,7 @@ export default function Studio() {
                   <div className="mt-3 flex items-center justify-between gap-4">
                     <p className="flex items-center gap-1.5 text-[0.54rem] text-bone/90">
                       <Info size={10} />
-                      Uploaded text plays with your device’s text-to-speech voice.
+                      Neural narration uses the selected voice. Up to 5,000 characters per conversion.
                     </p>
                     <p className="hidden items-center gap-1.5 font-mono text-[0.42rem] uppercase tracking-[0.12em] text-bone/38 sm:flex">
                       <ShieldCheck size={10} /> Private by design
@@ -738,10 +737,10 @@ export default function Studio() {
                       </button>
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-[0.72rem] text-bone/90">
-                          {language.display} · {speech.voiceName || 'Device voice'} · {result.manifest.speed.toFixed(2)}×
+                          {language.display} · {result.manifest.voice} · {result.manifest.speed.toFixed(2)}×
                         </p>
                         <p className="mt-0.5 truncate font-mono text-[0.42rem] uppercase tracking-[0.1em] text-bone/90">
-                          Reading your uploaded document
+                          Generated neural narration
                         </p>
                       </div>
                       <Volume2 size={14} className="shrink-0 text-bone/90" />
@@ -761,6 +760,14 @@ export default function Studio() {
                     </p>
 
                     <div className="mt-4 flex flex-wrap items-center gap-2">
+                      <a
+                        href={result.previewAudio}
+                        download={result.downloadName}
+                        className="studio-download inline-flex flex-1 items-center justify-center gap-2 border border-gold/25 bg-bone/[0.03] px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-gold transition-colors hover:border-orange/60 hover:text-orange"
+                      >
+                        <Download size={12} />
+                        Download MP3
+                      </a>
                       <button
                         type="button"
                         onClick={resetConversion}
@@ -771,7 +778,7 @@ export default function Studio() {
                       </button>
                     </div>
                     <p className="mt-3 text-[0.52rem] leading-4 text-bone/90">
-                      Reads the complete extracted text using an available device voice. Narrator samples above are auditions. MP3 export requires a connected audio-generation service.
+                      Play and download use the MP3 generated from your uploaded text in the selected narrator’s voice.
                     </p>
                   </motion.div>
                 ) : null}
@@ -784,7 +791,7 @@ export default function Studio() {
           <div className="mt-6 flex flex-col justify-between gap-3 border-t border-bone/[0.07] pt-5 text-[0.55rem] text-bone/90 sm:flex-row sm:items-center">
             <p className="flex items-center gap-2">
               <Info size={11} className="text-orange/60" />
-              Document text is extracted in your browser. Playback uses your device’s text-to-speech voices.
+              Document text is extracted in your browser and sent to Azure Speech when you convert.
             </p>
             <p className="font-mono uppercase tracking-[0.15em]">
               Extraction <span className="mx-1 text-bone/86">/</span> Synthesis{' '}

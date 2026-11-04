@@ -4,7 +4,11 @@
   "version": "1.0.0",
   "description": "Chaptera — a cinematic 3D audiobook platform for English, Tamil, and Urdu.",
   "type": "module",
+  "engines": {
+    "node": ">=22.13.0"
+  },
   "scripts": {
+    "start": "node server/start.mjs",
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1",

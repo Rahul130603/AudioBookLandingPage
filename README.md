@@ -51,15 +51,38 @@ All voice assets are pre-rendered local MP3s in `public/audio` so the demo works
 
 They were generated with Microsoft Edge neural voices using `scripts/generate-neural-voices.py`. The script is optional; the checked-in audio is enough to run the site. The narration text is original demo content written for Chaptera.
 
-## Conversion API
+## Conversion API and Azure setup
 
-The studio deliberately does **not** pretend to run real text-to-speech in the browser. The visual progress and sample preview come from the demo adapter in `src/lib/conversionApi.js`. That file is the single integration point for a production backend:
+The Studio extracts PDF, TXT, DOCX, and EPUB text in the browser. Clicking Convert sends up to 5,000 characters to the Node server at `/api/convert`. The server calls Azure Speech and returns an MP3 in the selected narrator voice. Play and Download MP3 use this same audio file.
 
-1. Replace `simulateConversion` with a multipart POST to `/api/convert`.
-2. Stream progress back through the same `onProgress` callback.
-3. Return `{ manifest, previewAudio, downloadName }` with the rendered audiobook URL.
+The original sample voice mappings are preserved.
 
-The current UI already handles validation, stages, cancellation, completion, audio previewing, and downloads, so the rest of the Studio does not need to change.
+- Aria uses `en-US-AriaNeural`.
+- Atlas uses `en-US-BrianNeural`.
+- Kavya uses `ta-IN-PallaviNeural`.
+- Arun uses `ta-IN-ValluvarNeural`.
+- Noor uses `ur-PK-UzmaNeural`.
+- Rayan uses `ur-PK-AsadNeural`.
+
+Create an Azure Speech resource using the [Microsoft setup guide](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/get-started-text-to-speech?pivots=programming-language-rest). Open the resource's **Keys and Endpoint** page and keep its key and region for the server configuration.
+
+### Render deployment
+
+1. Create a **Web Service**, connect this repository, and select `main`.
+2. Set the build command to `npm ci && npm run build`.
+3. Set the start command to `npm start`.
+4. Under Environment, set `AZURE_SPEECH_KEY` to the resource key and `AZURE_SPEECH_REGION` to its region identifier, such as `eastus`.
+5. Deploy and open the Web Service URL. Upload a short document, choose a narrator, convert, then play or download the MP3.
+
+The Node service serves both the built frontend and the API on Render's `PORT`, bound to `0.0.0.0`. Static Site hosting can display the page but cannot execute the narration API.
+
+Keep the Azure key in server environment variables. Browser code uses the same-origin API and never receives the key. Extracted text is sent to Azure only when Convert is clicked. The service stores neither manuscript text nor generated audio on disk.
+
+Generation is limited to two simultaneous requests and 30 requests per hour across each running server process. These are demo limits, and Azure usage is charged or metered under your Speech resource plan. A restart resets the in-memory hourly limit. Scanned PDFs require OCR before upload.
+
+### Local narration
+
+Set `AZURE_SPEECH_KEY` and `AZURE_SPEECH_REGION` in the terminal environment, then run `npm run build` followed by `npm start`. Open `http://localhost:10000`. For frontend editing, keep this backend running on port 10000 and run `npm run dev` in a second terminal. Vite forwards `/api` requests to that local backend.
 
 ## Structure
 
@@ -86,6 +109,6 @@ scripts/                     optional asset-generation utilities
 
 ## Notes
 
-- Demo conversion runs entirely in the browser and does not upload the manuscript.
-- Local voice previews play pre-rendered neural samples. Connecting the API is required for a full-length audiobook generated from the uploaded text.
+- Document extraction runs in the browser. Conversion sends extracted text to Azure Speech through the Node backend.
+- Narrator audition buttons play pre-rendered samples. Converted document playback uses the generated Azure MP3.
 - Bookmarks are stored in `localStorage` under `chaptera:bookmark:v1`.

@@ -5,6 +5,9 @@ dist
 .tmp
 .vendor
 *.local
+.env
+.env.*
+!.env.example
 .DS_Store
 
 screenshots/
