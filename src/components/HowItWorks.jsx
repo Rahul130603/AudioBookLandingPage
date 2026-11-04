@@ -27,7 +27,7 @@ function UploadVisual() {
       <span className="step-particle step-particle--1" />
       <span className="step-particle step-particle--2" />
       <span className="step-particle step-particle--3" />
-      <div className="absolute bottom-4 left-5 flex items-center gap-2 font-mono text-[0.46rem] uppercase tracking-[0.21em] text-white/25">
+      <div className="absolute bottom-4 left-5 flex items-center gap-2 font-mono text-[0.46rem] uppercase tracking-[0.21em] text-bone/90">
         <span className="h-1 w-1 rounded-full bg-orange" />
         Manuscript detected
       </div>
@@ -46,7 +46,7 @@ function VoiceVisual() {
         <span />
       </div>
       <div className="relative z-[2] flex flex-col items-center gap-5">
-        <div className="flex items-end gap-1.5 font-display text-[1.1rem] font-light tracking-[0.3em] text-bone/30">
+        <div className="flex items-end gap-1.5 font-display text-[1.1rem] font-light tracking-[0.3em] text-bone/84">
           <motion.span
             animate={reduce ? undefined : { opacity: [0.15, 0.55, 0.15], y: [0, -5, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
@@ -140,7 +140,7 @@ function HeadphoneVisual() {
         <circle cx="243.5" cy="171.5" r="7" fill="#FF6B27" fillOpacity="0.85" />
         <path d="M122 166h13M146 158v20M158 147v42M170 160v24M182 169h12" stroke="#FFB15C" strokeOpacity="0.42" strokeLinecap="round" />
       </svg>
-      <div className="absolute bottom-5 left-5 flex items-center gap-2 font-mono text-[0.46rem] uppercase tracking-[0.21em] text-white/25">
+      <div className="absolute bottom-5 left-5 flex items-center gap-2 font-mono text-[0.46rem] uppercase tracking-[0.21em] text-bone/90">
         <Headphones size={10} className="text-gold/50" />
         Chapter II · 00:42
       </div>
@@ -158,7 +158,7 @@ const VISUALS = {
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="relative overflow-hidden border-b border-white/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="how-it-works" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-15%] top-[20%] h-[32rem] w-[32rem] rounded-full bg-orange/[0.045] blur-[120px]" />
         <div className="absolute right-[-10%] bottom-0 h-[24rem] w-[24rem] rounded-full bg-gold/[0.035] blur-[100px]" />
@@ -177,29 +177,29 @@ export default function HowItWorks() {
             }
           />
           <Reveal delay={0.2} className="col-span-12 lg:col-span-4 lg:pb-2">
-            <p className="max-w-sm border-l border-white/10 pl-5 text-sm leading-7 text-smoke lg:ml-auto">
+            <p className="max-w-sm border-l border-bone/10 pl-5 text-sm leading-7 text-smoke lg:ml-auto">
               A manuscript is not just text. It is pace, silence, and breath. Chaptera listens for all three, then gives them back to you.
             </p>
-            <div className="mt-6 flex items-center gap-3 font-mono text-[0.5rem] uppercase tracking-[0.23em] text-bone/30 lg:justify-end">
+            <div className="mt-6 flex items-center gap-3 font-mono text-[0.5rem] uppercase tracking-[0.23em] text-bone/84 lg:justify-end">
               <Sparkles size={11} className="text-orange/70" />
               The ritual of listening
             </div>
           </Reveal>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-white/[0.08] md:grid-cols-3 lg:mt-20">
+        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-bone/[0.08] md:grid-cols-3 lg:mt-20">
           {HOW_IT_WORKS.map((step, index) => {
             const Visual = VISUALS[step.glyph]
             return (
               <Reveal key={step.number} delay={index * 0.09} className="h-full">
                 <TiltCard intensity={4.5} className="h-full">
-                  <article className="group relative flex h-full min-h-[34rem] flex-col overflow-hidden bg-[#0b0b0b] p-6 sm:p-8">
+                  <article className="group relative flex h-full min-h-[34rem] flex-col overflow-hidden bg-coal p-6 sm:p-8">
                     <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_100%,rgba(255,107,39,0.09),transparent_60%)] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
                     <div className="relative flex items-start justify-between">
                       <span className="font-display text-[0.68rem] font-medium tracking-[0.18em] text-gold/80">
                         STEP {step.number}
                       </span>
-                      <span className="font-mono text-[0.46rem] uppercase tracking-[0.2em] text-white/20">
+                      <span className="font-mono text-[0.46rem] uppercase tracking-[0.2em] text-bone/38">
                         {String(index + 1).padStart(2, '0')} / 03
                       </span>
                     </div>
@@ -214,12 +214,12 @@ export default function HowItWorks() {
                         {step.title}
                       </h3>
                       <p className="mt-4 max-w-sm text-[0.83rem] leading-6 text-smoke">{step.copy}</p>
-                      <div className="mt-6 flex items-center justify-between border-t border-white/[0.08] pt-4">
+                      <div className="mt-6 flex items-center justify-between border-t border-bone/[0.08] pt-4">
                         <div className="flex items-center gap-3">
                           {step.meta.map((item) => (
                             <span
                               key={item}
-                              className={`text-[0.48rem] font-medium uppercase tracking-[0.15em] text-bone/35 ${
+                              className={`text-[0.48rem] font-medium uppercase tracking-[0.15em] text-bone/88 ${
                                 item === 'தமிழ்' ? 'font-tamil text-[0.6rem]' : ''
                               } ${item === 'اردو' ? 'font-urdu text-[0.66rem]' : ''}`}
                             >
@@ -229,7 +229,7 @@ export default function HowItWorks() {
                         </div>
                         <ArrowUpRight
                           size={15}
-                          className="text-bone/20 transition-all duration-500 group-hover:rotate-45 group-hover:text-orange"
+                          className="text-bone/38 transition-all duration-500 group-hover:rotate-45 group-hover:text-orange"
                         />
                       </div>
                     </div>

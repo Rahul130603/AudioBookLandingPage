@@ -42,12 +42,12 @@ export default function FinalCTA() {
     <section
       id="begin"
       ref={sectionRef}
-      className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-white/[0.06] py-24 sm:py-32"
+      className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-bone/[0.06] py-24 sm:py-32"
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_68%_45%,rgba(255,107,39,0.16),transparent_45%)]" />
-        <div className="absolute left-[-10%] top-[20%] h-[35rem] w-[35rem] rounded-full border border-white/[0.035]" />
-        <div className="absolute left-[-5%] top-[14%] h-[47rem] w-[47rem] rounded-full border border-white/[0.025]" />
+        <div className="absolute left-[-10%] top-[20%] h-[35rem] w-[35rem] rounded-full border border-bone/[0.035]" />
+        <div className="absolute left-[-5%] top-[14%] h-[47rem] w-[47rem] rounded-full border border-bone/[0.025]" />
         <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-ink to-transparent" />
       </div>
 
@@ -132,7 +132,7 @@ export default function FinalCTA() {
             </h2>
           </Reveal>
           <Reveal delay={0.18}>
-            <p className="mt-8 max-w-md text-[0.88rem] leading-7 text-bone/45">
+            <p className="mt-8 max-w-md text-[0.88rem] leading-7 text-bone/90">
               Turn the page you already love into a voice you will remember. Your first audiobook is waiting on the other side of this button.
             </p>
           </Reveal>
@@ -144,7 +144,7 @@ export default function FinalCTA() {
                   <ArrowUpRight size={16} strokeWidth={1.8} />
                 </span>
               </a>
-              <span className="flex items-center gap-2 text-[0.55rem] uppercase tracking-[0.14em] text-white/25">
+              <span className="flex items-center gap-2 text-[0.55rem] uppercase tracking-[0.14em] text-bone/90">
                 <Headphones size={12} className="text-orange/60" />
                 3 languages · 4 formats · one voice
               </span>
@@ -153,7 +153,7 @@ export default function FinalCTA() {
         </div>
 
         <motion.div
-          className="relative mt-16 max-w-[45rem] border-t border-white/[0.08] pt-6 sm:mt-24"
+          className="relative mt-16 max-w-[45rem] border-t border-bone/[0.08] pt-6 sm:mt-24"
           style={{ opacity: reduce ? 0.8 : waveOpacity }}
         >
           <div className="flex items-center gap-3">
@@ -164,7 +164,7 @@ export default function FinalCTA() {
           </div>
           <div className="mt-4 flex items-end gap-5">
             <Waveform bars={72} height="3.2rem" playing={!reduce} color="rgba(255,107,39,.8)" seed={8} className="flex-1 justify-start" />
-            <span className="hidden shrink-0 font-mono text-[0.44rem] uppercase tracking-[0.15em] text-white/20 sm:block">
+            <span className="hidden shrink-0 font-mono text-[0.44rem] uppercase tracking-[0.15em] text-bone/38 sm:block">
               Chaptera / 001
             </span>
           </div>
@@ -172,7 +172,7 @@ export default function FinalCTA() {
       </div>
 
       <div className="pointer-events-none absolute bottom-8 right-8 hidden xl:block">
-        <span className="hero-vertical font-mono text-[0.47rem] uppercase tracking-[0.3em] text-white/20">
+        <span className="hero-vertical font-mono text-[0.47rem] uppercase tracking-[0.3em] text-bone/38">
           Scroll to close the book
         </span>
       </div>

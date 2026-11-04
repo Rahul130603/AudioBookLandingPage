@@ -209,11 +209,11 @@ export default function Studio() {
   }
 
   return (
-    <section id="studio" className="relative overflow-hidden border-b border-white/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="studio" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(255,107,39,0.07),transparent_45%)]" />
         <div className="ambient-orb left-[-12%] top-[30%] h-[32rem] w-[32rem] bg-orange/[0.06]" />
-        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bone/10 to-transparent" />
       </div>
 
       <div className="container-x relative">
@@ -230,17 +230,17 @@ export default function Studio() {
             }
           />
           <Reveal delay={0.15} className="col-span-12 lg:col-span-4">
-            <div className="flex gap-8 border-l border-white/10 pl-5 lg:ml-auto lg:justify-end">
+            <div className="flex gap-8 border-l border-bone/10 pl-5 lg:ml-auto lg:justify-end">
               <div>
                 <p className="font-mono text-[0.47rem] uppercase tracking-[0.2em] text-smoke/60">Pipeline</p>
-                <p className="mt-1.5 flex items-center gap-1.5 text-[0.62rem] text-bone/70">
+                <p className="mt-1.5 flex items-center gap-1.5 text-[0.62rem] text-bone/84">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-400/80" />
                   Frontend ready
                 </p>
               </div>
               <div>
                 <p className="font-mono text-[0.47rem] uppercase tracking-[0.2em] text-smoke/60">Endpoint</p>
-                <p className="mt-1.5 font-mono text-[0.62rem] text-bone/70">/api/convert</p>
+                <p className="mt-1.5 font-mono text-[0.62rem] text-bone/84">/api/convert</p>
               </div>
             </div>
           </Reveal>
@@ -255,16 +255,16 @@ export default function Studio() {
               <span className="panel-corner panel-corner--br" />
 
               <div className="p-4 sm:p-6 lg:p-8">
-                <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
+                <div className="flex items-center justify-between border-b border-bone/[0.08] pb-4">
                   <div className="flex items-center gap-3">
                     <span className="grid h-7 w-7 place-items-center border border-orange/30 font-mono text-[0.55rem] text-orange">
                       01
                     </span>
-                    <span className="font-mono text-[0.51rem] uppercase tracking-[0.2em] text-bone/55">
+                    <span className="font-mono text-[0.51rem] uppercase tracking-[0.2em] text-bone/88">
                       Manuscript input
                     </span>
                   </div>
-                  <span className="hidden font-mono text-[0.44rem] uppercase tracking-[0.16em] text-bone/25 sm:block">
+                  <span className="hidden font-mono text-[0.44rem] uppercase tracking-[0.16em] text-bone/90 sm:block">
                     PDF · EPUB · TXT · DOCX
                   </span>
                 </div>
@@ -312,7 +312,7 @@ export default function Studio() {
                       <div className="flex min-h-[16.5rem] flex-col items-center justify-center px-6 py-10 text-center">
                         <div className="upload-zone__icon relative mb-6 grid h-16 w-16 place-items-center rounded-full border border-gold/25 bg-orange/[0.07]">
                           <UploadCloud size={24} strokeWidth={1.2} className="text-gold" />
-                          <span className="absolute inset-[-8px] rounded-full border border-dashed border-white/10" />
+                          <span className="absolute inset-[-8px] rounded-full border border-dashed border-bone/10" />
                         </div>
                         <p className="font-display text-[1.15rem] font-medium tracking-[-0.02em] text-bone">
                           Drop your manuscript into the light
@@ -328,7 +328,7 @@ export default function Studio() {
                           {ACCEPTED.map((format) => (
                             <span
                               key={format}
-                              className="border border-white/10 bg-white/[0.02] px-2 py-1 font-mono text-[0.44rem] uppercase tracking-[0.13em] text-white/30"
+                              className="border border-bone/10 bg-bone/[0.02] px-2 py-1 font-mono text-[0.44rem] uppercase tracking-[0.13em] text-bone/84"
                             >
                               {format}
                             </span>
@@ -342,11 +342,11 @@ export default function Studio() {
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      className="mt-6 border border-white/10 bg-white/[0.025] p-4 sm:p-5"
+                      className="mt-6 border border-bone/10 bg-bone/[0.025] p-4 sm:p-5"
                     >
                       <div className="flex items-start gap-4">
                         <div className="relative grid h-14 w-12 shrink-0 place-items-center overflow-hidden border border-gold/25 bg-gradient-to-br from-[#24140b] to-[#090807]">
-                          <FileText size={18} className="text-gold" />
+                          <FileText size={18} className="text-[#FFB15C]" />
                           <span className="absolute bottom-1 font-mono text-[0.4rem] uppercase tracking-widest text-orange">
                             {file.ext}
                           </span>
@@ -358,7 +358,7 @@ export default function Studio() {
                           </p>
                           <div className="mt-3 flex items-center gap-2">
                             <span className="h-1 w-1 rounded-full bg-emerald-400" />
-                            <span className="text-[0.6rem] text-white/40">
+                            <span className="text-[0.6rem] text-bone/60">
                               {extractionMode === 'local'
                                 ? 'A local excerpt will be used for the voice preview.'
                                 : 'The full document is staged for server-side chapter extraction.'}
@@ -373,7 +373,7 @@ export default function Studio() {
                               inputRef.current?.click()
                             }}
                             disabled={busy}
-                            className="px-2 py-1 text-[0.52rem] uppercase tracking-[0.12em] text-bone/40 transition-colors hover:text-gold disabled:pointer-events-none disabled:opacity-25"
+                            className="px-2 py-1 text-[0.52rem] uppercase tracking-[0.12em] text-bone/60 transition-colors hover:text-gold disabled:pointer-events-none disabled:opacity-25"
                           >
                             Replace
                           </button>
@@ -388,7 +388,7 @@ export default function Studio() {
                               setError('')
                             }}
                             disabled={busy}
-                            className="grid h-7 w-7 place-items-center text-white/30 transition-colors hover:bg-white/5 hover:text-orange disabled:pointer-events-none disabled:opacity-25"
+                            className="grid h-7 w-7 place-items-center text-bone/84 transition-colors hover:bg-bone/5 hover:text-orange disabled:pointer-events-none disabled:opacity-25"
                             aria-label="Remove manuscript"
                           >
                             <X size={14} />
@@ -399,11 +399,11 @@ export default function Studio() {
                   )}
                 </AnimatePresence>
 
-                <div className="mt-7 grid grid-cols-1 gap-7 border-t border-white/[0.08] pt-6 sm:grid-cols-2">
+                <div className="mt-7 grid grid-cols-1 gap-7 border-t border-bone/[0.08] pt-6 sm:grid-cols-2">
                   <div>
                     <div className="mb-3 flex items-center justify-between">
-                      <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-bone/55">02 / Language</span>
-                      <span className="font-mono text-[0.43rem] uppercase tracking-[0.12em] text-white/20">3 available</span>
+                      <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-bone/88">02 / Language</span>
+                      <span className="font-mono text-[0.43rem] uppercase tracking-[0.12em] text-bone/38">3 available</span>
                     </div>
                     <div className="segmented w-full">
                       {LANGUAGES.map((item) => (
@@ -425,7 +425,7 @@ export default function Studio() {
 
                   <div>
                     <div className="mb-3 flex items-center justify-between">
-                      <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-bone/55">Reading speed</span>
+                      <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-bone/88">Reading speed</span>
                       <span className="font-mono text-[0.62rem] text-gold">{speed.toFixed(2)}×</span>
                     </div>
                     <input
@@ -440,7 +440,7 @@ export default function Studio() {
                       style={{ '--value': `${((speed - 0.75) / 1.25) * 100}%` }}
                       aria-label="Reading speed"
                     />
-                    <div className="mt-1 flex justify-between font-mono text-[0.42rem] uppercase tracking-[0.1em] text-white/25">
+                    <div className="mt-1 flex justify-between font-mono text-[0.42rem] uppercase tracking-[0.1em] text-bone/90">
                       <span>0.75×</span>
                       <span>1×</span>
                       <span>1.5×</span>
@@ -451,8 +451,8 @@ export default function Studio() {
 
                 <div className="mt-7">
                   <div className="mb-3 flex items-center justify-between">
-                    <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-bone/55">03 / Voice</span>
-                    <span className="font-mono text-[0.43rem] uppercase tracking-[0.12em] text-white/20">
+                    <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-bone/88">03 / Voice</span>
+                    <span className="font-mono text-[0.43rem] uppercase tracking-[0.12em] text-bone/38">
                       {language.display} voices
                     </span>
                   </div>
@@ -485,7 +485,7 @@ export default function Studio() {
                             <span className="min-w-0">
                               <span className="flex items-baseline gap-2">
                                 <span className="text-[0.78rem] font-medium text-bone">{option.name}</span>
-                                <span className="font-mono text-[0.42rem] uppercase tracking-[0.1em] text-white/30">{option.gender}</span>
+                                <span className="font-mono text-[0.42rem] uppercase tracking-[0.1em] text-bone/84">{option.gender}</span>
                               </span>
                               <span className="mt-0.5 block truncate text-[0.58rem] text-smoke">{option.tone}</span>
                             </span>
@@ -494,7 +494,7 @@ export default function Studio() {
                             type="button"
                             onClick={() => audio.toggle(option.sampleAudio, `voice-${option.id}`)}
                             disabled={busy}
-                            className="my-2 mr-2 grid w-8 shrink-0 place-items-center border border-white/10 text-white/35 transition-colors hover:border-gold/40 hover:text-gold disabled:pointer-events-none disabled:opacity-30"
+                            className="my-2 mr-2 grid w-8 shrink-0 place-items-center border border-bone/10 text-bone/88 transition-colors hover:border-gold/40 hover:text-gold disabled:pointer-events-none disabled:opacity-30"
                             aria-label={auditioning ? `Pause ${option.name} voice sample` : `Hear ${option.name} voice sample`}
                           >
                             {auditioning ? <Pause size={12} fill="currentColor" /> : <Volume2 size={13} />}
@@ -503,10 +503,10 @@ export default function Studio() {
                       )
                     })}
                   </div>
-                  <p className="mt-3 text-[0.6rem] leading-5 text-white/30">{voice.signature}</p>
+                  <p className="mt-3 text-[0.6rem] leading-5 text-bone/84">{voice.signature}</p>
                 </div>
 
-                <div className="mt-7 border-t border-white/[0.08] pt-6">
+                <div className="mt-7 border-t border-bone/[0.08] pt-6">
                   <AnimatePresence>
                     {error || audio.error ? (
                       <motion.div
@@ -545,7 +545,7 @@ export default function Studio() {
                     </div>
                   ) : (
                     <button type="button" onClick={handleConvert} className="btn btn-primary group w-full">
-                      <Sparkles size={14} className="text-ink/70" />
+                      <Sparkles size={14} className="text-bone/84" />
                       {complete ? 'Convert again' : 'Convert to audio'}
                       <span className="btn__icon">
                         <ArrowIcon />
@@ -554,11 +554,11 @@ export default function Studio() {
                   )}
 
                   <div className="mt-3 flex items-center justify-between gap-4">
-                    <p className="flex items-center gap-1.5 text-[0.54rem] text-white/25">
+                    <p className="flex items-center gap-1.5 text-[0.54rem] text-bone/90">
                       <Info size={10} />
                       Frontend demo. Conversion connects through the API adapter.
                     </p>
-                    <p className="hidden items-center gap-1.5 font-mono text-[0.42rem] uppercase tracking-[0.12em] text-white/20 sm:flex">
+                    <p className="hidden items-center gap-1.5 font-mono text-[0.42rem] uppercase tracking-[0.12em] text-bone/38 sm:flex">
                       <ShieldCheck size={10} /> Private by design
                     </p>
                   </div>
@@ -574,12 +574,12 @@ export default function Studio() {
               <span className="panel-corner panel-corner--bl" />
               <span className="panel-corner panel-corner--br" />
 
-              <div className="flex items-center justify-between border-b border-white/[0.08] px-5 py-4 sm:px-6">
-                <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-bone/55">Conversion chamber</span>
-                <span className="flex items-center gap-2 font-mono text-[0.43rem] uppercase tracking-[0.12em] text-white/35">
+              <div className="flex items-center justify-between border-b border-bone/[0.08] px-5 py-4 sm:px-6">
+                <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-bone/88">Conversion chamber</span>
+                <span className="flex items-center gap-2 font-mono text-[0.43rem] uppercase tracking-[0.12em] text-bone/88">
                   <span
                     className={`h-1.5 w-1.5 rounded-full ${
-                      complete ? 'bg-emerald-400' : busy ? 'animate-pulse bg-orange' : 'bg-white/25'
+                      complete ? 'bg-emerald-400' : busy ? 'animate-pulse bg-orange' : 'bg-bone/25'
                     }`}
                   />
                   {complete ? 'Preview ready' : busy ? 'Processing' : 'Standby'}
@@ -598,10 +598,10 @@ export default function Studio() {
                       opacity: progress > 0 ? 1 : 0.7,
                     }}
                   >
-                    <div className="h-full w-full rounded-full bg-[#0b0a09]" />
+                    <div className="h-full w-full rounded-full bg-[#fffdf9]/80" />
                   </div>
-                  <div className="absolute h-[13.2rem] w-[13.2rem] rounded-full border border-dashed border-white/[0.07]" />
-                  <div className="absolute h-[17.5rem] w-[17.5rem] rounded-full border border-white/[0.035]" />
+                  <div className="absolute h-[13.2rem] w-[13.2rem] rounded-full border border-dashed border-bone/[0.07]" />
+                  <div className="absolute h-[17.5rem] w-[17.5rem] rounded-full border border-bone/[0.035]" />
                   <div className="absolute inset-0 grid place-items-center">
                     <div className="pointer-events-none absolute left-0 top-1/2 hidden -translate-y-1/2 sm:block">
                       <Waveform
@@ -629,23 +629,23 @@ export default function Studio() {
                     >
                       <div className="conversion-book">
                         <div className="conversion-book__inner">
-                          <span className="font-display text-[0.45rem] uppercase tracking-[0.22em] text-white/35">
+                          <span className="font-display text-[0.45rem] uppercase tracking-[0.22em] text-cream/35">
                             Chaptera
                           </span>
                           <div>
                             <span
-                              className={`block text-center text-[2.2rem] leading-none text-bone ${
+                              className={`block text-center text-[2.2rem] leading-none text-cream ${
                                 language.code === 'ta' ? 'font-tamil text-[1.8rem]' : language.code === 'ur' ? 'font-urdu text-[2rem] leading-[1.8]' : 'font-display font-semibold'
                               }`}
                             >
                               {language.display}
                             </span>
                             <span className="mt-3 block h-px w-8 mx-auto bg-orange/70" />
-                            <span className="mt-2 block text-center font-mono text-[0.4rem] uppercase tracking-[0.2em] text-white/30">
+                            <span className="mt-2 block text-center font-mono text-[0.4rem] uppercase tracking-[0.2em] text-cream/30">
                               {complete ? 'Ready' : busy ? 'Listening' : 'Unopened'}
                             </span>
                           </div>
-                          <span className="text-center font-mono text-[0.38rem] uppercase tracking-[0.18em] text-white/20">
+                          <span className="text-center font-mono text-[0.38rem] uppercase tracking-[0.18em] text-cream/20">
                             {voice.name} · {speed.toFixed(2)}×
                           </span>
                         </div>
@@ -668,7 +668,7 @@ export default function Studio() {
                     </motion.div>
                   </div>
 
-                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 font-mono text-[0.45rem] uppercase tracking-[0.23em] text-white/25">
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 font-mono text-[0.45rem] uppercase tracking-[0.23em] text-bone/90">
                     {complete ? '100% · mastered' : busy ? `${Math.round(progress)}% · weaving voice` : 'Awaiting manuscript'}
                   </span>
                 </div>
@@ -680,7 +680,7 @@ export default function Studio() {
                     return (
                       <div
                         key={stage.key}
-                        className={`flex items-center gap-3 border-t border-white/[0.065] py-2.5 ${
+                        className={`flex items-center gap-3 border-t border-bone/[0.065] py-2.5 ${
                           done || active ? 'opacity-100' : 'opacity-35'
                         }`}
                       >
@@ -690,14 +690,14 @@ export default function Studio() {
                               ? 'border-orange/60 bg-orange/15 text-orange'
                               : active
                                 ? 'border-gold/60 text-gold'
-                                : 'border-white/15 text-white/30'
+                                : 'border-bone/15 text-bone/84'
                           }`}
                         >
                           {done ? <Check size={9} /> : active ? <Loader2 size={9} className="animate-spin" /> : String(index + 1).padStart(2, '0')}
                         </span>
                         <div className="min-w-0 flex-1">
-                          <p className={`text-[0.64rem] ${done ? 'text-bone/70' : active ? 'text-bone' : 'text-bone/40'}`}>{stage.label}</p>
-                          <p className="truncate text-[0.49rem] text-white/25">{stage.detail}</p>
+                          <p className={`text-[0.64rem] ${done ? 'text-bone/84' : active ? 'text-bone' : 'text-bone/60'}`}>{stage.label}</p>
+                          <p className="truncate text-[0.49rem] text-bone/90">{stage.detail}</p>
                         </div>
                         {done ? <span className="font-mono text-[0.4rem] uppercase tracking-[0.1em] text-orange/50">Done</span> : null}
                       </div>
@@ -719,27 +719,27 @@ export default function Studio() {
                         <span className="h-1.5 w-1.5 rounded-full bg-orange" />
                         <span className="font-mono text-[0.47rem] uppercase tracking-[0.19em] text-gold/80">Preview ready</span>
                       </div>
-                      <span className="font-mono text-[0.43rem] uppercase tracking-[0.12em] text-white/25">Demo render</span>
+                      <span className="font-mono text-[0.43rem] uppercase tracking-[0.12em] text-bone/90">Demo render</span>
                     </div>
 
                     <div className="mt-4 flex items-center gap-3">
                       <button
                         type="button"
                         onClick={handlePreview}
-                        className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-orange text-ink transition-transform duration-300 hover:scale-105"
+                        className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-orange text-bone transition-transform duration-300 hover:scale-105"
                         aria-label={previewing ? 'Pause voice preview' : 'Play voice preview'}
                       >
                         {previewing ? <Pause size={15} fill="currentColor" /> : <Play size={15} fill="currentColor" className="ml-0.5" />}
                       </button>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-[0.72rem] text-bone/80">
+                        <p className="truncate text-[0.72rem] text-bone/90">
                           {language.display} · {voice.name} · {speed.toFixed(2)}×
                         </p>
-                        <p className="mt-0.5 truncate font-mono text-[0.42rem] uppercase tracking-[0.1em] text-white/25">
+                        <p className="mt-0.5 truncate font-mono text-[0.42rem] uppercase tracking-[0.1em] text-bone/90">
                           Neural voice preview · full render via API
                         </p>
                       </div>
-                      <Volume2 size={14} className="shrink-0 text-white/25" />
+                      <Volume2 size={14} className="shrink-0 text-bone/90" />
                     </div>
 
                     <Waveform
@@ -751,7 +751,7 @@ export default function Studio() {
                       seed={5}
                     />
 
-                    <p className="mt-2 line-clamp-2 text-[0.56rem] italic leading-5 text-white/30">
+                    <p className="mt-2 line-clamp-2 text-[0.56rem] italic leading-5 text-bone/84">
                       “{excerpt}”
                     </p>
 
@@ -759,7 +759,7 @@ export default function Studio() {
                       <a
                         href={result.previewAudio}
                         download={result.downloadName}
-                        className="inline-flex flex-1 items-center justify-center gap-2 border border-gold/25 bg-white/[0.03] px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-gold transition-colors hover:border-orange/60 hover:text-orange"
+                        className="inline-flex flex-1 items-center justify-center gap-2 border border-gold/25 bg-bone/[0.03] px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-gold transition-colors hover:border-orange/60 hover:text-orange"
                       >
                         <Download size={12} />
                         Download demo
@@ -767,13 +767,13 @@ export default function Studio() {
                       <button
                         type="button"
                         onClick={resetConversion}
-                        className="inline-flex items-center justify-center gap-2 border border-white/10 px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-bone/45 transition-colors hover:border-white/25 hover:text-bone"
+                        className="inline-flex items-center justify-center gap-2 border border-bone/10 px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-bone/90 transition-colors hover:border-bone/25 hover:text-bone"
                       >
                         <RotateCcw size={12} />
                         Reset
                       </button>
                     </div>
-                    <p className="mt-3 text-[0.52rem] leading-4 text-white/25">
+                    <p className="mt-3 text-[0.52rem] leading-4 text-bone/90">
                       Download includes a pre-rendered {language.label} voice sample in {voice.name}’s voice. Connect the API for the full-length audiobook.
                     </p>
                   </motion.div>
@@ -784,14 +784,14 @@ export default function Studio() {
         </div>
 
         <Reveal delay={0.15}>
-          <div className="mt-6 flex flex-col justify-between gap-3 border-t border-white/[0.07] pt-5 text-[0.55rem] text-white/25 sm:flex-row sm:items-center">
+          <div className="mt-6 flex flex-col justify-between gap-3 border-t border-bone/[0.07] pt-5 text-[0.55rem] text-bone/90 sm:flex-row sm:items-center">
             <p className="flex items-center gap-2">
               <Info size={11} className="text-orange/60" />
               This interface is production-ready; only the conversion service is simulated in this build.
             </p>
             <p className="font-mono uppercase tracking-[0.15em]">
-              Extraction <span className="mx-1 text-white/15">/</span> Synthesis{' '}
-              <span className="mx-1 text-white/15">/</span> Mastering
+              Extraction <span className="mx-1 text-bone/86">/</span> Synthesis{' '}
+              <span className="mx-1 text-bone/86">/</span> Mastering
             </p>
           </div>
         </Reveal>

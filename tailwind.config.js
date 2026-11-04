@@ -4,13 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#080808',
-        charcoal: '#151515',
-        coal: '#0D0D0D',
+        ink: '#FAF8F5',
+        charcoal: '#F1EAE1',
+        coal: '#FFFDF9',
         orange: '#FF6B27',
-        gold: '#FFB15C',
-        bone: '#F2ECE3',
-        smoke: '#91887F',
+        gold: '#C9782C',
+        bone: '#1A1511',
+        smoke: '#706459',
+        cream: '#F8F3EA',
       },
       fontFamily: {
         sans: ['Inter Variable', 'Inter', 'sans-serif'],
@@ -41,9 +42,12 @@ export default {
         65: '0.65',
         68: '0.68',
         72: '0.72',
+        76: '0.76',
         78: '0.78',
         82: '0.82',
+        84: '0.84',
         85: '0.85',
+        86: '0.86',
         88: '0.88',
         92: '0.92',
       },

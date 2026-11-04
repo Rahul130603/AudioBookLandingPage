@@ -11,7 +11,7 @@ function BookPreviewButton({ book, isPlaying, onToggle }) {
     <button
       type="button"
       onClick={onToggle}
-      className="inline-flex items-center gap-2 border border-white/15 bg-ink/60 px-3 py-2 text-[0.49rem] font-medium uppercase tracking-[0.12em] text-bone/70 backdrop-blur-md transition-colors hover:border-gold/40 hover:text-gold"
+      className="inline-flex items-center gap-2 border border-bone/15 bg-ink/60 px-3 py-2 text-[0.49rem] font-medium uppercase tracking-[0.12em] text-bone/84 backdrop-blur-md transition-colors hover:border-gold/40 hover:text-gold"
       aria-label={isPlaying ? `Pause preview of ${book.title}` : `Hear a line from ${book.title}`}
     >
       {isPlaying ? <Pause size={11} fill="currentColor" /> : <Volume2 size={11} />}
@@ -96,18 +96,18 @@ function FeaturedBookCard({ book, index, audio }) {
           <h3 className="truncate font-display text-[1.08rem] font-medium tracking-[-0.03em] text-bone transition-colors group-hover:text-gold">
             {book.title}
           </h3>
-          <p className="mt-1 truncate text-[0.61rem] text-bone/45">{book.author}</p>
+          <p className="mt-1 truncate text-[0.61rem] text-bone/90">{book.author}</p>
         </div>
         <div className="shrink-0 text-right">
-          <p className="font-mono text-[0.41rem] uppercase tracking-[0.13em] text-white/22">0{index + 1}</p>
-          <p className="mt-1 font-mono text-[0.41rem] uppercase tracking-[0.09em] text-white/18">{book.duration}</p>
+          <p className="font-mono text-[0.41rem] uppercase tracking-[0.13em] text-bone/60">0{index + 1}</p>
+          <p className="mt-1 font-mono text-[0.41rem] uppercase tracking-[0.09em] text-bone/88">{book.duration}</p>
         </div>
       </div>
       <div className="flex items-center gap-2 px-3 pb-3 font-mono text-[0.43rem] uppercase tracking-[0.13em] text-gold/45">
         <span style={{ background: book.accent }} className="h-1 w-1 rounded-full" />
         {book.langCode === 'EN' ? 'English' : book.language}
       </div>
-      <p className="min-h-[2.6rem] px-3 pb-4 text-[0.66rem] leading-5 text-white/40">{book.blurb}</p>
+      <p className="min-h-[2.6rem] px-3 pb-4 text-[0.66rem] leading-5 text-bone/60">{book.blurb}</p>
     </article>
   )
 }
@@ -164,7 +164,7 @@ export default function FeaturedBooks() {
   }
 
   return (
-    <section id="explore" className="relative overflow-hidden border-b border-white/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="explore" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_20%,rgba(255,177,92,0.045),transparent_45%)]" />
         <div className="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-ink via-ink/50 to-transparent" />
@@ -184,7 +184,7 @@ export default function FeaturedBooks() {
           />
           <div className="flex items-center gap-3">
             <div className="mr-2 hidden flex-col items-end sm:flex">
-              <span className="font-mono text-[0.46rem] uppercase tracking-[0.2em] text-white/25">Browse the shelf</span>
+              <span className="font-mono text-[0.46rem] uppercase tracking-[0.2em] text-bone/90">Browse the shelf</span>
               <span className="mt-1 font-mono text-[0.44rem] tracking-[0.1em] text-gold/60">{String(FEATURED_BOOKS.length).padStart(2, '0')} TITLES</span>
             </div>
             <button type="button" onClick={() => scrollRail(-1)} className="icon-button" aria-label="Scroll books left">
@@ -223,13 +223,13 @@ export default function FeaturedBooks() {
         </div>
         <div className="container-x">
           <div className="mt-4 flex items-center justify-between">
-            <div className="h-px flex-1 bg-white/[0.08]">
+            <div className="h-px flex-1 bg-bone/[0.08]">
               <div
                 className="h-full origin-left bg-gradient-to-r from-orange to-gold transition-transform duration-200"
                 style={{ transform: `scaleX(${Math.max(0.02, progress)})` }}
               />
             </div>
-            <span className="ml-5 font-mono text-[0.42rem] uppercase tracking-[0.15em] text-white/20">
+            <span className="ml-5 font-mono text-[0.42rem] uppercase tracking-[0.15em] text-bone/38">
               Drag / scroll the shelf
             </span>
           </div>
@@ -244,7 +244,7 @@ export default function FeaturedBooks() {
             exit={{ opacity: 0, y: 8 }}
             className="container-x"
           >
-            <div className="mt-6 flex items-center justify-between gap-4 border border-orange/25 bg-orange/[0.05] px-4 py-3 text-[0.62rem] leading-5 text-bone/65" role="status">
+            <div className="mt-6 flex items-center justify-between gap-4 border border-orange/25 bg-orange/[0.05] px-4 py-3 text-[0.62rem] leading-5 text-bone/90" role="status">
               <span>{audio.error}</span>
               <button type="button" onClick={() => audio.setError('')} className="shrink-0 text-[0.52rem] uppercase tracking-[0.12em] text-orange underline underline-offset-2">
                 Dismiss
@@ -256,8 +256,8 @@ export default function FeaturedBooks() {
 
       <div className="container-x mt-16">
         <Reveal>
-          <div className="flex flex-col justify-between gap-4 border-t border-white/[0.08] pt-5 sm:flex-row sm:items-center">
-            <p className="flex items-center gap-2 text-[0.6rem] text-white/25">
+          <div className="flex flex-col justify-between gap-4 border-t border-bone/[0.08] pt-5 sm:flex-row sm:items-center">
+            <p className="flex items-center gap-2 text-[0.6rem] text-bone/90">
               <Play size={9} className="text-orange/60" />
               Hover a book to hear a line in its native language.
             </p>

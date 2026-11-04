@@ -53,7 +53,7 @@ function InfoModal({ type, onClose }) {
 
   return (
     <motion.div
-      className="fixed inset-0 z-[120] grid place-items-center bg-ink/80 p-4 backdrop-blur-xl"
+      className="modal-scrim fixed inset-0 z-[120] grid place-items-center p-4 backdrop-blur-xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -78,7 +78,7 @@ function InfoModal({ type, onClose }) {
           type="button"
           onClick={onClose}
           autoFocus
-          className="absolute right-4 top-4 grid h-8 w-8 place-items-center border border-white/10 text-bone/40 transition-colors hover:border-orange/40 hover:text-orange"
+          className="absolute right-4 top-4 grid h-8 w-8 place-items-center border border-bone/10 text-bone/60 transition-colors hover:border-orange/40 hover:text-orange"
           aria-label="Close dialog"
         >
           <X size={14} />
@@ -87,7 +87,7 @@ function InfoModal({ type, onClose }) {
         <h2 id="info-modal-title" className="display mt-5 text-[clamp(1.9rem,4vw,2.8rem)] text-bone">
           {content.title}
         </h2>
-        <div className="mt-6 space-y-4 border-t border-white/[0.08] pt-6">
+        <div className="mt-6 space-y-4 border-t border-bone/[0.08] pt-6">
           {content.body.map((paragraph) => (
             <p key={paragraph} className="text-[0.78rem] leading-7 text-smoke">
               {paragraph}
@@ -110,14 +110,14 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative overflow-hidden bg-[#070707]">
+      <footer className="relative overflow-hidden bg-[#f6f0e8]">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute bottom-[-30%] left-1/2 h-[44rem] w-[44rem] -translate-x-1/2 rounded-full bg-orange/[0.045] blur-[110px]" />
-          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bone/10 to-transparent" />
         </div>
 
         <div className="container-x relative">
-          <div className="flex flex-col justify-between gap-8 border-b border-white/[0.07] py-12 md:flex-row md:items-center">
+          <div className="flex flex-col justify-between gap-8 border-b border-bone/[0.07] py-12 md:flex-row md:items-center">
             <div>
               <span className="eyebrow">The next chapter</span>
               <p className="mt-3 max-w-lg font-display text-[clamp(1.5rem,3vw,2.3rem)] font-medium tracking-[-0.045em] text-bone">
@@ -135,15 +135,15 @@ export default function Footer() {
           <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-5">
               <Logo />
-              <p className="mt-5 max-w-xs font-display text-[1.1rem] font-light leading-relaxed tracking-[-0.02em] text-bone/55">
+              <p className="mt-5 max-w-xs font-display text-[1.1rem] font-light leading-relaxed tracking-[-0.02em] text-bone/88">
                 Every Book Has a Voice.
               </p>
-              <p className="mt-4 max-w-xs text-[0.7rem] leading-6 text-white/25">
+              <p className="mt-4 max-w-xs text-[0.7rem] leading-6 text-bone/90">
                 A cinematic listening room for the stories you already love — and the ones still waiting to be heard.
               </p>
               <a
                 href="mailto:hello@chaptera.audio"
-                className="mt-6 inline-flex items-center gap-2 border-b border-white/15 pb-1 text-[0.6rem] uppercase tracking-[0.14em] text-white/40 transition-colors hover:border-orange hover:text-gold"
+                className="mt-6 inline-flex items-center gap-2 border-b border-bone/15 pb-1 text-[0.6rem] uppercase tracking-[0.14em] text-bone/60 transition-colors hover:border-orange hover:text-gold"
               >
                 hello@chaptera.audio
                 <ArrowUpRight size={11} />
@@ -151,7 +151,7 @@ export default function Footer() {
             </div>
 
             <div className="lg:col-span-3">
-              <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-white/25">Navigate</p>
+              <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-bone/90">Navigate</p>
               <nav aria-label="Footer" className="mt-5 flex flex-col items-start gap-3">
                 {LINKS.map((link) =>
                   link.action ? (
@@ -159,7 +159,7 @@ export default function Footer() {
                       key={link.label}
                       type="button"
                       onClick={() => setModal(link.action)}
-                      className="text-[0.7rem] text-bone/45 transition-colors hover:text-gold"
+                      className="text-[0.7rem] text-bone/90 transition-colors hover:text-gold"
                     >
                       {link.label}
                     </button>
@@ -167,7 +167,7 @@ export default function Footer() {
                     <a
                       key={link.label}
                       href={link.href}
-                      className="text-[0.7rem] text-bone/45 transition-colors hover:text-gold"
+                      className="text-[0.7rem] text-bone/90 transition-colors hover:text-gold"
                     >
                       {link.label}
                     </a>
@@ -177,30 +177,30 @@ export default function Footer() {
             </div>
 
             <div className="lg:col-span-2">
-              <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-white/25">Languages</p>
+              <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-bone/90">Languages</p>
               <div className="mt-5 flex flex-col items-start gap-3">
-                <a href="#languages" className="text-[0.7rem] text-bone/45 transition-colors hover:text-gold">
+                <a href="#languages" className="text-[0.7rem] text-bone/90 transition-colors hover:text-gold">
                   English
                 </a>
-                <a href="#languages" lang="ta" className="font-tamil text-[0.8rem] text-bone/45 transition-colors hover:text-gold">
+                <a href="#languages" lang="ta" className="font-tamil text-[0.8rem] text-bone/90 transition-colors hover:text-gold">
                   தமிழ்
                 </a>
-                <a href="#languages" lang="ur" className="font-urdu text-[0.9rem] text-bone/45 transition-colors hover:text-gold">
+                <a href="#languages" lang="ur" className="font-urdu text-[0.9rem] text-bone/90 transition-colors hover:text-gold">
                   اردو
                 </a>
               </div>
             </div>
 
             <div className="lg:col-span-2 lg:text-right">
-              <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-white/25">Chaptera</p>
-              <p className="mt-5 text-[0.7rem] leading-6 text-white/25">
+              <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-bone/90">Chaptera</p>
+              <p className="mt-5 text-[0.7rem] leading-6 text-bone/90">
                 A studio for voices,
                 <br />
                 pages & in-between hours.
               </p>
               <a
                 href="#home"
-                className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/35 transition-colors hover:border-orange/50 hover:text-orange"
+                className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full border border-bone/10 text-bone/88 transition-colors hover:border-orange/50 hover:text-orange"
                 aria-label="Back to top"
               >
                 <ArrowUp size={14} />
@@ -208,17 +208,17 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="footer-word select-none pb-2 text-center" aria-hidden="true">
+          <div className="footer-word pointer-events-none select-none pb-2 text-center" aria-hidden="true">
             CHAPTERA<span style={{ color: '#FF6B27', WebkitTextStroke: '0' }}>.</span>
           </div>
 
-          <div className="flex flex-col justify-between gap-3 border-t border-white/[0.07] py-5 text-[0.55rem] text-white/20 sm:flex-row sm:items-center">
+          <div className="flex flex-col justify-between gap-3 border-t border-bone/[0.07] py-5 text-[0.55rem] text-bone/38 sm:flex-row sm:items-center">
             <p>© 2026 Chaptera Studio. All stories belong to their authors.</p>
             <div className="flex items-center gap-5">
               <button type="button" onClick={() => setModal('privacy')} className="transition-colors hover:text-gold">
                 Privacy
               </button>
-              <span className="h-3 w-px bg-white/10" />
+              <span className="h-3 w-px bg-bone/10" />
               <span className="font-mono uppercase tracking-[0.12em]">Made for listening</span>
             </div>
           </div>

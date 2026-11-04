@@ -20,14 +20,14 @@ function LanguageCard({ language, index, active, setActive, audio }) {
       onMouseEnter={() => setActive(language.id)}
       onFocus={() => setActive(language.id)}
     >
-      <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between border-b border-white/[0.08] p-5 sm:p-6" dir="ltr">
+      <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between border-b border-bone/[0.08] p-5 sm:p-6" dir="ltr">
         <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-gold/70">
           {language.eyebrow}
         </span>
         <button
           type="button"
           onClick={handleListen}
-          className="group/voice inline-flex items-center gap-2 border-b border-white/15 pb-1 text-[0.48rem] font-medium uppercase tracking-[0.16em] text-bone/45 transition-colors hover:border-orange hover:text-gold"
+          className="group/voice inline-flex items-center gap-2 border-b border-bone/15 pb-1 text-[0.48rem] font-medium uppercase tracking-[0.16em] text-bone/90 transition-colors hover:border-orange hover:text-gold"
           aria-label={isPlaying ? `Stop ${language.display} voice sample` : `Hear a line in ${language.display}`}
         >
           {isPlaying ? <Pause size={9} fill="currentColor" /> : <Volume2 size={11} />}
@@ -42,7 +42,7 @@ function LanguageCard({ language, index, active, setActive, audio }) {
         }}
       />
       <span
-        className="pointer-events-none absolute -bottom-16 right-[-1rem] select-none font-display text-[16rem] leading-none text-white/[0.025]"
+        className="pointer-events-none absolute -bottom-16 right-[-1rem] select-none font-display text-[16rem] leading-none text-bone/[0.025]"
         aria-hidden="true"
       >
         {language.script}
@@ -50,10 +50,10 @@ function LanguageCard({ language, index, active, setActive, audio }) {
 
       <div className="relative z-[2] flex h-full flex-col px-5 pb-6 pt-20 sm:px-6">
         <div className="flex items-start justify-between" dir="ltr">
-          <span className="font-mono text-[0.47rem] uppercase tracking-[0.2em] text-bone/25">
+          <span className="font-mono text-[0.47rem] uppercase tracking-[0.2em] text-bone/90">
             0{index + 1} / 03
           </span>
-          <span className="font-mono text-[0.47rem] uppercase tracking-[0.14em] text-bone/25">
+          <span className="font-mono text-[0.47rem] uppercase tracking-[0.14em] text-bone/90">
             {language.voices}
           </span>
         </div>
@@ -67,7 +67,7 @@ function LanguageCard({ language, index, active, setActive, audio }) {
             <span className="block text-[clamp(3.4rem,5.6vw,5.4rem)] leading-none tracking-[-0.05em] text-bone">
               {language.display}
             </span>
-            <span className="mt-3 block text-[0.55rem] uppercase tracking-[0.26em] text-white/25">
+            <span className="mt-3 block text-[0.55rem] uppercase tracking-[0.26em] text-bone/90">
               {language.label} / {language.code}
             </span>
           </div>
@@ -91,18 +91,18 @@ function LanguageCard({ language, index, active, setActive, audio }) {
           </div>
         </div>
 
-        <div className="border-t border-white/[0.08] pt-5">
+        <div className="border-t border-bone/[0.08] pt-5">
           <p
             dir={language.directions}
             lang={language.code}
-            className={`max-w-[24rem] text-[0.84rem] leading-7 text-bone/65 ${
+            className={`max-w-[24rem] text-[0.84rem] leading-7 text-bone/90 ${
               language.directions === 'rtl' ? 'ml-auto text-right font-urdu leading-[2.4]' : language.code === 'ta' ? 'font-tamil leading-8' : ''
             }`}
           >
             {language.description}
           </p>
           <div className="mt-5 flex items-center justify-between gap-4">
-            <span className="text-[0.55rem] uppercase tracking-[0.14em] text-bone/32">
+            <span className="text-[0.55rem] uppercase tracking-[0.14em] text-bone/86">
               {language.code === 'en' ? 'Natural & cinematic' : language.descriptionEn}
             </span>
             <a
@@ -128,11 +128,11 @@ export default function Languages() {
   const audio = useAudioSample()
 
   return (
-    <section id="languages" className="relative overflow-hidden border-b border-white/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="languages" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
       <div className="pointer-events-none absolute inset-0">
         <div className="ambient-orb right-[-10%] top-[12%] h-[35rem] w-[35rem] bg-orange/[0.06]" />
-        <div className="absolute left-1/2 top-1/2 h-[45rem] w-[45rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.035]" />
-        <div className="absolute left-1/2 top-1/2 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.025]" />
+        <div className="absolute left-1/2 top-1/2 h-[45rem] w-[45rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bone/[0.035]" />
+        <div className="absolute left-1/2 top-1/2 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bone/[0.025]" />
         <div className="absolute left-1/2 top-1/2 h-[58rem] w-[58rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold/[0.025]" />
       </div>
 
@@ -164,7 +164,7 @@ export default function Languages() {
         </div>
 
         <Reveal delay={0.1}>
-          <div className="mt-8 flex flex-col justify-between gap-4 border-t border-white/[0.08] pt-5 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col justify-between gap-4 border-t border-bone/[0.08] pt-5 sm:flex-row sm:items-center">
             <div className="flex items-center gap-3">
               <span className="flex h-6 w-6 items-center justify-center rounded-full border border-gold/30">
                 <Volume2 size={10} className="text-gold/80" />
@@ -173,7 +173,7 @@ export default function Languages() {
                 Native tongue, natural rhythm. Every language is voiced by a dedicated neural narrator.
               </p>
             </div>
-            <span className="font-mono text-[0.47rem] uppercase tracking-[0.19em] text-bone/25">
+            <span className="font-mono text-[0.47rem] uppercase tracking-[0.19em] text-bone/90">
               More languages entering the studio soon
             </span>
           </div>
@@ -185,7 +185,7 @@ export default function Languages() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="fixed bottom-6 left-1/2 z-[95] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 border border-orange/30 bg-[#130c08]/95 px-4 py-3 text-center text-[0.65rem] leading-5 text-bone/75 shadow-2xl backdrop-blur-xl"
+              className="fixed bottom-6 left-1/2 z-[95] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 border border-orange/30 bg-[#fffdf9]/95 px-4 py-3 text-center text-[0.65rem] leading-5 text-bone/88 shadow-2xl backdrop-blur-xl"
               role="status"
             >
               {audio.error}

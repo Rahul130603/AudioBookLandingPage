@@ -3,15 +3,17 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: dark;
-  --ink: #080808;
-  --charcoal: #151515;
+  color-scheme: light;
+  --ink: #faf8f5;
+  --charcoal: #f1eae1;
+  --coal: #fffdf9;
   --orange: #ff6b27;
-  --gold: #ffb15c;
-  --bone: #f2ece3;
-  --line: rgba(255, 255, 255, 0.1);
-  --line-strong: rgba(255, 255, 255, 0.18);
-  --muted: #91887f;
+  --gold: #c9782c;
+  --bone: #1a1511;
+  --cream: #f8f3ea;
+  --line: rgba(26, 21, 17, 0.1);
+  --line-strong: rgba(26, 21, 17, 0.18);
+  --muted: #706459;
   --ease-cinematic: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -37,7 +39,13 @@ body {
   margin: 0;
   min-width: 320px;
   overflow-x: hidden;
-  background: var(--ink);
+  background-color: var(--ink);
+  background-image:
+    radial-gradient(ellipse 48% 42% at 94% 12%, rgba(255, 107, 39, 0.13), transparent 72%),
+    radial-gradient(ellipse 44% 42% at 0% 72%, rgba(255, 177, 92, 0.12), transparent 76%),
+    radial-gradient(ellipse 42% 34% at 78% 98%, rgba(255, 139, 69, 0.08), transparent 76%),
+    linear-gradient(180deg, #faf8f5 0%, #f8f3ec 52%, #faf8f5 100%);
+  background-attachment: fixed;
   color: var(--bone);
   font-family: 'Inter Variable', 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -52,18 +60,18 @@ body.custom-cursor-active button {
 
 ::selection {
   background: var(--orange);
-  color: #080808;
+  color: #170f0a;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #080808;
+  background: #f7f2ea;
 }
 ::-webkit-scrollbar-thumb {
-  background: #2b2520;
-  border: 2px solid #080808;
+  background: #d9cbbd;
+  border: 2px solid #f7f2ea;
   border-radius: 99px;
 }
 ::-webkit-scrollbar-thumb:hover {
@@ -1168,7 +1176,7 @@ svg {
     right: -12%;
     bottom: 0;
     width: 70%;
-    opacity: 0.58;
+    opacity: 1;
   }
   .hero-stage::before {
     top: 18%;
@@ -1187,7 +1195,7 @@ svg {
     bottom: -4%;
     width: 108%;
     height: 48%;
-    opacity: 0.8;
+    opacity: 0.96;
   }
   .hero-stage::before {
     top: 20%;
@@ -2234,4 +2242,419 @@ svg {
     opacity: 0.25 !important;
     animation: none;
   }
+}
+
+/* ============================================================
+   WARM IVORY ATMOSPHERE
+   A light background pass only. Layout, type scale, motion,
+   book geometry, and interactions are intentionally unchanged.
+   ============================================================ */
+
+.grain {
+  opacity: 0.018;
+  mix-blend-mode: multiply;
+}
+
+.vignette {
+  background: radial-gradient(ellipse at center, transparent 54%, rgba(105, 62, 30, 0.055) 100%);
+}
+
+.grid-lines {
+  background-image:
+    linear-gradient(to right, rgba(32, 23, 16, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(32, 23, 16, 0.045) 1px, transparent 1px);
+}
+
+.eyebrow {
+  color: #b45e1e;
+}
+
+.text-shine {
+  background: linear-gradient(108deg, #d49a48 0%, #ff6b27 52%, #ee5718 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-outline {
+  -webkit-text-stroke-color: rgba(26, 21, 17, 0.24);
+}
+
+.text-outline-orange {
+  -webkit-text-stroke-color: rgba(255, 107, 39, 0.55);
+}
+
+.btn-primary {
+  color: #130c07;
+  box-shadow: 0 12px 34px -16px rgba(212, 82, 20, 0.5);
+}
+
+.btn-primary .btn__icon {
+  background: rgba(19, 12, 7, 0.14);
+}
+
+.btn-primary:hover {
+  background: #ff8145;
+  box-shadow: 0 16px 45px -16px rgba(212, 82, 20, 0.45);
+}
+
+.btn-ghost {
+  border-color: rgba(26, 21, 17, 0.16);
+  background: rgba(255, 255, 255, 0.68);
+  color: var(--bone);
+  box-shadow: 0 10px 30px -24px rgba(62, 37, 18, 0.45);
+}
+
+.btn-ghost .btn__icon {
+  background: rgba(255, 107, 39, 0.11);
+  color: #bc5b1f;
+}
+
+.btn-ghost:hover {
+  border-color: rgba(255, 107, 39, 0.42);
+  background: #fffdf9;
+  color: var(--bone);
+}
+
+.btn-dark {
+  background: var(--bone);
+  color: var(--cream);
+}
+
+.icon-button {
+  border-color: rgba(26, 21, 17, 0.14);
+  background: rgba(255, 253, 249, 0.78);
+  color: var(--bone);
+}
+
+.icon-button:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: #130c07;
+}
+
+.line-link {
+  color: var(--bone);
+}
+
+.glass-panel {
+  border-color: rgba(26, 21, 17, 0.1);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(255, 250, 243, 0.56) 42%),
+    rgba(255, 253, 249, 0.78);
+  box-shadow:
+    0 40px 100px -55px rgba(90, 51, 22, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.glass-panel::after {
+  background: linear-gradient(120deg, rgba(255, 107, 39, 0.2), transparent 30%, transparent 70%, rgba(255, 177, 92, 0.18));
+}
+
+.panel-corner {
+  border-color: rgba(201, 120, 44, 0.58);
+}
+
+.hero-scroll {
+  color: rgba(26, 21, 17, 0.46);
+}
+
+.hero-scroll__track {
+  background: rgba(26, 21, 17, 0.13);
+}
+
+.language-card {
+  border-color: rgba(26, 21, 17, 0.12);
+  background: #fffdf9;
+  box-shadow: 0 26px 65px -58px rgba(82, 46, 20, 0.4);
+}
+
+.language-card::before {
+  background: radial-gradient(circle at 50% 85%, rgba(255, 107, 39, 0.16), transparent 58%);
+}
+
+.language-card:hover {
+  border-color: rgba(255, 107, 39, 0.38);
+}
+
+.language-card__wave {
+  opacity: 0.28;
+}
+
+.voice-option {
+  border-color: rgba(26, 21, 17, 0.12);
+  background: rgba(255, 253, 249, 0.62);
+}
+
+.voice-option:hover {
+  border-color: rgba(26, 21, 17, 0.25);
+}
+
+.voice-option[data-active='true'] {
+  border-color: var(--orange);
+  background: rgba(255, 107, 39, 0.06);
+}
+
+.segmented {
+  border-color: rgba(26, 21, 17, 0.14);
+  background: rgba(255, 253, 249, 0.68);
+}
+
+.segmented button {
+  color: rgba(26, 21, 17, 0.5);
+}
+
+.segmented button[aria-pressed='true'] {
+  background: var(--bone);
+  color: var(--cream);
+}
+
+.range::-webkit-slider-runnable-track {
+  background: linear-gradient(to right, var(--orange) var(--value), rgba(26, 21, 17, 0.14) var(--value));
+}
+
+.range::-moz-range-track {
+  background: rgba(26, 21, 17, 0.14);
+}
+
+.range::-webkit-slider-thumb {
+  border-color: #faf8f5;
+  box-shadow: 0 0 0 1px rgba(201, 120, 44, 0.8), 0 0 16px rgba(255, 107, 39, 0.4);
+}
+
+.range::-moz-range-thumb {
+  border-color: #faf8f5;
+}
+
+.player-shell {
+  border-color: rgba(26, 21, 17, 0.11);
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255, 107, 39, 0.12), transparent 45%),
+    linear-gradient(150deg, #fffdf9, #f5eee5 58%);
+  box-shadow: 0 60px 120px -65px rgba(84, 46, 19, 0.4);
+}
+
+.player-shell::before {
+  background-image: repeating-linear-gradient(
+    90deg,
+    transparent 0,
+    transparent calc(12.5% - 1px),
+    rgba(26, 21, 17, 0.03) calc(12.5% - 1px),
+    rgba(26, 21, 17, 0.03) 12.5%
+  );
+}
+
+.chapter-row {
+  border-top-color: rgba(26, 21, 17, 0.08);
+}
+
+.chapter-row:hover {
+  background: rgba(255, 107, 39, 0.045);
+}
+
+.chapter-row[data-active='true'] {
+  color: #ad551b;
+}
+
+.chapter-row__index {
+  border-color: rgba(26, 21, 17, 0.16);
+}
+
+.step-visual {
+  border-bottom-color: rgba(26, 21, 17, 0.07);
+  background-image: radial-gradient(rgba(26, 21, 17, 0.1) 0.6px, transparent 0.6px);
+}
+
+.step-visual::after {
+  background: radial-gradient(ellipse at 50% 55%, transparent 20%, #fffdf9 88%);
+}
+
+.upload-zone {
+  border-color: rgba(201, 120, 44, 0.38);
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(255, 107, 39, 0.1), transparent 60%),
+    rgba(255, 253, 249, 0.65);
+}
+
+.upload-zone:hover,
+.upload-zone[data-dragging='true'] {
+  border-color: var(--orange);
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(255, 107, 39, 0.16), transparent 62%),
+    rgba(255, 255, 255, 0.82);
+}
+
+.conversion-orbit {
+  border-color: rgba(26, 21, 17, 0.08);
+}
+
+.conversion-orbit::before {
+  border-color: rgba(201, 120, 44, 0.17);
+}
+
+.conversion-orbit::after {
+  border-color: rgba(255, 107, 39, 0.2);
+}
+
+.progress-track {
+  background: rgba(26, 21, 17, 0.12);
+}
+
+.feature-tile {
+  border-color: rgba(26, 21, 17, 0.1);
+  background:
+    radial-gradient(ellipse at 85% 0%, rgba(255, 107, 39, 0.06), transparent 50%),
+    linear-gradient(150deg, rgba(255, 255, 255, 0.82), rgba(255, 253, 249, 0.5) 55%),
+    #fffdf9;
+  box-shadow: 0 28px 60px -58px rgba(80, 45, 20, 0.42);
+}
+
+.feature-tile:hover {
+  border-color: rgba(255, 107, 39, 0.32);
+}
+
+.chapter-sheet {
+  border-color: rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(110deg, rgba(255, 177, 92, 0.07), transparent 40%),
+    #1a1410;
+}
+
+.footer-word {
+  -webkit-text-stroke: 1px rgba(26, 21, 17, 0.15);
+}
+
+.noise-overlay {
+  opacity: 0.025;
+  mix-blend-mode: multiply;
+}
+
+.hero-stage {
+  filter: saturate(0.96);
+}
+
+.art-frame {
+  border-color: rgba(201, 120, 44, 0.4);
+}
+
+/* Keep dark book-cover artwork legible against the new page surface. */
+.book-3d__cover {
+  box-shadow:
+    0 35px 55px -32px rgba(71, 39, 17, 0.45),
+    -1px 0 0 rgba(255, 255, 255, 0.1) inset;
+}
+
+.book-card:hover .book-3d__cover {
+  box-shadow:
+    0 38px 65px -30px rgba(71, 39, 17, 0.42),
+    0 0 32px rgba(255, 107, 39, 0.16),
+    -1px 0 0 rgba(255, 177, 92, 0.18) inset;
+}
+
+/* Small type that sat on the old dark background now needs a touch more weight of color. */
+.nav-scrolled-light {
+  background-color: rgba(250, 248, 245, 0.82);
+}
+
+/* Illustration accents that stay on dark mini-surfaces */
+.format-sheet__stamp,
+.chapter-sheet__num,
+.bookmark-page__chapter,
+.bookmark-time {
+  color: #ffb15c;
+}
+
+.bookmark-time {
+  border-color: rgba(255, 177, 92, 0.28);
+  background: rgba(13, 10, 8, 0.9);
+}
+
+.speed-dial__label {
+  color: rgba(26, 21, 17, 0.38);
+}
+
+.upload-portal__core,
+.lang-node--ta {
+  color: #ffb15c;
+}
+
+.cta-page__copy {
+  color: rgba(35, 26, 18, 0.7);
+}
+
+.cta-book__cover-back {
+  color: rgba(248, 243, 234, 0.5);
+}
+
+/* Modal scrim should feel warm rather than black on the ivory theme. */
+.modal-scrim {
+  background-color: rgba(32, 20, 11, 0.34);
+}
+
+.speed-dial {
+  border-color: rgba(26, 21, 17, 0.1);
+}
+
+.listen-rings span {
+  border-color: rgba(26, 21, 17, 0.06);
+}
+.listen-rings span:nth-child(2) {
+  border-color: rgba(201, 120, 44, 0.14);
+}
+.listen-rings span:nth-child(3) {
+  border-color: rgba(26, 21, 17, 0.04);
+}
+
+.chapter-progress {
+  background: rgba(26, 21, 17, 0.12);
+}
+
+.voice-wave {
+  color: #c9782c;
+}
+
+.format-inflow {
+  color: #b45e1e;
+}
+
+.book-rail [role='region']:focus-visible {
+  outline-color: var(--orange);
+}
+
+.cta-book {
+  filter: drop-shadow(0 42px 42px rgba(82, 48, 22, 0.22));
+}
+
+.cta-book__cover-face {
+  box-shadow: 0 12px 32px rgba(70, 39, 17, 0.2);
+}
+
+.footer-word {
+  -webkit-text-stroke-color: rgba(26, 21, 17, 0.23);
+}
+
+.player-shell {
+  border-color: rgba(26, 21, 17, 0.14);
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(255, 107, 39, 0.13), transparent 45%),
+    linear-gradient(150deg, #fffdf9, #f2e9dd 58%);
+  box-shadow: 0 55px 115px -60px rgba(84, 46, 19, 0.48);
+}
+
+.feature-tile {
+  border-color: rgba(26, 21, 17, 0.12);
+  background:
+    radial-gradient(ellipse at 85% 0%, rgba(255, 107, 39, 0.07), transparent 50%),
+    linear-gradient(150deg, rgba(255, 255, 255, 0.92), rgba(255, 250, 244, 0.64) 55%),
+    #fffdf9;
+  box-shadow: 0 28px 60px -62px rgba(80, 45, 20, 0.5);
+}
+
+.language-card {
+  box-shadow: 0 26px 65px -60px rgba(82, 46, 20, 0.48);
+}
+
+/* Refined secondary text on the light surface */
+.text-smoke\/70 {
+  color: rgba(112, 100, 89, 0.86);
 }

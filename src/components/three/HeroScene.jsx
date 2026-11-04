@@ -457,9 +457,7 @@ function CameraRig({ reducedMotion }) {
 function Scene({ reducedMotion }) {
   return (
     <>
-      <color attach="background" args={['#080808']} />
-      <fog attach="fog" args={['#080808', 9, 18]} />
-      <ambientLight intensity={0.42} />
+      <ambientLight intensity={0.64} />
       <directionalLight
         position={[5.5, 7, 6]}
         intensity={2.5}
@@ -495,17 +493,17 @@ function Scene({ reducedMotion }) {
         scale={[8, 7, 5]}
         size={2.2}
         speed={reducedMotion ? 0 : 0.25}
-        opacity={0.55}
+        opacity={0.3}
         color="#FF8D45"
         noise={0.45}
       />
       <ContactShadows
         position={[0, -2.52, 0]}
-        opacity={0.55}
+        opacity={0.3}
         scale={11}
         blur={3.2}
         far={4}
-        color="#000000"
+        color="#5a3a20"
         frames={reducedMotion ? 1 : Infinity}
       />
       <AdaptiveDpr pixelated />

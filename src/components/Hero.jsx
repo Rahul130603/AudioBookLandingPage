@@ -23,7 +23,7 @@ export default function Hero() {
   }, [reduce])
 
   return (
-    <section id="home" ref={root} className="hero border-b border-white/[0.06]">
+    <section id="home" ref={root} className="hero border-b border-bone/[0.06]">
       <div className="pointer-events-none absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_72%_42%,rgba(255,107,39,0.13),transparent_42%)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_0%_85%,rgba(255,177,92,0.05),transparent_38%)]" />
@@ -37,21 +37,21 @@ export default function Hero() {
         </div>
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[46%] bg-gradient-to-t from-ink via-ink/60 to-transparent md:hidden" />
-      <div className="pointer-events-none absolute inset-0 z-[2] hidden bg-[linear-gradient(90deg,#080808_0%,rgba(8,8,8,0.94)_32%,rgba(8,8,8,0.58)_50%,rgba(8,8,8,0.14)_66%,transparent_78%)] md:block" />
+      <div className="pointer-events-none absolute inset-0 z-[2] hidden bg-[linear-gradient(90deg,#FAF8F5_0%,rgba(250,248,245,0.95)_32%,rgba(250,248,245,0.72)_50%,rgba(250,248,245,0.18)_66%,transparent_78%)] md:block" />
 
       <div className="hero-content container-x relative z-10 flex min-h-[100svh] flex-col justify-between pb-7 pt-28 sm:pt-32 lg:pb-9">
         <div className="flex flex-1 items-center">
           <div className="grid w-full grid-cols-12 items-center gap-8">
             <div className="col-span-12 xl:col-span-9">
               <div data-hero-eyebrow className="mb-8 flex flex-wrap items-center gap-4 sm:mb-10">
-                <span className="inline-flex items-center gap-2 border border-white/10 bg-white/[0.025] px-3 py-2 text-[0.56rem] font-medium uppercase tracking-[0.21em] text-bone/70 backdrop-blur-md">
+                <span className="inline-flex items-center gap-2 border border-bone/10 bg-coal/75 px-3 py-2 shadow-[0_10px_28px_-24px_rgba(74,43,21,0.45)] text-[0.56rem] font-medium uppercase tracking-[0.21em] text-bone/84 backdrop-blur-md">
                   <span className="relative flex h-1.5 w-1.5">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange opacity-60" />
                     <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-orange" />
                   </span>
                   Cinematic AI audiobooks
                 </span>
-                <span className="hidden h-px w-12 bg-white/15 sm:block" />
+                <span className="hidden h-px w-12 bg-bone/15 sm:block" />
                 <span className="font-mono text-[0.52rem] uppercase tracking-[0.24em] text-smoke">
                   Vol. 001 — The listening edition
                 </span>
@@ -74,7 +74,7 @@ export default function Hero() {
               <div className="mt-9 flex flex-col gap-8 sm:mt-11 xl:flex-row xl:items-end xl:gap-12">
                 <div data-hero-copy className="max-w-[31rem]">
                   <div className="mb-5 h-px w-16 bg-gradient-to-r from-orange to-transparent" />
-                  <p className="text-balance text-[0.95rem] leading-[1.8] text-bone/62">
+                  <p className="text-balance text-[0.95rem] leading-[1.8] text-bone/88">
                     Transform any book into an immersive audiobook experience.
                     Upload, convert, and listen in{' '}
                     <span className="text-bone">English</span>,{' '}
@@ -103,14 +103,14 @@ export default function Hero() {
           </div>
         </div>
 
-        <div data-hero-foot className="mt-16 border-t border-white/[0.09] pt-5">
+        <div data-hero-foot className="mt-16 border-t border-bone/[0.09] pt-5">
           <div className="flex flex-wrap items-center justify-between gap-x-8 gap-y-5">
             <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
               <div className="hero-meta">
                 <span className="mb-1 block font-mono text-[0.48rem] uppercase tracking-[0.2em] text-smoke/70">
                   Languages
                 </span>
-                <div className="flex items-baseline gap-4 text-[0.7rem] font-medium tracking-wide text-bone/75">
+                <div className="flex items-baseline gap-4 text-[0.7rem] font-medium tracking-wide text-bone/88">
                   <span>EN</span>
                   <span className="font-tamil text-[0.78rem]">தமிழ்</span>
                   <span className="font-urdu text-[0.84rem]">اردو</span>
@@ -120,7 +120,7 @@ export default function Hero() {
                 <span className="mb-1 block font-mono text-[0.48rem] uppercase tracking-[0.2em] text-smoke/70">
                   Formats
                 </span>
-                <div className="flex items-baseline gap-3 text-[0.7rem] font-medium tracking-wide text-bone/75">
+                <div className="flex items-baseline gap-3 text-[0.7rem] font-medium tracking-wide text-bone/88">
                   <span>PDF</span>
                   <span>EPUB</span>
                   <span>TXT</span>
@@ -131,7 +131,7 @@ export default function Hero() {
                 <span className="mb-1 block font-mono text-[0.48rem] uppercase tracking-[0.2em] text-smoke/70">
                   The promise
                 </span>
-                <span className="text-[0.7rem] font-medium tracking-wide text-bone/75">
+                <span className="text-[0.7rem] font-medium tracking-wide text-bone/88">
                   Every page, spoken beautifully.
                 </span>
               </div>

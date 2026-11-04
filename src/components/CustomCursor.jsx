@@ -61,12 +61,12 @@ export default function CustomCursor() {
     <div className="pointer-events-none fixed inset-0 z-[999] hidden md:block" aria-hidden="true">
       <span
         ref={dotRef}
-        className="fixed left-0 top-0 h-[6px] w-[6px] rounded-full bg-gold mix-blend-difference"
+        className="fixed left-0 top-0 h-[6px] w-[6px] rounded-full bg-orange"
       />
       <span
         ref={ringRef}
         data-hover="false"
-        className="fixed left-0 top-0 h-9 w-9 rounded-full border border-gold/60 transition-[width,height,background-color,border-color] duration-300 data-[hover=true]:h-14 data-[hover=true]:w-14 data-[hover=true]:border-orange/70 data-[hover=true]:bg-orange/5"
+        className="fixed left-0 top-0 h-9 w-9 rounded-full border border-bone/35 transition-[width,height,background-color,border-color] duration-300 data-[hover=true]:h-14 data-[hover=true]:w-14 data-[hover=true]:border-orange/70 data-[hover=true]:bg-orange/5"
       />
     </div>
   )

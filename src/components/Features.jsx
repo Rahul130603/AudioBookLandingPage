@@ -174,7 +174,7 @@ const GLYPH_ICONS = {
 
 export default function Features() {
   return (
-    <section id="features" className="relative overflow-hidden border-b border-white/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="features" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,107,39,0.075),transparent_38%)]" />
         <div className="grid-lines absolute inset-0 opacity-20" />
@@ -193,7 +193,7 @@ export default function Features() {
             }
           />
           <Reveal delay={0.15}>
-            <p className="max-w-sm border-l border-white/10 pl-5 text-sm leading-7 text-smoke">
+            <p className="max-w-sm border-l border-bone/10 pl-5 text-sm leading-7 text-smoke">
               We built Chaptera around a simple belief: a great book should never be limited by the shape of its pages.
             </p>
           </Reveal>
@@ -207,11 +207,11 @@ export default function Features() {
               <Reveal key={feature.number} delay={index * 0.045} className={`${feature.span} flex`}>
                 <article className={`feature-tile group flex w-full flex-col ${feature.height} p-5 sm:p-7`}>
                   <div className="flex items-start justify-between">
-                    <span className="flex items-center gap-2 font-mono text-[0.46rem] uppercase tracking-[0.2em] text-white/25">
+                    <span className="flex items-center gap-2 font-mono text-[0.46rem] uppercase tracking-[0.2em] text-bone/90">
                       <Icon size={11} strokeWidth={1.2} className="text-orange/50" />
                       {feature.number}
                     </span>
-                    <span className="font-mono text-[0.42rem] uppercase tracking-[0.14em] text-white/15">
+                    <span className="font-mono text-[0.42rem] uppercase tracking-[0.14em] text-bone/86">
                       0{index + 1} / 07
                     </span>
                   </div>
@@ -231,11 +231,11 @@ export default function Features() {
         </div>
 
         <Reveal delay={0.1}>
-          <div className="mt-8 flex flex-col justify-between gap-3 border-t border-white/[0.08] pt-5 sm:flex-row sm:items-center">
-            <p className="text-[0.58rem] leading-5 text-white/25">
+          <div className="mt-8 flex flex-col justify-between gap-3 border-t border-bone/[0.08] pt-5 sm:flex-row sm:items-center">
+            <p className="text-[0.58rem] leading-5 text-bone/90">
               Every detail is built to keep you inside the story — not inside the interface.
             </p>
-            <div className="flex items-center gap-6 font-mono text-[0.44rem] uppercase tracking-[0.15em] text-white/20">
+            <div className="flex items-center gap-6 font-mono text-[0.44rem] uppercase tracking-[0.15em] text-bone/38">
               <span>EN</span>
               <span className="font-tamil normal-case text-[0.58rem]">தமிழ்</span>
               <span className="font-urdu normal-case text-[0.62rem]">اردو</span>

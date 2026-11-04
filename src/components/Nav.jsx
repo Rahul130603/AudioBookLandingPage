@@ -48,7 +48,7 @@ export default function Nav() {
         <div
           className={`relative transition-all duration-500 ${
             scrolled
-              ? 'border-b border-white/[0.07] bg-ink/72 backdrop-blur-2xl'
+              ? 'border-b border-bone/[0.07] bg-ink/72 backdrop-blur-2xl'
               : 'border-b border-transparent bg-gradient-to-b from-ink/65 to-transparent'
           }`}
         >
@@ -60,9 +60,9 @@ export default function Nav() {
                 <a
                   key={link.label}
                   href={link.href}
-                  className="group relative flex items-center gap-1.5 whitespace-nowrap py-2 text-[0.62rem] font-medium uppercase tracking-[0.17em] text-bone/55 transition-colors duration-300 hover:text-bone"
+                  className="group relative flex items-center gap-1.5 whitespace-nowrap py-2 text-[0.62rem] font-medium uppercase tracking-[0.17em] text-bone transition-colors duration-300 hover:text-orange"
                 >
-                  <span className="text-[0.47rem] text-orange/60 transition-colors group-hover:text-orange">
+                  <span className="text-[0.47rem] text-orange/80 transition-colors group-hover:text-orange">
                     0{index + 1}
                   </span>
                   {link.label}
@@ -74,7 +74,7 @@ export default function Nav() {
             <div className="flex items-center gap-3">
               <a
                 href="#studio"
-                className="group hidden min-h-[2.7rem] items-center gap-3 border border-white/15 bg-white/[0.035] pl-4 pr-1.5 text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-bone backdrop-blur-md transition-all duration-300 hover:border-gold/40 hover:bg-gold/[0.06] sm:inline-flex"
+                className="group hidden min-h-[2.7rem] items-center gap-3 border border-bone/10 bg-coal/85 pl-4 pr-1.5 shadow-[0_12px_30px_-24px_rgba(74,43,21,0.5)] text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-bone backdrop-blur-md transition-all duration-300 hover:border-gold/40 hover:bg-gold/[0.06] sm:inline-flex"
               >
                 Upload book
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-orange text-ink transition-transform duration-500 group-hover:rotate-45">
@@ -85,7 +85,7 @@ export default function Nav() {
               <button
                 type="button"
                 onClick={() => setOpen(true)}
-                className="grid h-11 w-11 place-items-center border border-white/15 text-bone transition-colors hover:border-orange/60 hover:text-orange xl:hidden"
+                className="grid h-11 w-11 place-items-center border border-bone/15 text-bone transition-colors hover:border-orange/60 hover:text-orange xl:hidden"
                 aria-label="Open navigation menu"
                 aria-expanded={open}
               >
@@ -94,7 +94,7 @@ export default function Nav() {
             </div>
           </div>
 
-          <div className="absolute inset-x-0 bottom-0 h-px bg-white/[0.04]">
+          <div className="absolute inset-x-0 bottom-0 h-px bg-bone/[0.04]">
             <div
               className="h-full origin-left bg-gradient-to-r from-orange to-gold transition-transform duration-150"
               style={{ transform: `scaleX(${progress})` }}
@@ -122,7 +122,7 @@ export default function Nav() {
               <button
                 type="button"
                 onClick={() => setOpen(false)}
-                className="grid h-11 w-11 place-items-center border border-white/15 text-bone"
+                className="grid h-11 w-11 place-items-center border border-bone/15 text-bone"
                 aria-label="Close navigation menu"
               >
                 <X size={20} strokeWidth={1.7} />
@@ -138,7 +138,7 @@ export default function Nav() {
                   initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.16 + index * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="group flex items-baseline justify-between border-b border-white/[0.08] py-5"
+                  className="group flex items-baseline justify-between border-b border-bone/[0.08] py-5"
                 >
                   <span className="flex items-baseline gap-4">
                     <span className="font-mono text-[0.55rem] text-orange/70">0{index + 1}</span>
@@ -146,7 +146,7 @@ export default function Nav() {
                       {link.label}
                     </span>
                   </span>
-                  <ArrowUpRight size={20} className="text-white/20 transition-all group-hover:rotate-45 group-hover:text-orange" />
+                  <ArrowUpRight size={20} className="text-bone/38 transition-all group-hover:rotate-45 group-hover:text-orange" />
                 </motion.a>
               ))}
 

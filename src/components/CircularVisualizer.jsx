@@ -87,13 +87,13 @@ export default function CircularVisualizer({ audioRef, playing }) {
       // Guide rings
       ctx.beginPath()
       ctx.arc(cx, cy, unit * 0.49, 0, Math.PI * 2)
-      ctx.strokeStyle = 'rgba(255,255,255,0.045)'
+      ctx.strokeStyle = 'rgba(26,21,17,0.08)'
       ctx.lineWidth = 1
       ctx.stroke()
 
       ctx.beginPath()
       ctx.arc(cx, cy, unit * 0.335, 0, Math.PI * 2)
-      ctx.strokeStyle = 'rgba(255,177,92,0.10)'
+      ctx.strokeStyle = 'rgba(201,120,44,0.18)'
       ctx.lineWidth = 1
       ctx.stroke()
 

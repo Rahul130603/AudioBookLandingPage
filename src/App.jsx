@@ -111,7 +111,7 @@ export default function App() {
   }, [reduce])
 
   return (
-    <div ref={root} className="relative min-h-screen overflow-x-clip bg-ink">
+    <div ref={root} className="relative min-h-screen overflow-x-clip bg-transparent">
       <a href="#main" className="skip-link">
         Skip to content
       </a>
