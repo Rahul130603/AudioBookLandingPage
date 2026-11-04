@@ -1,18 +1,17 @@
 /**
  * Frontend-only conversion adapter.
  *
- * The UI calls this single function so the simulated pipeline can be replaced
- * with a real backend without touching the Studio component. A production
- * implementation would POST multipart/form-data to `/api/convert`, subscribe to
- * job progress (SSE or websocket), and return the rendered audio manifest.
+ * Prepares extracted manuscript text and playback settings for device speech.
+ * Audio-file generation can be added by posting the manuscript to a backend
+ * and returning its rendered audio manifest.
  */
 export const CONVERSION_ENDPOINT = '/api/convert'
 
 export const STAGES = [
-  { key: 'read', label: 'Reading manuscript', detail: 'Pages, chapters, and punctuation mapped', at: 0 },
-  { key: 'structure', label: 'Building the chapter map', detail: 'Preserving the architecture of the book', at: 22 },
-  { key: 'voice', label: 'Synthesising the voice', detail: 'Intonation, breath, and pause placed', at: 44 },
-  { key: 'master', label: 'Mastering the audio', detail: 'Chapter markers and playback data', at: 79 },
+  { key: 'read', label: 'Reading manuscript', detail: 'Uploaded document text extracted', at: 0 },
+  { key: 'structure', label: 'Preparing document narration', detail: 'Using the complete extracted manuscript', at: 22 },
+  { key: 'voice', label: 'Preparing playback settings', detail: 'Language and reading speed selected', at: 44 },
+  { key: 'master', label: 'Ready to read aloud', detail: 'Device speech starts when you press Play', at: 79 },
 ]
 
 export function getStageIndex(progress) {
@@ -26,6 +25,10 @@ export function getStageIndex(progress) {
 
 export function simulateConversion({ file, language, voice, speed, onProgress, signal, duration = 5600 }) {
   return new Promise((resolve, reject) => {
+    if (!file?.text?.trim()) {
+      reject(new Error('No readable manuscript text is available.'))
+      return
+    }
     if (signal?.aborted) {
       reject(new DOMException('Conversion cancelled', 'AbortError'))
       return
@@ -52,6 +55,7 @@ export function simulateConversion({ file, language, voice, speed, onProgress, s
       } else {
         resolve({
           demo: true,
+          text: file.text,
           manifest: {
             source: file?.name ?? 'Untitled manuscript',
             format: file?.ext ?? 'txt',
@@ -61,11 +65,6 @@ export function simulateConversion({ file, language, voice, speed, onProgress, s
             speed,
             createdAt: new Date().toISOString(),
           },
-          previewAudio: voice?.sampleAudio ?? '/audio/samples/voice-en-aria.mp3',
-          downloadName: `chaptera-${(file?.name ?? 'manuscript')
-            .replace(/\.[^.]+$/, '')
-            .replace(/[^a-z0-9]+/gi, '-')
-            .toLowerCase()}-${(voice?.name ?? 'aria').toLowerCase()}-demo.mp3`,
         })
       }
     }

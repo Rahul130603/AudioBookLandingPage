@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   Check,
-  Download,
   FileText,
   Info,
   Loader2,
@@ -19,17 +18,13 @@ import { LANGUAGES, VOICES } from '../lib/data'
 import { getStageIndex, simulateConversion, STAGES } from '../lib/conversionApi'
 import { formatBytes } from '../lib/utils'
 import useAudioSample from '../hooks/useAudioSample'
+import useManuscriptSpeech from '../hooks/useManuscriptSpeech'
+import { extractManuscript } from '../lib/extractManuscript'
 import Waveform from './Waveform'
 import { Reveal, SectionHeading } from './Reveal'
 
 const ACCEPTED = ['pdf', 'epub', 'txt', 'docx']
 const MAX_BYTES = 50 * 1024 * 1024
-
-const SAMPLE_TEXT = {
-  en: 'The evening light moved slowly across the page, and for the first time, the story did not feel silent. Every sentence carried a breath. Every character found a voice. This is where your book begins its second life.',
-  ta: 'மாலை வெளிச்சம் பக்கத்தின் மேல் மெதுவாக நகர்ந்தது. அந்தக் கதை இப்போது மௌனமாக இல்லை. ஒவ்வொரு வாக்கியமும் ஒரு மூச்சைச் சுமந்தது. ஒவ்வொரு கதாபாத்திரமும் ஒரு குரலைக் கண்டது.',
-  ur: 'شام کی روشنی صفحے پر آہستہ آہستہ پھیل رہی تھی، اور پہلی بار کہانی خاموش محسوس نہیں ہو رہی تھی۔ ہر جملے میں ایک سانس تھی۔ ہر کردار کو ایک آواز ملی تھی۔',
-}
 
 function readExtension(name) {
   return name.split('.').pop()?.toLowerCase() ?? ''
@@ -40,6 +35,13 @@ export default function Studio() {
   const inputRef = useRef(null)
   const abortRef = useRef(null)
   const audio = useAudioSample()
+  const speech = useManuscriptSpeech()
+  const uploadVersion = useRef(0)
+  const stopPlayback = useCallback(() => {
+    audio.stop()
+    speech.stop()
+    speech.clearError()
+  }, [audio.stop, speech.stop, speech.clearError])
 
   const [file, setFile] = useState(null)
   const [languageId, setLanguageId] = useState('english')
@@ -50,7 +52,7 @@ export default function Studio() {
   const [progress, setProgress] = useState(0)
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
-  const [excerpt, setExcerpt] = useState(SAMPLE_TEXT.en)
+  const [excerpt, setExcerpt] = useState('')
   const [extractionMode, setExtractionMode] = useState('sample')
 
   const language = LANGUAGES.find((item) => item.id === languageId) || LANGUAGES[0]
@@ -59,24 +61,18 @@ export default function Studio() {
   const busy = phase === 'converting'
   const complete = phase === 'complete'
   const stageIndex = getStageIndex(progress)
-  const previewing = audio.playingId === 'studio-preview'
+  const previewing = speech.playing
 
   useEffect(() => {
     return () => {
       abortRef.current?.abort()
+      uploadVersion.current += 1
     }
   }, [])
 
-  useEffect(() => {
-    if (!file || file.ext !== 'txt') {
-      setExcerpt(SAMPLE_TEXT[language.code])
-      setExtractionMode('sample')
-    }
-  }, [languageId, file])
-
   const resetConversion = () => {
     abortRef.current?.abort()
-    audio.stop()
+    stopPlayback()
     setPhase('idle')
     setProgress(0)
     setResult(null)
@@ -95,32 +91,26 @@ export default function Studio() {
       return
     }
 
-    audio.stop()
+    stopPlayback()
     audio.setError('')
     setError('')
     setResult(null)
     setPhase('idle')
     setProgress(0)
+    const version = ++uploadVersion.current
     setFile({ name: incoming.name, size: incoming.size, ext })
-
-    if (ext === 'txt') {
-      try {
-        const text = await incoming.text()
-        const cleaned = text.replace(/\s+/g, ' ').trim()
-        if (cleaned.length > 60) {
-          setExcerpt(cleaned.slice(0, 480))
-          setExtractionMode('local')
-        } else {
-          setExcerpt(SAMPLE_TEXT[language.code])
-          setExtractionMode('sample')
-        }
-      } catch {
-        setExcerpt(SAMPLE_TEXT[language.code])
-        setExtractionMode('sample')
-      }
-    } else {
-      setExcerpt(SAMPLE_TEXT[language.code])
-      setExtractionMode('sample')
+    setExcerpt('')
+    setExtractionMode('reading')
+    try {
+      const text = await extractManuscript(incoming, ext)
+      if (version !== uploadVersion.current) return
+      setFile({ name: incoming.name, size: incoming.size, ext, text })
+      setExcerpt(text.slice(0, 480))
+      setExtractionMode('local')
+    } catch (readError) {
+      if (version !== uploadVersion.current) return
+      setExtractionMode('error')
+      setError(readError.message || 'This document could not be read. Try a text-based PDF or TXT file.')
     }
   }
 
@@ -135,12 +125,13 @@ export default function Studio() {
     acceptFile(event.dataTransfer.files?.[0])
   }
 
-  const stopSample = audio.stop
+  const stopSample = stopPlayback
 
   const handleLanguage = useCallback(
     (id) => {
       const next = LANGUAGES.find((item) => item.id === id)
       if (!next) return
+      abortRef.current?.abort()
       setLanguageId(id)
       setVoiceId(VOICES[next.code][0].id)
       setResult(null)
@@ -167,11 +158,15 @@ export default function Studio() {
       return
     }
 
+    if (!file.text || extractionMode !== 'local') {
+      setError(extractionMode === 'reading' ? 'Please wait while the document text is extracted.' : 'Upload a document with readable text before converting.')
+      return
+    }
     setError('')
     setResult(null)
     setPhase('converting')
     setProgress(0)
-    audio.stop()
+    stopPlayback()
     abortRef.current?.abort()
     const controller = new AbortController()
     abortRef.current = controller
@@ -185,6 +180,7 @@ export default function Studio() {
         signal: controller.signal,
         onProgress: setProgress,
       })
+      if (controller.signal.aborted) return
       setResult(output)
       setPhase('complete')
       setProgress(100)
@@ -205,7 +201,13 @@ export default function Studio() {
   }
 
   const handlePreview = () => {
-    audio.toggle(voice.sampleAudio, 'studio-preview')
+    if (!result?.text) return
+    speech.toggle({
+      text: result.text,
+      languageCode: result.manifest.languageCode,
+      narratorName: result.manifest.voice,
+      speed: result.manifest.speed,
+    })
   }
 
   return (
@@ -354,14 +356,14 @@ export default function Studio() {
                         <div className="min-w-0 flex-1">
                           <p className="truncate text-[0.86rem] font-medium text-bone">{file.name}</p>
                           <p className="mt-1 font-mono text-[0.48rem] uppercase tracking-[0.13em] text-smoke/70">
-                            {formatBytes(file.size)} · {extractionMode === 'local' ? 'Text extracted' : 'Ready for API extraction'}
+                            {formatBytes(file.size)} · {extractionMode === 'local' ? 'Text extracted' : extractionMode === 'reading' ? 'Reading document…' : 'Text extraction failed'}
                           </p>
                           <div className="mt-3 flex items-center gap-2">
                             <span className="h-1 w-1 rounded-full bg-emerald-400" />
                             <span className="text-[0.6rem] text-bone/60">
                               {extractionMode === 'local'
-                                ? 'A local excerpt will be used for the voice preview.'
-                                : 'The full document is staged for server-side chapter extraction.'}
+                                ? 'The uploaded document text is ready to read aloud.'
+                                : extractionMode === 'reading' ? 'Extracting text from your document.' : 'Choose a document with readable text.'}
                             </span>
                           </div>
                         </div>
@@ -369,7 +371,7 @@ export default function Studio() {
                           <button
                             type="button"
                             onClick={() => {
-                              audio.stop()
+                              stopPlayback()
                               inputRef.current?.click()
                             }}
                             disabled={busy}
@@ -380,8 +382,11 @@ export default function Studio() {
                           <button
                             type="button"
                             onClick={() => {
-                              audio.stop()
+                              stopPlayback()
                               setFile(null)
+                              uploadVersion.current += 1
+                              setExtractionMode('sample')
+                              setExcerpt('')
                               setResult(null)
                               setPhase('idle')
                               setProgress(0)
@@ -482,7 +487,7 @@ export default function Studio() {
                             type="button"
                             className="flex min-w-0 flex-1 items-center gap-3 p-3 text-left"
                             onClick={() => {
-                              audio.stop()
+                              stopPlayback()
                               setVoiceId(option.id)
                               setResult(null)
                               setPhase('idle')
@@ -521,7 +526,7 @@ export default function Studio() {
 
                 <div className="mt-7 border-t border-bone/[0.08] pt-6">
                   <AnimatePresence>
-                    {error || audio.error ? (
+                    {error || audio.error || speech.error ? (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
@@ -530,12 +535,13 @@ export default function Studio() {
                         role="status"
                       >
                         <p className="border-l border-orange bg-orange/[0.06] px-3 py-2 text-[0.65rem] leading-5 text-orange/90">
-                          {error || audio.error}
+                          {error || audio.error || speech.error}
                           <button
                             type="button"
                             onClick={() => {
                               setError('')
                               audio.setError('')
+                              speech.clearError()
                             }}
                             className="ml-3 underline underline-offset-2"
                           >
@@ -557,7 +563,7 @@ export default function Studio() {
                       </button>
                     </div>
                   ) : (
-                    <button type="button" onClick={handleConvert} className="btn btn-primary group w-full">
+                    <button type="button" onClick={handleConvert} disabled={extractionMode === 'reading'} className="btn btn-primary group w-full">
                       <Sparkles size={14} className="text-bone/84" />
                       {complete ? 'Convert again' : 'Convert to audio'}
                       <span className="btn__icon">
@@ -569,7 +575,7 @@ export default function Studio() {
                   <div className="mt-3 flex items-center justify-between gap-4">
                     <p className="flex items-center gap-1.5 text-[0.54rem] text-bone/90">
                       <Info size={10} />
-                      Frontend demo. Conversion connects through the API adapter.
+                      Uploaded text plays with your device’s text-to-speech voice.
                     </p>
                     <p className="hidden items-center gap-1.5 font-mono text-[0.42rem] uppercase tracking-[0.12em] text-bone/38 sm:flex">
                       <ShieldCheck size={10} /> Private by design
@@ -718,7 +724,7 @@ export default function Studio() {
                         <span className="h-1.5 w-1.5 rounded-full bg-orange" />
                         <span className="font-mono text-[0.47rem] uppercase tracking-[0.19em] text-gold/80">Preview ready</span>
                       </div>
-                      <span className="font-mono text-[0.43rem] uppercase tracking-[0.12em] text-bone/90">Demo render</span>
+                      <span className="font-mono text-[0.43rem] uppercase tracking-[0.12em] text-bone/90">Document narration</span>
                     </div>
 
                     <div className="mt-4 flex items-center gap-3">
@@ -726,16 +732,16 @@ export default function Studio() {
                         type="button"
                         onClick={handlePreview}
                         className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-orange text-bone transition-transform duration-300 hover:scale-105"
-                        aria-label={previewing ? 'Pause voice preview' : 'Play voice preview'}
+                        aria-label={previewing ? 'Pause document narration' : 'Play document narration'}
                       >
                         {previewing ? <Pause size={15} fill="currentColor" /> : <Play size={15} fill="currentColor" className="ml-0.5" />}
                       </button>
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-[0.72rem] text-bone/90">
-                          {language.display} · {voice.name} · {speed.toFixed(2)}×
+                          {language.display} · {speech.voiceName || 'Device voice'} · {result.manifest.speed.toFixed(2)}×
                         </p>
                         <p className="mt-0.5 truncate font-mono text-[0.42rem] uppercase tracking-[0.1em] text-bone/90">
-                          Neural voice preview · full render via API
+                          Reading your uploaded document
                         </p>
                       </div>
                       <Volume2 size={14} className="shrink-0 text-bone/90" />
@@ -755,14 +761,6 @@ export default function Studio() {
                     </p>
 
                     <div className="mt-4 flex flex-wrap items-center gap-2">
-                      <a
-                        href={result.previewAudio}
-                        download={result.downloadName}
-                        className="studio-download inline-flex flex-1 items-center justify-center gap-2 border border-gold/25 bg-bone/[0.03] px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-gold transition-colors hover:border-orange/60 hover:text-orange"
-                      >
-                        <Download size={12} />
-                        Download demo
-                      </a>
                       <button
                         type="button"
                         onClick={resetConversion}
@@ -773,7 +771,7 @@ export default function Studio() {
                       </button>
                     </div>
                     <p className="mt-3 text-[0.52rem] leading-4 text-bone/90">
-                      Download includes a pre-rendered {language.label} voice sample in {voice.name}’s voice. Connect the API for the full-length audiobook.
+                      Reads the complete extracted text using an available device voice. Narrator samples above are auditions. MP3 export requires a connected audio-generation service.
                     </p>
                   </motion.div>
                 ) : null}
@@ -786,7 +784,7 @@ export default function Studio() {
           <div className="mt-6 flex flex-col justify-between gap-3 border-t border-bone/[0.07] pt-5 text-[0.55rem] text-bone/90 sm:flex-row sm:items-center">
             <p className="flex items-center gap-2">
               <Info size={11} className="text-orange/60" />
-              This interface is production-ready; only the conversion service is simulated in this build.
+              Document text is extracted in your browser. Playback uses your device’s text-to-speech voices.
             </p>
             <p className="font-mono uppercase tracking-[0.15em]">
               Extraction <span className="mx-1 text-bone/86">/</span> Synthesis{' '}
