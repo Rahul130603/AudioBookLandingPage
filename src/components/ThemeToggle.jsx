@@ -5,8 +5,8 @@ const STORAGE_KEY = 'chaptera:theme'
 
 export default function ThemeToggle({ className = '' }) {
   const [theme, setTheme] = useState(() => {
-    if (typeof document === 'undefined') return 'light'
-    return document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light'
+    if (typeof document === 'undefined') return 'dark'
+    return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark'
   })
 
   useEffect(() => {

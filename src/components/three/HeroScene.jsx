@@ -400,7 +400,7 @@ function Scene({ reducedMotion, mobile }) {
         </Float>
       )}
 
-      <SoundRings reducedMotion={reducedMotion} lightTheme={lightTheme} />
+      {!lightTheme && <SoundRings reducedMotion={reducedMotion} lightTheme={lightTheme} />}
       <SoundBars reducedMotion={reducedMotion} lightTheme={lightTheme} />
       <Sparkles
         count={reducedMotion ? 16 : isSmall ? 36 : 85}

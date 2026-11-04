@@ -3420,6 +3420,28 @@ html[data-theme='light'] .text-bone\/45 {
   }
 }
 
+@media (max-width: 1279px) {
+  #begin .cta-book-wrap {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    margin-top: 2.5rem;
+    padding: 0;
+    justify-content: center;
+    opacity: 1;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  #begin .cta-book-wrap > div {
+    height: clamp(24rem, 80vw, 32rem);
+  }
+
+  #begin .cta-book-stage {
+    justify-items: center;
+  }
+}
+
 @media (min-width: 1280px) {
   html {
     zoom: 0.75;
