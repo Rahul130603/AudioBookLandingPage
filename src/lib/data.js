@@ -1,3 +1,11 @@
+export const HERO_COVER = '/assets/books/01_hero_book/hero_the_silent_meridian.jpg'
+
+export const PLAYER_COVERS = [
+  { title: 'Kaadal Nila', src: '/assets/books/05_player_covers/kaadal_nila_player.jpg' },
+  { title: 'Alik Aur Subah', src: '/assets/books/05_player_covers/alik_aur_subah.jpg' },
+  { title: "The Cartographer's Sleep", src: '/assets/books/05_player_covers/the_cartographers_sleep.jpg' },
+]
+
 export const LANGUAGES = [
   {
     id: 'english',
@@ -14,6 +22,7 @@ export const LANGUAGES = [
     sampleAudio: '/audio/samples/language-en.mp3',
     accent: '#FF6B27',
     gradient: 'from-[#2b160b] via-[#120c09] to-[#0b0b0b]',
+    cover: '/assets/books/03_language_books/english_sherlock_holmes.jpg',
   },
   {
     id: 'tamil',
@@ -31,6 +40,7 @@ export const LANGUAGES = [
     sampleAudio: '/audio/samples/language-ta.mp3',
     accent: '#FFB15C',
     gradient: 'from-[#2a1d0d] via-[#130f0a] to-[#0b0b0b]',
+    cover: '/assets/books/03_language_books/tamil_kaadal_nila.jpg',
   },
   {
     id: 'urdu',
@@ -48,6 +58,7 @@ export const LANGUAGES = [
     sampleAudio: '/audio/samples/language-ur.mp3',
     accent: '#F3D1A3',
     gradient: 'from-[#24170e] via-[#110d0a] to-[#0b0b0b]',
+    cover: '/assets/books/03_language_books/urdu_umeed_ka_safar.jpg',
   },
 ]
 
@@ -116,13 +127,14 @@ export const FEATURED_BOOKS = [
     language: 'English',
     langCode: 'EN',
     duration: '9h 42m',
-    art: 'meridian',
     accent: '#FF6B27',
     ink: '#F4EDE3',
     kicker: 'A NOVEL',
     blurb: 'A mapmaker follows a compass that points to voices, not places.',
     sample: 'On the last quiet evening of autumn, the city of Veyra folded itself into the fog.',
     sampleAudio: '/audio/samples/book-silent-meridian.mp3',
+    cover: '/assets/books/02_featured_books/the_alchemist.jpg',
+    fullCover: HERO_COVER,
   },
   {
     id: 'kaadal-nila',
@@ -131,13 +143,13 @@ export const FEATURED_BOOKS = [
     language: 'Tamil',
     langCode: 'த',
     duration: '7h 18m',
-    art: 'moon',
     accent: '#FFB15C',
     ink: '#F7EAD7',
     kicker: 'ஒரு காதல் கதை',
     blurb: 'Two letters, one monsoon, and a love that arrives a little too late.',
     sample: 'மழை வந்து கொண்டிருந்தது. அவள் கடிதத்தை மடித்து வைத்தாள்.',
     sampleAudio: '/audio/samples/book-kaadal-nila.mp3',
+    cover: '/assets/books/02_featured_books/pride_and_prejudice.jpg',
   },
   {
     id: 'aik-aur-subah',
@@ -146,13 +158,13 @@ export const FEATURED_BOOKS = [
     language: 'Urdu',
     langCode: 'اردو',
     duration: '5h 56m',
-    art: 'dawn',
     accent: '#E9C28C',
     ink: '#F6E7CE',
     kicker: 'ایک اور صبح',
     blurb: 'Poems for the hours between midnight and the first light.',
     sample: 'ایک اور صبح، ایک اور کہانی۔',
     sampleAudio: '/audio/samples/book-aik-aur-subah.mp3',
+    cover: '/assets/books/02_featured_books/the_little_prince.jpg',
   },
   {
     id: 'cartographers-sleep',
@@ -161,13 +173,13 @@ export const FEATURED_BOOKS = [
     language: 'English',
     langCode: 'EN',
     duration: '11h 04m',
-    art: 'topography',
     accent: '#D8C2A2',
     ink: '#F1E9DC',
     kicker: 'A NOVEL',
     blurb: 'Every night he draws a country. Every morning it is gone.',
     sample: 'The coastline changed while he slept, as it always did.',
     sampleAudio: '/audio/samples/book-cartographers-sleep.mp3',
+    cover: '/assets/books/02_featured_books/atomic_habits.jpg',
   },
   {
     id: 'neelam',
@@ -176,13 +188,13 @@ export const FEATURED_BOOKS = [
     language: 'Tamil',
     langCode: 'த',
     duration: '8h 26m',
-    art: 'ocean',
     accent: '#FF7A38',
     ink: '#F7EBDD',
     kicker: 'ஒரு புராணக் கதை',
     blurb: 'A sapphire, a sunken temple, and the girl who remembers the sea.',
     sample: 'கடல் அலைகள் அவளது பெயரை மெதுவாக உச்சரித்தன.',
     sampleAudio: '/audio/samples/book-neelam.mp3',
+    cover: '/assets/books/02_featured_books/wings_of_fire.jpg',
   },
   {
     id: 'raat-ka-rasta',
@@ -191,13 +203,13 @@ export const FEATURED_BOOKS = [
     language: 'Urdu',
     langCode: 'اردو',
     duration: '6h 12m',
-    art: 'noir',
     accent: '#FF6B27',
     ink: '#F1E6D6',
     kicker: 'ایک ناول',
     blurb: 'A missing singer. A city that never turns its lights off.',
     sample: 'شہر کی روشنیوں میں کوئی چیز غائب تھی۔',
     sampleAudio: '/audio/samples/book-raat-ka-rasta.mp3',
+    cover: '/assets/books/02_featured_books/1984.jpg',
   },
 ]
 
@@ -244,6 +256,7 @@ export const HOW_IT_WORKS = [
     copy: 'Drop in your PDF, EPUB, TXT, or DOCX. Chaptera reads the structure, keeps the pages in order, and prepares the text for narration.',
     meta: ['PDF', 'EPUB', 'TXT', 'DOCX'],
     glyph: 'upload',
+    cover: '/assets/books/04_how_it_works/upload_your_book.jpg',
   },
   {
     number: '02',
@@ -252,6 +265,7 @@ export const HOW_IT_WORKS = [
     copy: 'Choose a language and a voice. Neural narration turns every sentence into natural pacing, intonation, and silence that belongs.',
     meta: ['EN', 'தமிழ்', 'اردو'],
     glyph: 'voice',
+    cover: '/assets/books/04_how_it_works/ai_voice_conversion.jpg',
   },
   {
     number: '03',
@@ -260,6 +274,7 @@ export const HOW_IT_WORKS = [
     copy: 'Your audiobook follows you from the commute to the last light of the evening. Pick up exactly where you left off, chapter by chapter.',
     meta: ['ONLINE', 'OFFLINE', 'SYNCED'],
     glyph: 'listen',
+    cover: '/assets/books/04_how_it_works/listen_anywhere.jpg',
   },
 ]
 

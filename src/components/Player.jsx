@@ -14,7 +14,7 @@ import {
   VolumeX,
   X,
 } from 'lucide-react'
-import { PLAYER_CHAPTERS } from '../lib/data'
+import { HERO_COVER, PLAYER_CHAPTERS, PLAYER_COVERS } from '../lib/data'
 import { formatTime } from '../lib/utils'
 import CircularVisualizer from './CircularVisualizer'
 import { Reveal, SectionHeading } from './Reveal'
@@ -69,67 +69,16 @@ function ChapterEqualizer({ playing }) {
 function PlayerArtwork() {
   return (
     <div className="relative h-full w-full overflow-hidden rounded-full border border-gold/30 bg-[#0b0806] shadow-[0_30px_80px_-20px_rgba(0,0,0,.9)]">
-      <svg viewBox="0 0 400 400" className="absolute inset-0 h-full w-full" aria-hidden="true">
-        <defs>
-          <radialGradient id="player-bg" cx="50%" cy="42%" r="66%">
-            <stop offset="0%" stopColor="#2c180b" />
-            <stop offset="58%" stopColor="#100b08" />
-            <stop offset="100%" stopColor="#070706" />
-          </radialGradient>
-          <radialGradient id="player-sun" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#FFD7AC" />
-            <stop offset="46%" stopColor="#FF6B27" />
-            <stop offset="100%" stopColor="#6b2e0f" stopOpacity="0.1" />
-          </radialGradient>
-          <linearGradient id="player-line" x1="0" y1="0" x2="1" y2="0">
-            <stop stopColor="#FF6B27" stopOpacity="0" />
-            <stop offset="0.5" stopColor="#FFB15C" />
-            <stop offset="1" stopColor="#FF6B27" stopOpacity="0" />
-          </linearGradient>
-        </defs>
-        <rect width="400" height="400" fill="url(#player-bg)" />
-        <g fill="none" stroke="rgba(255,177,92,.18)">
-          <circle cx="200" cy="190" r="134" />
-          <circle cx="200" cy="190" r="100" strokeOpacity="0.12" />
-          <circle cx="200" cy="190" r="162" strokeOpacity="0.08" />
-        </g>
-        <circle cx="200" cy="174" r="68" fill="url(#player-sun)" opacity="0.8" />
-        <path d="M52 268h296" stroke="url(#player-line)" />
-        <path d="M78 286c40-12 66-14 94-5s48 10 76 2 50-11 74-4" fill="none" stroke="rgba(255,107,39,.25)" />
-        <g fill="rgba(255,225,196,.55)">
-          <circle cx="91" cy="110" r="1.4" />
-          <circle cx="314" cy="131" r="1" />
-          <circle cx="298" cy="80" r="0.8" />
-          <circle cx="110" cy="318" r="1.2" />
-        </g>
-      </svg>
-
-      <div className="absolute inset-0 flex flex-col justify-between p-[13%] text-center">
-        <div className="flex items-center justify-between">
-          <span className="font-display text-[0.48rem] font-semibold uppercase tracking-[0.3em] text-cream/55">Chaptera</span>
-          <span className="font-mono text-[0.36rem] uppercase tracking-[0.15em] text-cream/25">Original</span>
-        </div>
-
-        <div>
-          <span className="font-mono text-[0.35rem] uppercase tracking-[0.22em] text-[#FFB15C]/55">A novel of voice & memory</span>
-          <h3 className="mt-2 font-display text-[clamp(1.35rem,3.4vw,2.1rem)] font-semibold uppercase leading-[0.95] tracking-[-0.06em] text-cream">
-            The Silent
-            <br />
-            <span className="text-shine">Meridian</span>
-          </h3>
-          <div className="mx-auto mt-3 h-px w-10 bg-orange/60" />
-          <p className="mt-2.5 font-mono text-[0.4rem] uppercase tracking-[0.2em] text-cream/40">A. R. Voss</p>
-        </div>
-
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-[0.34rem] uppercase tracking-[0.15em] text-cream/25">Unabridged</span>
-          <span className="flex items-center gap-1 font-mono text-[0.34rem] uppercase tracking-[0.15em] text-cream/25">
-            <Headphones size={7} /> Audio edition
-          </span>
-        </div>
-      </div>
-
-      <div className="absolute inset-0 rounded-full shadow-[inset_0_0_60px_rgba(0,0,0,.6)]" />
+      <img
+        src={HERO_COVER}
+        alt=""
+        loading="eager"
+        draggable={false}
+        className="absolute inset-0 h-full w-full object-cover"
+        style={{ objectPosition: '50% 42%' }}
+      />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_46%,transparent_34%,rgba(7,6,5,.18)_72%,rgba(7,6,5,.58)_100%)]" />
+      <div className="pointer-events-none absolute inset-0 rounded-full shadow-[inset_0_0_64px_rgba(0,0,0,.55)]" />
       <div className="noise-overlay" />
     </div>
   )
@@ -402,6 +351,19 @@ export default function Player() {
               </div>
 
               <div className="flex items-center gap-2">
+                <div className="hidden items-center gap-1 sm:flex" aria-hidden="true">
+                  {PLAYER_COVERS.map((cover) => (
+                    <img
+                      key={cover.title}
+                      src={cover.src}
+                      alt=""
+                      title={cover.title}
+                      loading="eager"
+                      draggable={false}
+                      className="h-8 w-[1.35rem] border border-bone/20 object-cover shadow-[0_4px_12px_rgba(20,12,6,.28)]"
+                    />
+                  ))}
+                </div>
                 {bookmark ? (
                   <div className="flex items-center border border-gold/20 bg-gold/[0.045]">
                     <button

@@ -5,7 +5,15 @@ import Waveform from './Waveform'
 import { HOW_IT_WORKS } from '../lib/data'
 import { Reveal, SectionHeading } from './Reveal'
 
-function UploadVisual() {
+function StepCover({ src, className = '' }) {
+  return (
+    <span className={`step-cover ${className}`} aria-hidden="true">
+      <img src={src} alt="" loading="lazy" draggable={false} className="h-full w-full object-cover" />
+    </span>
+  )
+}
+
+function UploadVisual({ cover }) {
   return (
     <div className="step-visual step-visual--upload" aria-hidden="true">
       <div className="upload-portal">
@@ -19,9 +27,7 @@ function UploadVisual() {
         <span className="flying-book__back" />
         <span className="flying-book__pages" />
         <span className="flying-book__cover">
-          <span className="flying-book__brand">CH.</span>
-          <span className="flying-book__title">THE<br />UNSEEN</span>
-          <span className="flying-book__line" />
+          <img src={cover} alt="" loading="lazy" draggable={false} className="absolute inset-0 h-full w-full object-cover" />
         </span>
       </div>
       <span className="step-particle step-particle--1" />
@@ -35,10 +41,11 @@ function UploadVisual() {
   )
 }
 
-function VoiceVisual() {
+function VoiceVisual({ cover }) {
   const reduce = useReducedMotion()
   return (
     <div className="step-visual step-visual--voice" aria-hidden="true">
+      <StepCover src={cover} className="step-cover--voice" />
       <div className="voice-halo" />
       <div className="voice-rings">
         <span />
@@ -87,9 +94,10 @@ function VoiceVisual() {
   )
 }
 
-function HeadphoneVisual() {
+function HeadphoneVisual({ cover }) {
   return (
     <div className="step-visual step-visual--listen" aria-hidden="true">
+      <StepCover src={cover} className="step-cover--listen" />
       <div className="listen-rings">
         <span />
         <span />
@@ -204,7 +212,7 @@ export default function HowItWorks() {
                       </span>
                     </div>
 
-                    <Visual />
+                    <Visual cover={step.cover} />
 
                     <div className="relative mt-auto pt-8">
                       <p className="font-mono text-[0.49rem] uppercase tracking-[0.22em] text-orange/60">

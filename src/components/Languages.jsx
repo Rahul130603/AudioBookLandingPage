@@ -24,15 +24,25 @@ function LanguageCard({ language, index, active, setActive, audio }) {
         <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-gold/70">
           {language.eyebrow}
         </span>
-        <button
-          type="button"
-          onClick={handleListen}
-          className="group/voice inline-flex items-center gap-2 border-b border-bone/15 pb-1 text-[0.48rem] font-medium uppercase tracking-[0.16em] text-bone/90 transition-colors hover:border-orange hover:text-gold"
-          aria-label={isPlaying ? `Stop ${language.display} voice sample` : `Hear a line in ${language.display}`}
-        >
-          {isPlaying ? <Pause size={9} fill="currentColor" /> : <Volume2 size={11} />}
-          {isPlaying ? 'Playing' : 'Hear a line'}
-        </button>
+        <div className="relative flex items-center">
+          <img
+            src={language.cover}
+            alt=""
+            loading="lazy"
+            draggable={false}
+            className="pointer-events-none absolute right-[calc(100%+0.65rem)] top-1/2 h-9 w-6 -translate-y-1/2 border border-bone/15 object-cover shadow-[0_6px_18px_-8px_rgba(74,43,21,.55)] sm:h-10 sm:w-[1.75rem]"
+            aria-hidden="true"
+          />
+          <button
+            type="button"
+            onClick={handleListen}
+            className="group/voice inline-flex items-center gap-2 border-b border-bone/15 pb-1 text-[0.48rem] font-medium uppercase tracking-[0.16em] text-bone/90 transition-colors hover:border-orange hover:text-gold"
+            aria-label={isPlaying ? `Stop ${language.display} voice sample` : `Hear a line in ${language.display}`}
+          >
+            {isPlaying ? <Pause size={9} fill="currentColor" /> : <Volume2 size={11} />}
+            {isPlaying ? 'Playing' : 'Hear a line'}
+          </button>
+        </div>
       </div>
 
       <div

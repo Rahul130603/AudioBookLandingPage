@@ -84,7 +84,7 @@ export default function FinalCTA() {
               <div className="cta-book__spine" />
               <motion.div className="cta-book__cover" style={{ rotateY: reduce ? -30 : coverRotation, transformOrigin: 'left center' }}>
                 <div className="cta-book__cover-face">
-                  <BookCover book={BOOK} />
+                  <BookCover book={BOOK} mode="full" />
                 </div>
                 <div className="cta-book__cover-back">
                   <span>Every book has a voice.</span>

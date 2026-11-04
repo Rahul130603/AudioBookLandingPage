@@ -7,8 +7,10 @@ import {
   Preload,
   RoundedBox,
   Sparkles,
+  useTexture,
 } from '@react-three/drei'
 import * as THREE from 'three'
+import { HERO_COVER } from '../../lib/data'
 
 const ORANGE = '#FF6B27'
 const GOLD = '#FFB15C'
@@ -20,118 +22,6 @@ function drawSpacedText(ctx, text, x, y, spacing) {
     ctx.fillText(char, cursor, y)
     cursor += ctx.measureText(char).width + spacing
   }
-}
-
-function makeCoverTexture() {
-  const canvas = document.createElement('canvas')
-  canvas.width = 1024
-  canvas.height = 1400
-  const ctx = canvas.getContext('2d')
-
-  ctx.fillStyle = '#080706'
-  ctx.fillRect(0, 0, 1024, 1400)
-
-  const glow = ctx.createRadialGradient(610, 500, 20, 610, 500, 760)
-  glow.addColorStop(0, 'rgba(255,107,39,0.22)')
-  glow.addColorStop(0.48, 'rgba(255,107,39,0.055)')
-  glow.addColorStop(1, 'rgba(0,0,0,0)')
-  ctx.fillStyle = glow
-  ctx.fillRect(0, 0, 1024, 1400)
-
-  // Spine shadow
-  const spine = ctx.createLinearGradient(0, 0, 120, 0)
-  spine.addColorStop(0, 'rgba(0,0,0,0.8)')
-  spine.addColorStop(0.5, 'rgba(255,255,255,0.025)')
-  spine.addColorStop(1, 'rgba(0,0,0,0)')
-  ctx.fillStyle = spine
-  ctx.fillRect(0, 0, 120, 1400)
-
-  // Fine frame
-  ctx.strokeStyle = 'rgba(255,177,92,0.36)'
-  ctx.lineWidth = 2
-  ctx.strokeRect(56, 56, 912, 1288)
-  ctx.strokeStyle = 'rgba(255,255,255,0.075)'
-  ctx.lineWidth = 1
-  ctx.strokeRect(70, 70, 884, 1260)
-
-  // Brand
-  ctx.fillStyle = 'rgba(242,236,227,0.88)'
-  ctx.font = '600 25px Poppins, sans-serif'
-  drawSpacedText(ctx, 'CHAPTERA', 96, 142, 8)
-
-  ctx.fillStyle = 'rgba(255,177,92,0.55)'
-  ctx.font = '400 16px monospace'
-  drawSpacedText(ctx, 'ORIGINAL / 001', 724, 141, 3)
-
-  // Horizon artwork
-  ctx.save()
-  ctx.translate(512, 635)
-  ctx.strokeStyle = 'rgba(255,107,39,0.32)'
-  ctx.lineWidth = 1.5
-  ;[178, 232, 292, 356, 420].forEach((r) => {
-    ctx.beginPath()
-    ctx.arc(0, 0, r, 0, Math.PI * 2)
-    ctx.stroke()
-  })
-  const sun = ctx.createRadialGradient(-40, -45, 5, 0, 0, 148)
-  sun.addColorStop(0, '#FFD8AD')
-  sun.addColorStop(0.45, '#FF8D47')
-  sun.addColorStop(1, 'rgba(255,107,39,0.18)')
-  ctx.fillStyle = sun
-  ctx.beginPath()
-  ctx.arc(-20, -22, 118, 0, Math.PI * 2)
-  ctx.fill()
-  ctx.strokeStyle = 'rgba(255,216,173,0.8)'
-  ctx.beginPath()
-  ctx.arc(-20, -22, 118, 0, Math.PI * 2)
-  ctx.stroke()
-  ctx.beginPath()
-  ctx.moveTo(-420, 0)
-  ctx.lineTo(420, 0)
-  ctx.strokeStyle = 'rgba(255,107,39,0.55)'
-  ctx.stroke()
-  ctx.restore()
-
-  // Tiny stars
-  ctx.fillStyle = 'rgba(255,230,205,0.6)'
-  ;[
-    [180, 430, 2],
-    [820, 390, 1.5],
-    [726, 820, 2],
-    [284, 830, 1.4],
-    [820, 960, 1.2],
-  ].forEach(([x, y, r]) => {
-    ctx.beginPath()
-    ctx.arc(x, y, r, 0, Math.PI * 2)
-    ctx.fill()
-  })
-
-  // Title
-  ctx.fillStyle = 'rgba(242,236,227,0.92)'
-  ctx.font = '300 25px Poppins, sans-serif'
-  drawSpacedText(ctx, 'A NOVEL OF VOICE AND MEMORY', 96, 887, 6)
-
-  ctx.fillStyle = '#F6F0E7'
-  ctx.font = '700 145px Poppins, sans-serif'
-  ctx.fillText('THE', 88, 1048)
-  ctx.fillText('SILENT', 88, 1180)
-
-  const grad = ctx.createLinearGradient(88, 0, 760, 0)
-  grad.addColorStop(0, '#FFB15C')
-  grad.addColorStop(0.6, '#FF6B27')
-  grad.addColorStop(1, '#FF8D47')
-  ctx.fillStyle = grad
-  ctx.font = '700 145px Poppins, sans-serif'
-  ctx.fillText('MERIDIAN', 88, 1312)
-
-  ctx.fillStyle = 'rgba(242,236,227,0.62)'
-  ctx.font = '400 25px Poppins, sans-serif'
-  drawSpacedText(ctx, 'A. R. VOSS', 96, 1367, 4)
-
-  const texture = new THREE.CanvasTexture(canvas)
-  texture.colorSpace = THREE.SRGBColorSpace
-  texture.anisotropy = 8
-  return texture
 }
 
 function makePageTexture(pageNumber = 1, chapterLabel = 'CHAPTER ONE', titleLineOne = "The Mapmaker's", titleLineTwo = 'Window') {
@@ -333,19 +223,28 @@ function Book({ reducedMotion }) {
     }
   }, [])
 
-  const coverTexture = useMemo(() => makeCoverTexture(), [fontReady])
+  const coverTexture = useTexture(HERO_COVER)
   const pageTexture = useMemo(() => makePageTexture(12, 'CHAPTER ONE', "The Mapmaker's", 'Window'), [fontReady])
   const pageTexture2 = useMemo(() => makePageTexture(13, 'CHAPTER TWO', 'A City', 'Without Clocks'), [fontReady])
   const edgeTexture = useMemo(() => makeEdgeTexture(), [])
 
   useEffect(() => {
+    coverTexture.colorSpace = THREE.SRGBColorSpace
+    coverTexture.anisotropy = 8
+    coverTexture.wrapS = THREE.ClampToEdgeWrapping
+    coverTexture.wrapT = THREE.ClampToEdgeWrapping
+    coverTexture.repeat.set(1, 0.918)
+    coverTexture.offset.set(0, 0.041)
+    coverTexture.needsUpdate = true
+  }, [coverTexture])
+
+  useEffect(() => {
     return () => {
-      coverTexture.dispose()
       pageTexture.dispose()
       pageTexture2.dispose()
       edgeTexture.dispose()
     }
-  }, [coverTexture, pageTexture, pageTexture2, edgeTexture])
+  }, [pageTexture, pageTexture2, edgeTexture])
 
   const scale =
     size.width < 480 ? 0.66 : size.width < 768 ? 0.8 : size.width < 1100 ? 0.82 : size.width < 1300 ? 0.92 : 0.98

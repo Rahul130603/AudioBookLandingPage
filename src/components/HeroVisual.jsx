@@ -35,7 +35,7 @@ function StaticBook() {
             <div className="book-3d__pages" />
             <div className="book-3d__spine" />
             <div className="book-3d__cover">
-              <BookCover book={FEATURED_BOOKS[0]} />
+              <BookCover book={FEATURED_BOOKS[0]} mode="full" />
             </div>
           </div>
         </div>

@@ -10,6 +10,10 @@ The header moon/sun control switches between the warm ivory atmosphere and the o
 
 ![Chaptera dark mode](docs/chaptera-dark.jpg)
 
+![Chaptera premium book shelf](docs/chaptera-books.jpg)
+
+Premium cover artwork is self-hosted in `public/assets/books` and mapped to the 3D hero, featured shelf, language cards, workflow visuals, and listening room.
+
 ## Run locally
 
 ```bash
