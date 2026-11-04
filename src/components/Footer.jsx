@@ -110,7 +110,7 @@ export default function Footer() {
 
   return (
     <>
-      <footer className="relative overflow-hidden bg-[#f6f0e8]">
+      <footer className="relative overflow-hidden bg-charcoal">
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute bottom-[-30%] left-1/2 h-[44rem] w-[44rem] -translate-x-1/2 rounded-full bg-orange/[0.045] blur-[110px]" />
           <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-bone/10 to-transparent" />

@@ -185,7 +185,7 @@ export default function Languages() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="fixed bottom-6 left-1/2 z-[95] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 border border-orange/30 bg-[#fffdf9]/95 px-4 py-3 text-center text-[0.65rem] leading-5 text-bone/88 shadow-2xl backdrop-blur-xl"
+              className="fixed bottom-6 left-1/2 z-[95] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 border border-orange/30 bg-coal/95 px-4 py-3 text-center text-[0.65rem] leading-5 text-bone/88 shadow-2xl backdrop-blur-xl"
               role="status"
             >
               {audio.error}

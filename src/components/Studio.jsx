@@ -598,7 +598,7 @@ export default function Studio() {
                       opacity: progress > 0 ? 1 : 0.7,
                     }}
                   >
-                    <div className="h-full w-full rounded-full bg-[#fffdf9]/80" />
+                    <div className="h-full w-full rounded-full bg-coal/80" />
                   </div>
                   <div className="absolute h-[13.2rem] w-[13.2rem] rounded-full border border-dashed border-bone/[0.07]" />
                   <div className="absolute h-[17.5rem] w-[17.5rem] rounded-full border border-bone/[0.035]" />

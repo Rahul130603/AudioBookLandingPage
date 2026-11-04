@@ -4,14 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#FAF8F5',
-        charcoal: '#F1EAE1',
-        coal: '#FFFDF9',
+        ink: 'rgb(var(--c-ink) / <alpha-value>)',
+        charcoal: 'rgb(var(--c-charcoal) / <alpha-value>)',
+        coal: 'rgb(var(--c-coal) / <alpha-value>)',
         orange: '#FF6B27',
-        gold: '#C9782C',
-        bone: '#1A1511',
-        smoke: '#706459',
-        cream: '#F8F3EA',
+        gold: 'rgb(var(--c-gold) / <alpha-value>)',
+        bone: 'rgb(var(--c-bone) / <alpha-value>)',
+        smoke: 'rgb(var(--c-smoke) / <alpha-value>)',
+        cream: 'rgb(var(--c-cream) / <alpha-value>)',
       },
       fontFamily: {
         sans: ['Inter Variable', 'Inter', 'sans-serif'],

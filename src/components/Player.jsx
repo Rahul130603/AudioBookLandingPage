@@ -697,7 +697,7 @@ export default function Player() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 12 }}
-                  className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 border border-orange/30 bg-[#fffdf9]/95 px-3.5 py-2 text-[0.58rem] text-bone/88 shadow-xl backdrop-blur-md"
+                  className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 border border-orange/30 bg-coal/95 px-3.5 py-2 text-[0.58rem] text-bone/88 shadow-xl backdrop-blur-md"
                   role="status"
                 >
                   <Check size={11} className="text-emerald-400" />

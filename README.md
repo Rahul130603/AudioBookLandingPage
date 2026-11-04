@@ -6,6 +6,10 @@ Chaptera is a cinematic, 3D audiobook experience built with React, Vite, Tailwin
 
 ![Chaptera hero](docs/chaptera-hero.jpg)
 
+The header moon/sun control switches between the warm ivory atmosphere and the original dark cinematic mood. The choice is saved in the browser.
+
+![Chaptera dark mode](docs/chaptera-dark.jpg)
+
 ## Run locally
 
 ```bash

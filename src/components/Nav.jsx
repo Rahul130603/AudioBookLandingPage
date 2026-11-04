@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import Logo from './Logo'
+import ThemeToggle from './ThemeToggle'
 
 const LINKS = [
   { label: 'Home', href: '#home' },
@@ -72,6 +73,7 @@ export default function Nav() {
             </nav>
 
             <div className="flex items-center gap-3">
+              <ThemeToggle />
               <a
                 href="#studio"
                 className="group hidden min-h-[2.7rem] items-center gap-3 border border-bone/10 bg-coal/85 pl-4 pr-1.5 shadow-[0_12px_30px_-24px_rgba(74,43,21,0.5)] text-[0.6rem] font-semibold uppercase tracking-[0.14em] text-bone backdrop-blur-md transition-all duration-300 hover:border-gold/40 hover:bg-gold/[0.06] sm:inline-flex"

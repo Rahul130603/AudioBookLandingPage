@@ -37,7 +37,7 @@ export default function Hero() {
         </div>
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[46%] bg-gradient-to-t from-ink via-ink/60 to-transparent md:hidden" />
-      <div className="pointer-events-none absolute inset-0 z-[2] hidden bg-[linear-gradient(90deg,#FAF8F5_0%,rgba(250,248,245,0.95)_32%,rgba(250,248,245,0.72)_50%,rgba(250,248,245,0.18)_66%,transparent_78%)] md:block" />
+      <div className="hero-scrim pointer-events-none absolute inset-0 z-[2] hidden md:block" />
 
       <div className="hero-content container-x relative z-10 flex min-h-[100svh] flex-col justify-between pb-7 pt-28 sm:pt-32 lg:pb-9">
         <div className="flex flex-1 items-center">

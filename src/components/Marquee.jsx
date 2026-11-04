@@ -3,9 +3,9 @@ import { MARQUEE_ITEMS } from '../lib/data'
 export default function Marquee() {
   const items = [...MARQUEE_ITEMS, ...MARQUEE_ITEMS]
   return (
-    <div className="relative overflow-hidden border-b border-bone/[0.06] bg-[#f7f2ea] py-5">
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-[#f7f2ea] to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-[#f7f2ea] to-transparent" />
+    <div className="relative overflow-hidden border-b border-bone/[0.06] bg-charcoal py-5">
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-28 bg-gradient-to-r from-charcoal to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-28 bg-gradient-to-l from-charcoal to-transparent" />
       <div className="marquee-track items-center">
         {items.map((item, index) => (
           <div key={`${item}-${index}`} className="flex shrink-0 items-center gap-8 px-8">
