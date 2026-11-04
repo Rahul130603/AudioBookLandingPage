@@ -2,6 +2,7 @@
   "name": "chaptera",
   "private": true,
   "version": "1.0.0",
+  "description": "Chaptera — a cinematic 3D audiobook platform for English, Tamil, and Urdu.",
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",

@@ -2,27 +2,16 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, Pause, Volume2 } from 'lucide-react'
 import { LANGUAGES } from '../lib/data'
-import useSpeech from '../hooks/useSpeech'
+import useAudioSample from '../hooks/useAudioSample'
 import Waveform from './Waveform'
 import { Reveal, SectionHeading } from './Reveal'
 
-function LanguageCard({ language, index, active, setActive, speech }) {
-  const isPlaying = speech.speaking && speech.speakingId === `language-${language.id}`
-  const [unavailable, setUnavailable] = useState('')
+function LanguageCard({ language, index, active, setActive, audio }) {
+  const isPlaying = audio.playingId === `language-${language.id}`
 
   const handleListen = (event) => {
     event.stopPropagation()
-    if (isPlaying) {
-      speech.stop()
-      return
-    }
-    setUnavailable('')
-    speech.speak({
-      text: language.sample,
-      langCode: language.code,
-      id: `language-${language.id}`,
-      onNotice: setUnavailable,
-    })
+    audio.toggle(language.sampleAudio, `language-${language.id}`)
   }
 
   return (
@@ -31,7 +20,7 @@ function LanguageCard({ language, index, active, setActive, speech }) {
       onMouseEnter={() => setActive(language.id)}
       onFocus={() => setActive(language.id)}
     >
-      <div className="absolute inset-x-0 top-0 z-[2] flex items-center justify-between border-b border-white/[0.08] p-5 sm:p-6" dir="ltr">
+      <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between border-b border-white/[0.08] p-5 sm:p-6" dir="ltr">
         <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-gold/70">
           {language.eyebrow}
         </span>
@@ -72,6 +61,7 @@ function LanguageCard({ language, index, active, setActive, speech }) {
         <div className="flex flex-1 flex-col justify-center py-8">
           <div
             dir={language.directions}
+            lang={language.code}
             className={`language-card__glyph ${language.directions === 'rtl' ? 'text-right font-urdu leading-[1.7]' : language.code === 'ta' ? 'font-tamil' : 'font-display'}`}
           >
             <span className="block text-[clamp(3.4rem,5.6vw,5.4rem)] leading-none tracking-[-0.05em] text-bone">
@@ -104,6 +94,7 @@ function LanguageCard({ language, index, active, setActive, speech }) {
         <div className="border-t border-white/[0.08] pt-5">
           <p
             dir={language.directions}
+            lang={language.code}
             className={`max-w-[24rem] text-[0.84rem] leading-7 text-bone/65 ${
               language.directions === 'rtl' ? 'ml-auto text-right font-urdu leading-[2.4]' : language.code === 'ta' ? 'font-tamil leading-8' : ''
             }`}
@@ -116,6 +107,9 @@ function LanguageCard({ language, index, active, setActive, speech }) {
             </span>
             <a
               href="#studio"
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('chaptera:select-language', { detail: language.id }))
+              }}
               className="group/link inline-flex shrink-0 items-center gap-2 text-[0.52rem] font-semibold uppercase tracking-[0.15em] text-gold/80 transition-colors hover:text-orange"
               aria-label={`Create an audiobook in ${language.label}`}
             >
@@ -123,18 +117,6 @@ function LanguageCard({ language, index, active, setActive, speech }) {
               <ArrowUpRight size={13} className="transition-transform duration-300 group-hover/link:rotate-45" />
             </a>
           </div>
-          <AnimatePresence>
-            {unavailable ? (
-              <motion.p
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="mt-3 text-[0.58rem] leading-5 text-orange/70"
-              >
-                {unavailable}
-              </motion.p>
-            ) : null}
-          </AnimatePresence>
         </div>
       </div>
     </article>
@@ -143,7 +125,7 @@ function LanguageCard({ language, index, active, setActive, speech }) {
 
 export default function Languages() {
   const [active, setActive] = useState('english')
-  const speech = useSpeech()
+  const audio = useAudioSample()
 
   return (
     <section id="languages" className="relative overflow-hidden border-b border-white/[0.06] py-[clamp(6rem,10vw,10rem)]">
@@ -175,7 +157,7 @@ export default function Languages() {
                 index={index}
                 active={active}
                 setActive={setActive}
-                speech={speech}
+                audio={audio}
               />
             </Reveal>
           ))}
@@ -198,7 +180,7 @@ export default function Languages() {
         </Reveal>
 
         <AnimatePresence>
-          {speech.notice ? (
+          {audio.error ? (
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -206,11 +188,11 @@ export default function Languages() {
               className="fixed bottom-6 left-1/2 z-[95] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 border border-orange/30 bg-[#130c08]/95 px-4 py-3 text-center text-[0.65rem] leading-5 text-bone/75 shadow-2xl backdrop-blur-xl"
               role="status"
             >
-              {speech.notice}
+              {audio.error}
               <button
                 type="button"
                 className="ml-3 text-orange underline underline-offset-2"
-                onClick={() => speech.setNotice('')}
+                onClick={() => audio.setError('')}
               >
                 Dismiss
               </button>

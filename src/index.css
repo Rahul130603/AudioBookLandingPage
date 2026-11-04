@@ -438,7 +438,7 @@ svg {
   position: absolute;
   z-index: 1;
   top: 0;
-  right: -10%;
+  right: -6%;
   bottom: 0;
   width: 70%;
   pointer-events: none;
@@ -623,18 +623,6 @@ svg {
   background: rgba(255, 107, 39, 0.07);
 }
 
-.voice-option[data-active='true']::after {
-  content: '';
-  position: absolute;
-  top: 0.65rem;
-  right: 0.65rem;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--orange);
-  box-shadow: 0 0 10px var(--orange);
-}
-
 /* ---------- Range inputs ---------- */
 
 .range {
@@ -795,6 +783,14 @@ svg {
     0 35px 50px -30px rgba(0, 0, 0, 0.9),
     -1px 0 0 rgba(255, 255, 255, 0.1) inset;
   transform: translateZ(14px);
+  transition: box-shadow 0.6s var(--ease-cinematic);
+}
+
+.book-card:hover .book-3d__cover {
+  box-shadow:
+    0 35px 60px -28px rgba(0, 0, 0, 0.9),
+    0 0 32px rgba(255, 107, 39, 0.16),
+    -1px 0 0 rgba(255, 177, 92, 0.18) inset;
 }
 
 .book-3d__cover::after {
@@ -1168,11 +1164,11 @@ svg {
 
 @media (min-width: 768px) and (max-width: 1279px) {
   .hero-stage {
-    top: 28%;
+    top: 38%;
     right: -12%;
     bottom: 0;
     width: 70%;
-    opacity: 0.62;
+    opacity: 0.58;
   }
   .hero-stage::before {
     top: 18%;
@@ -1191,7 +1187,7 @@ svg {
     bottom: -4%;
     width: 108%;
     height: 48%;
-    opacity: 0.72;
+    opacity: 0.8;
   }
   .hero-stage::before {
     top: 20%;

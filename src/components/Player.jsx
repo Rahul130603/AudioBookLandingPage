@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import {
   Bookmark,
   BookmarkCheck,
@@ -136,7 +136,6 @@ function PlayerArtwork() {
 }
 
 export default function Player() {
-  const reduce = useReducedMotion()
   const audioRef = useRef(null)
   const shouldAutoPlayRef = useRef(false)
   const pendingSeekRef = useRef(null)
@@ -259,10 +258,23 @@ export default function Player() {
     audio.playbackRate = rate
   }, [rate])
 
+  useEffect(() => {
+    const audio = audioRef.current
+    if (!audio) return undefined
+    const onSamplePlay = () => audio.pause()
+    window.addEventListener('chaptera:sample-play', onSamplePlay)
+    return () => window.removeEventListener('chaptera:sample-play', onSamplePlay)
+  }, [])
+
   const togglePlay = () => {
     const audio = audioRef.current
     if (!audio) return
     if (audio.paused) {
+      window.dispatchEvent(new Event('chaptera:main-play'))
+      if (audio.ended || (Number.isFinite(audio.duration) && audio.currentTime >= audio.duration - 0.05)) {
+        audio.currentTime = 0
+        setTime(0)
+      }
       audio
         .play()
         .then(() => setPlaying(true))
@@ -294,6 +306,7 @@ export default function Player() {
       togglePlay()
       return
     }
+    window.dispatchEvent(new Event('chaptera:main-play'))
     pendingSeekRef.current = null
     shouldAutoPlayRef.current = true
     setCurrentIndex(index)
@@ -331,6 +344,7 @@ export default function Player() {
     const audio = audioRef.current
     if (!audio) return
     if (bookmark.chapterIndex === currentIndex) {
+      window.dispatchEvent(new Event('chaptera:main-play'))
       const target = Math.max(0, bookmark.time)
       audio.currentTime = target
       setTime(target)
@@ -459,9 +473,9 @@ export default function Player() {
                     </h3>
                     <p className="mt-1 text-[0.64rem] text-smoke">A. R. Voss · Narrated by Aria</p>
                   </div>
-                  <div className="text-right">
+                  <div className="shrink-0 text-right">
                     <p className="font-mono text-[0.4rem] uppercase tracking-[0.16em] text-white/22">Total</p>
-                    <p className="mt-1 font-mono text-[0.62rem] text-bone/50">2h 59m</p>
+                    <p className="mt-1 whitespace-nowrap font-mono text-[0.62rem] text-bone/50">3m 08s</p>
                   </div>
                 </div>
               </div>
@@ -493,7 +507,7 @@ export default function Player() {
                           {active && playing ? <ChapterEqualizer playing /> : String(index + 1).padStart(2, '0')}
                         </span>
                         <span className="min-w-0">
-                          <span className={`block truncate text-[0.78rem] ${active ? 'text-gold' : 'text-bone/65 group-hover:text-bone'}`}>
+                          <span className={`block text-[0.78rem] leading-5 ${active ? 'text-gold' : 'text-bone/65 group-hover:text-bone'}`}>
                             {item.title}
                           </span>
                           <span className={`mt-0.5 block font-mono text-[0.42rem] uppercase tracking-[0.13em] ${active ? 'text-gold/50' : 'text-white/22'}`}>
@@ -572,7 +586,7 @@ export default function Player() {
                       <span className="flex items-center gap-1.5">
                         <Headphones size={9} /> Headphones recommended
                       </span>
-                      <span>16-bit · 16 kHz · mono</span>
+                      <span>Neural voice · MP3 · 48 kbps</span>
                     </div>
                   )}
                 </div>

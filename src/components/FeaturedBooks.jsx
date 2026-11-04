@@ -2,11 +2,11 @@ import { useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Pause, Play, Volume2 } from 'lucide-react'
 import { FEATURED_BOOKS } from '../lib/data'
-import useSpeech from '../hooks/useSpeech'
+import useAudioSample from '../hooks/useAudioSample'
 import BookCover from './BookCover'
 import { Reveal, SectionHeading } from './Reveal'
 
-function BookPreviewButton({ book, speech, isPlaying, onToggle }) {
+function BookPreviewButton({ book, isPlaying, onToggle }) {
   return (
     <button
       type="button"
@@ -20,10 +20,10 @@ function BookPreviewButton({ book, speech, isPlaying, onToggle }) {
   )
 }
 
-function FeaturedBookCard({ book, index, speech, activeId, setActiveId, setNotice }) {
+function FeaturedBookCard({ book, index, audio }) {
   const cardRef = useRef(null)
   const stageRef = useRef(null)
-  const isPlaying = speech.speaking && speech.speakingId === `feature-${book.id}`
+  const isPlaying = audio.playingId === `book-${book.id}`
 
   const handleMove = (event) => {
     const node = stageRef.current
@@ -40,23 +40,11 @@ function FeaturedBookCard({ book, index, speech, activeId, setActiveId, setNotic
     const node = stageRef.current
     if (!node) return
     node.style.transform = 'rotateX(3deg) rotateY(-15deg) translateY(0) scale(1)'
-    setActiveId(null)
   }
 
   const togglePreview = (event) => {
     event.stopPropagation()
-    if (isPlaying) {
-      speech.stop()
-      return
-    }
-    setActiveId(book.id)
-    speech.speak({
-      text: book.sample,
-      langCode: book.langCode === 'த' ? 'ta' : book.langCode === 'اردو' ? 'ur' : 'en',
-      rate: 0.94,
-      id: `feature-${book.id}`,
-      onNotice: setNotice,
-    })
+    audio.toggle(book.sampleAudio, `book-${book.id}`)
   }
 
   return (
@@ -65,7 +53,6 @@ function FeaturedBookCard({ book, index, speech, activeId, setActiveId, setNotic
       className="book-card group snap-start"
       onMouseMove={handleMove}
       onMouseLeave={handleLeave}
-      onMouseEnter={() => setActiveId(book.id)}
     >
       <div className="relative px-3 pt-3">
         <div className="book-glow" style={{ background: `radial-gradient(circle, ${book.accent}42, transparent 65%)` }} />
@@ -85,7 +72,7 @@ function FeaturedBookCard({ book, index, speech, activeId, setActiveId, setNotic
         </div>
 
         <div className="absolute bottom-5 right-5 z-20 translate-y-0 opacity-100 transition-all duration-500 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
-          <BookPreviewButton book={book} speech={speech} isPlaying={isPlaying} onToggle={togglePreview} />
+          <BookPreviewButton book={book} isPlaying={isPlaying} onToggle={togglePreview} />
         </div>
 
         {isPlaying ? (
@@ -127,9 +114,8 @@ function FeaturedBookCard({ book, index, speech, activeId, setActiveId, setNotic
 
 export default function FeaturedBooks() {
   const railRef = useRef(null)
-  const speech = useSpeech()
-  const [activeId, setActiveId] = useState(null)
-  const [notice, setNotice] = useState('')
+  const dragRef = useRef({ active: false, startX: 0, startScroll: 0 })
+  const audio = useAudioSample()
   const [progress, setProgress] = useState(0)
 
   const scrollRail = (direction) => {
@@ -144,6 +130,37 @@ export default function FeaturedBooks() {
     if (!rail) return
     const max = rail.scrollWidth - rail.clientWidth
     setProgress(max > 0 ? rail.scrollLeft / max : 0)
+  }
+
+  const startDrag = (event) => {
+    if (event.pointerType !== 'mouse' || event.target.closest('button, a')) return
+    const rail = railRef.current
+    if (!rail) return
+    dragRef.current = { active: true, startX: event.clientX, startScroll: rail.scrollLeft }
+    rail.setPointerCapture?.(event.pointerId)
+    rail.style.cursor = 'grabbing'
+  }
+
+  const moveDrag = (event) => {
+    if (!dragRef.current.active) return
+    const rail = railRef.current
+    if (!rail) return
+    rail.scrollLeft = dragRef.current.startScroll - (event.clientX - dragRef.current.startX)
+  }
+
+  const endDrag = () => {
+    dragRef.current.active = false
+    if (railRef.current) railRef.current.style.cursor = 'grab'
+  }
+
+  const handleRailKey = (event) => {
+    if (event.key === 'ArrowRight') {
+      event.preventDefault()
+      scrollRail(1)
+    } else if (event.key === 'ArrowLeft') {
+      event.preventDefault()
+      scrollRail(-1)
+    }
   }
 
   return (
@@ -185,18 +202,21 @@ export default function FeaturedBooks() {
           <div
             ref={railRef}
             onScroll={updateProgress}
+            onPointerDown={startDrag}
+            onPointerMove={moveDrag}
+            onPointerUp={endDrag}
+            onPointerCancel={endDrag}
+            onPointerLeave={endDrag}
+            onKeyDown={handleRailKey}
+            role="region"
+            aria-label="Featured audiobooks. Scroll horizontally or use the arrow buttons."
+            tabIndex={0}
+            style={{ cursor: 'grab' }}
             className="book-rail fade-edges -mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5"
           >
             {FEATURED_BOOKS.map((book, index) => (
               <Reveal key={book.id} delay={index * 0.04} className="w-[78vw] shrink-0 sm:w-[20rem] lg:w-[21.5rem]">
-                <FeaturedBookCard
-                  book={book}
-                  index={index}
-                  speech={speech}
-                  activeId={activeId}
-                  setActiveId={setActiveId}
-                  setNotice={setNotice}
-                />
+                <FeaturedBookCard book={book} index={index} audio={audio} />
               </Reveal>
             ))}
           </div>
@@ -206,7 +226,7 @@ export default function FeaturedBooks() {
             <div className="h-px flex-1 bg-white/[0.08]">
               <div
                 className="h-full origin-left bg-gradient-to-r from-orange to-gold transition-transform duration-200"
-                style={{ transform: `scaleX(${Math.max(0.12, progress)})` }}
+                style={{ transform: `scaleX(${Math.max(0.02, progress)})` }}
               />
             </div>
             <span className="ml-5 font-mono text-[0.42rem] uppercase tracking-[0.15em] text-white/20">
@@ -217,7 +237,7 @@ export default function FeaturedBooks() {
       </div>
 
       <AnimatePresence>
-        {notice ? (
+        {audio.error ? (
           <motion.div
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
@@ -225,8 +245,8 @@ export default function FeaturedBooks() {
             className="container-x"
           >
             <div className="mt-6 flex items-center justify-between gap-4 border border-orange/25 bg-orange/[0.05] px-4 py-3 text-[0.62rem] leading-5 text-bone/65" role="status">
-              <span>{notice}</span>
-              <button type="button" onClick={() => setNotice('')} className="shrink-0 text-[0.52rem] uppercase tracking-[0.12em] text-orange underline underline-offset-2">
+              <span>{audio.error}</span>
+              <button type="button" onClick={() => audio.setError('')} className="shrink-0 text-[0.52rem] uppercase tracking-[0.12em] text-orange underline underline-offset-2">
                 Dismiss
               </button>
             </div>

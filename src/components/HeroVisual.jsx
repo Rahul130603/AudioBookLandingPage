@@ -1,4 +1,4 @@
-import { Component, lazy, Suspense, useEffect, useState } from 'react'
+import { Component, lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
 import BookCover from './BookCover'
 import { FEATURED_BOOKS } from '../lib/data'
@@ -25,19 +25,6 @@ class SceneBoundary extends Component {
   }
 }
 
-function SceneLoader() {
-  return (
-    <div className="loader-stage" aria-hidden="true">
-      <div className="relative">
-        <div className="loader-ring" />
-        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-mono text-[0.5rem] uppercase tracking-[0.25em] text-gold/70">
-          ch.
-        </span>
-      </div>
-    </div>
-  )
-}
-
 function StaticBook() {
   return (
     <div className="flex h-full w-full items-center justify-center" aria-hidden="true">
@@ -59,7 +46,9 @@ function StaticBook() {
 
 export default function HeroVisual() {
   const reduce = useReducedMotion()
+  const hostRef = useRef(null)
   const [canRender, setCanRender] = useState(false)
+  const [inView, setInView] = useState(true)
 
   useEffect(() => {
     let mounted = true
@@ -75,13 +64,26 @@ export default function HeroVisual() {
     }
   }, [])
 
+  useEffect(() => {
+    const node = hostRef.current
+    if (!node) return undefined
+    const observer = new IntersectionObserver(
+      ([entry]) => setInView(entry.isIntersecting),
+      { rootMargin: '160px 0px' },
+    )
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
   if (!canRender) return <StaticBook />
 
   return (
-    <SceneBoundary fallback={<StaticBook />}>
-      <Suspense fallback={<StaticBook />}>
-        <HeroScene reducedMotion={Boolean(reduce)} />
-      </Suspense>
-    </SceneBoundary>
+    <div ref={hostRef} className="h-full w-full">
+      <SceneBoundary fallback={<StaticBook />}>
+        <Suspense fallback={<StaticBook />}>
+          <HeroScene reducedMotion={Boolean(reduce)} active={inView} />
+        </Suspense>
+      </SceneBoundary>
+    </div>
   )
 }

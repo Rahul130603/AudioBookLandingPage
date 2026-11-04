@@ -61,8 +61,11 @@ export function simulateConversion({ file, language, voice, speed, onProgress, s
             speed,
             createdAt: new Date().toISOString(),
           },
-          previewAudio: '/audio/studio-demo.mp3',
-          downloadName: `chaptera-${(file?.name ?? 'manuscript').replace(/\.[^.]+$/, '').replace(/[^a-z0-9]+/gi, '-').toLowerCase()}-demo.mp3`,
+          previewAudio: voice?.sampleAudio ?? '/audio/samples/voice-en-aria.mp3',
+          downloadName: `chaptera-${(file?.name ?? 'manuscript')
+            .replace(/\.[^.]+$/, '')
+            .replace(/[^a-z0-9]+/gi, '-')
+            .toLowerCase()}-${(voice?.name ?? 'aria').toLowerCase()}-demo.mp3`,
         })
       }
     }

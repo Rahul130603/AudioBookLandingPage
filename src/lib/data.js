@@ -11,6 +11,7 @@ export const LANGUAGES = [
     description: 'Experience stories in natural English voices.',
     sample: 'Every book has a voice. Let yours be heard.',
     voices: '02 curated voices',
+    sampleAudio: '/audio/samples/language-en.mp3',
     accent: '#FF6B27',
     gradient: 'from-[#2b160b] via-[#120c09] to-[#0b0b0b]',
   },
@@ -27,6 +28,7 @@ export const LANGUAGES = [
     descriptionEn: 'Hear your books in a warm, expressive Tamil voice.',
     sample: 'ஒவ்வொரு புத்தகத்திற்கும் ஒரு குரல் உண்டு.',
     voices: '02 curated voices',
+    sampleAudio: '/audio/samples/language-ta.mp3',
     accent: '#FFB15C',
     gradient: 'from-[#2a1d0d] via-[#130f0a] to-[#0b0b0b]',
   },
@@ -43,6 +45,7 @@ export const LANGUAGES = [
     descriptionEn: 'Let your stories unfold in a poetic Urdu voice.',
     sample: 'ہر کتاب کی ایک آواز ہوتی ہے۔',
     voices: '02 curated voices',
+    sampleAudio: '/audio/samples/language-ur.mp3',
     accent: '#F3D1A3',
     gradient: 'from-[#24170e] via-[#110d0a] to-[#0b0b0b]',
   },
@@ -56,6 +59,7 @@ export const VOICES = {
       gender: 'Female',
       tone: 'Warm · Cinematic',
       signature: 'Soft edges, intimate close-mic presence.',
+      sampleAudio: '/audio/samples/voice-en-aria.mp3',
     },
     {
       id: 'atlas',
@@ -63,6 +67,7 @@ export const VOICES = {
       gender: 'Male',
       tone: 'Deep · Grounded',
       signature: 'A low, unhurried voice built for long listening.',
+      sampleAudio: '/audio/samples/voice-en-atlas.mp3',
     },
   ],
   ta: [
@@ -72,6 +77,7 @@ export const VOICES = {
       gender: 'Female',
       tone: 'Velvet · Expressive',
       signature: 'Musical phrasing with a gentle emotional lift.',
+      sampleAudio: '/audio/samples/voice-ta-kavya.mp3',
     },
     {
       id: 'arun',
@@ -79,6 +85,7 @@ export const VOICES = {
       gender: 'Male',
       tone: 'Clear · Calm',
       signature: 'Crisp Tamil diction with a measured pace.',
+      sampleAudio: '/audio/samples/voice-ta-arun.mp3',
     },
   ],
   ur: [
@@ -88,6 +95,7 @@ export const VOICES = {
       gender: 'Female',
       tone: 'Poetic · Soft',
       signature: 'Delicate delivery, tuned for Urdu prose and poetry.',
+      sampleAudio: '/audio/samples/voice-ur-noor.mp3',
     },
     {
       id: 'rayan',
@@ -95,6 +103,7 @@ export const VOICES = {
       gender: 'Male',
       tone: 'Rich · Resonant',
       signature: 'A velvet baritone with natural gravity.',
+      sampleAudio: '/audio/samples/voice-ur-rayan.mp3',
     },
   ],
 }
@@ -113,6 +122,7 @@ export const FEATURED_BOOKS = [
     kicker: 'A NOVEL',
     blurb: 'A mapmaker follows a compass that points to voices, not places.',
     sample: 'On the last quiet evening of autumn, the city of Veyra folded itself into the fog.',
+    sampleAudio: '/audio/samples/book-silent-meridian.mp3',
   },
   {
     id: 'kaadal-nila',
@@ -127,6 +137,7 @@ export const FEATURED_BOOKS = [
     kicker: 'ஒரு காதல் கதை',
     blurb: 'Two letters, one monsoon, and a love that arrives a little too late.',
     sample: 'மழை வந்து கொண்டிருந்தது. அவள் கடிதத்தை மடித்து வைத்தாள்.',
+    sampleAudio: '/audio/samples/book-kaadal-nila.mp3',
   },
   {
     id: 'aik-aur-subah',
@@ -141,6 +152,7 @@ export const FEATURED_BOOKS = [
     kicker: 'ایک اور صبح',
     blurb: 'Poems for the hours between midnight and the first light.',
     sample: 'ایک اور صبح، ایک اور کہانی۔',
+    sampleAudio: '/audio/samples/book-aik-aur-subah.mp3',
   },
   {
     id: 'cartographers-sleep',
@@ -155,6 +167,7 @@ export const FEATURED_BOOKS = [
     kicker: 'A NOVEL',
     blurb: 'Every night he draws a country. Every morning it is gone.',
     sample: 'The coastline changed while he slept, as it always did.',
+    sampleAudio: '/audio/samples/book-cartographers-sleep.mp3',
   },
   {
     id: 'neelam',
@@ -169,6 +182,7 @@ export const FEATURED_BOOKS = [
     kicker: 'ஒரு புராணக் கதை',
     blurb: 'A sapphire, a sunken temple, and the girl who remembers the sea.',
     sample: 'கடல் அலைகள் அவளது பெயரை மெதுவாக உச்சரித்தன.',
+    sampleAudio: '/audio/samples/book-neelam.mp3',
   },
   {
     id: 'raat-ka-rasta',
@@ -183,6 +197,7 @@ export const FEATURED_BOOKS = [
     kicker: 'ایک ناول',
     blurb: 'A missing singer. A city that never turns its lights off.',
     sample: 'شہر کی روشنیوں میں کوئی چیز غائب تھی۔',
+    sampleAudio: '/audio/samples/book-raat-ka-rasta.mp3',
   },
 ]
 
@@ -192,7 +207,7 @@ export const PLAYER_CHAPTERS = [
     title: "The Mapmaker's Window",
     label: 'Chapter I',
     file: '/audio/chapter-01.mp3',
-    fallbackDuration: 39,
+    fallbackDuration: 37,
     text: "On the last quiet evening of autumn, the city of Veyra folded itself into the fog. Mira watched from the mapmaker's window as street lamps became small orange islands in a sea of grey.",
   },
   {
@@ -200,7 +215,7 @@ export const PLAYER_CHAPTERS = [
     title: 'A City Without Clocks',
     label: 'Chapter II',
     file: '/audio/chapter-02.mp3',
-    fallbackDuration: 41,
+    fallbackDuration: 48,
     text: 'The road out of Veyra did not appear on any map Mira owned. It began behind the old theatre, and it ended at a station with no name. The station clock had no hands.',
   },
   {
@@ -208,7 +223,7 @@ export const PLAYER_CHAPTERS = [
     title: 'The Voice in the Static',
     label: 'Chapter III',
     file: '/audio/chapter-03.mp3',
-    fallbackDuration: 49,
+    fallbackDuration: 51,
     text: 'Inside the train, every window showed a different city. One was drowned in summer. One was still being built. Another had been erased so completely that only its shadows remained.',
   },
   {
@@ -216,7 +231,7 @@ export const PLAYER_CHAPTERS = [
     title: 'Where the Meridian Ends',
     label: 'Chapter IV',
     file: '/audio/chapter-04.mp3',
-    fallbackDuration: 47,
+    fallbackDuration: 52,
     text: 'Dawn arrived without permission. Mira stepped onto a platform of white stone, and the city without clocks opened before her. Here, every story had a voice.',
   },
 ]

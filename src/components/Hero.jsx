@@ -36,8 +36,8 @@ export default function Hero() {
           <HeroVisual />
         </div>
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[46%] bg-gradient-to-t from-ink via-ink/70 to-transparent md:hidden" />
-      <div className="pointer-events-none absolute inset-0 z-[2] hidden bg-[linear-gradient(90deg,#080808_0%,rgba(8,8,8,0.9)_22%,rgba(8,8,8,0.38)_56%,transparent_78%)] md:block xl:hidden" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[2] h-[46%] bg-gradient-to-t from-ink via-ink/60 to-transparent md:hidden" />
+      <div className="pointer-events-none absolute inset-0 z-[2] hidden bg-[linear-gradient(90deg,#080808_0%,rgba(8,8,8,0.94)_32%,rgba(8,8,8,0.58)_50%,rgba(8,8,8,0.14)_66%,transparent_78%)] md:block" />
 
       <div className="hero-content container-x relative z-10 flex min-h-[100svh] flex-col justify-between pb-7 pt-28 sm:pt-32 lg:pb-9">
         <div className="flex flex-1 items-center">
@@ -78,8 +78,8 @@ export default function Hero() {
                     Transform any book into an immersive audiobook experience.
                     Upload, convert, and listen in{' '}
                     <span className="text-bone">English</span>,{' '}
-                    <span className="font-tamil text-bone">Tamil</span>, and{' '}
-                    <span className="font-urdu text-[1.05rem] leading-loose text-bone">Urdu</span>.
+                    <span className="font-tamil text-bone" lang="ta">Tamil</span>, and{' '}
+                    <span className="font-urdu text-[1.05rem] leading-loose text-bone" lang="ur">Urdu</span>.
                   </p>
                 </div>
 

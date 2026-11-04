@@ -134,7 +134,7 @@ function makeCoverTexture() {
   return texture
 }
 
-function makePageTexture(pageNumber = 1) {
+function makePageTexture(pageNumber = 1, chapterLabel = 'CHAPTER ONE', titleLineOne = "The Mapmaker's", titleLineTwo = 'Window') {
   const canvas = document.createElement('canvas')
   canvas.width = 1024
   canvas.height = 1400
@@ -155,12 +155,12 @@ function makePageTexture(pageNumber = 1) {
 
   ctx.fillStyle = 'rgba(54,40,28,0.4)'
   ctx.font = '400 15px monospace'
-  drawSpacedText(ctx, 'CHAPTER ONE', 110, 196, 2)
+  drawSpacedText(ctx, chapterLabel, 110, 196, 2)
 
   ctx.fillStyle = 'rgba(33,24,18,0.84)'
   ctx.font = '600 52px Georgia, serif'
-  ctx.fillText("The Mapmaker's", 110, 286)
-  ctx.fillText('Window', 110, 348)
+  ctx.fillText(titleLineOne, 110, 286)
+  ctx.fillText(titleLineTwo, 110, 348)
 
   ctx.fillStyle = 'rgba(255,255,255,0.32)'
   ctx.fillRect(110, 398, 804, 1)
@@ -185,7 +185,7 @@ function makePageTexture(pageNumber = 1) {
 
   ctx.fillStyle = 'rgba(120,84,46,0.38)'
   ctx.font = '400 14px monospace'
-  ctx.fillText('12', 512, 1322)
+  ctx.fillText(String(pageNumber), 512, 1322)
 
   const texture = new THREE.CanvasTexture(canvas)
   texture.colorSpace = THREE.SRGBColorSpace
@@ -223,7 +223,7 @@ function TurningPage({ texture, backTexture, index, reducedMotion }) {
     const t = state.clock.elapsedTime
     const delay = 1.35 + index * 0.3
     if (t < delay && !reducedMotion) return
-    const target = THREE.MathUtils.degToRad(-148 + index * 7) + Math.sin(t * 0.34 + index) * (reducedMotion ? 0 : 0.012)
+    const target = THREE.MathUtils.degToRad(-38 + index * 4) + Math.sin(t * 0.34 + index) * (reducedMotion ? 0 : 0.012)
     pivot.current.rotation.y = THREE.MathUtils.damp(pivot.current.rotation.y, target, 1.8, delta)
     if (mesh.current) {
       const bend = Math.sin(Math.min(1, Math.abs(pivot.current.rotation.y) / Math.PI) * Math.PI) * 0.06
@@ -232,7 +232,7 @@ function TurningPage({ texture, backTexture, index, reducedMotion }) {
   })
 
   return (
-    <group ref={pivot} position={[-1.54, 0, 0.26 + index * 0.012]} rotation={[0, reducedMotion ? THREE.MathUtils.degToRad(-148 + index * 7) : 0, 0]}>
+    <group ref={pivot} position={[-1.54, 0, 0.26 + index * 0.012]} rotation={[0, reducedMotion ? THREE.MathUtils.degToRad(-38 + index * 4) : 0, 0]}>
       <group ref={mesh} position={[1.54, 0, 0]}>
         <mesh castShadow receiveShadow>
           <planeGeometry args={[3.08, 4.24, 20, 1]} />
@@ -334,8 +334,8 @@ function Book({ reducedMotion }) {
   }, [])
 
   const coverTexture = useMemo(() => makeCoverTexture(), [fontReady])
-  const pageTexture = useMemo(() => makePageTexture(12), [fontReady])
-  const pageTexture2 = useMemo(() => makePageTexture(13), [fontReady])
+  const pageTexture = useMemo(() => makePageTexture(12, 'CHAPTER ONE', "The Mapmaker's", 'Window'), [fontReady])
+  const pageTexture2 = useMemo(() => makePageTexture(13, 'CHAPTER TWO', 'A City', 'Without Clocks'), [fontReady])
   const edgeTexture = useMemo(() => makeEdgeTexture(), [])
 
   useEffect(() => {
@@ -348,8 +348,8 @@ function Book({ reducedMotion }) {
   }, [coverTexture, pageTexture, pageTexture2, edgeTexture])
 
   const scale =
-    size.width < 480 ? 0.66 : size.width < 768 ? 0.78 : size.width < 1100 ? 0.76 : size.width < 1300 ? 0.87 : 0.91
-  const horizontalShift = size.width < 768 ? 0 : size.width < 1100 ? 0.65 : 0.9
+    size.width < 480 ? 0.66 : size.width < 768 ? 0.8 : size.width < 1100 ? 0.82 : size.width < 1300 ? 0.92 : 0.98
+  const horizontalShift = size.width < 768 ? 0 : size.width < 1100 ? 0.35 : 0.6
 
   useFrame((state, delta) => {
     if (!book.current) return
@@ -367,14 +367,14 @@ function Book({ reducedMotion }) {
     book.current.position.x = THREE.MathUtils.damp(book.current.position.x, horizontalShift, 2, delta)
 
     if (coverPivot.current) {
-      const base = THREE.MathUtils.degToRad(-152)
-      const target = t > 0.7 || reducedMotion ? base : THREE.MathUtils.degToRad(-20)
+      const base = THREE.MathUtils.degToRad(-45)
+      const target = t > 0.7 || reducedMotion ? base : THREE.MathUtils.degToRad(-16)
       coverPivot.current.rotation.y = THREE.MathUtils.damp(coverPivot.current.rotation.y, target, 1.8, delta)
     }
   })
 
   return (
-    <group ref={book} position={[size.width < 768 ? 0 : size.width < 1100 ? 0.65 : 0.9, 0.18, 0]} scale={scale}>
+    <group ref={book} position={[size.width < 768 ? 0 : size.width < 1100 ? 0.35 : 0.6, 0.18, 0]} scale={scale}>
       <group rotation={[0.02, 0, 0]}>
         {/* Page block */}
         <RoundedBox args={[3.08, 4.26, 0.38]} radius={0.03} smoothness={3} position={[0.03, 0, -0.02]} castShadow receiveShadow>
@@ -415,7 +415,7 @@ function Book({ reducedMotion }) {
         <group
           ref={coverPivot}
           position={[-1.6, 0, 0.285]}
-          rotation={[0, reducedMotion ? THREE.MathUtils.degToRad(-152) : THREE.MathUtils.degToRad(-20), 0]}
+          rotation={[0, reducedMotion ? THREE.MathUtils.degToRad(-45) : THREE.MathUtils.degToRad(-16), 0]}
         >
           <RoundedBox args={[3.24, 4.44, 0.13]} radius={0.045} smoothness={3} position={[1.6, 0, 0]} castShadow receiveShadow>
             <meshPhysicalMaterial color="#100c09" roughness={0.44} metalness={0.25} clearcoat={0.8} clearcoatRoughness={0.25} />
@@ -514,7 +514,7 @@ function Scene({ reducedMotion }) {
   )
 }
 
-export default function HeroScene({ reducedMotion = false }) {
+export default function HeroScene({ reducedMotion = false, active = true }) {
   return (
     <Canvas
       aria-hidden="true"
@@ -523,7 +523,7 @@ export default function HeroScene({ reducedMotion = false }) {
       camera={{ position: [0, 0.15, 9.1], fov: 38, near: 0.1, far: 60 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       style={{ background: 'transparent' }}
-      frameloop="always"
+      frameloop={active ? 'always' : 'never'}
     >
       <Suspense fallback={null}>
         <Scene reducedMotion={reducedMotion} />

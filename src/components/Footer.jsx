@@ -77,6 +77,7 @@ function InfoModal({ type, onClose }) {
         <button
           type="button"
           onClick={onClose}
+          autoFocus
           className="absolute right-4 top-4 grid h-8 w-8 place-items-center border border-white/10 text-bone/40 transition-colors hover:border-orange/40 hover:text-orange"
           aria-label="Close dialog"
         >
@@ -181,10 +182,10 @@ export default function Footer() {
                 <a href="#languages" className="text-[0.7rem] text-bone/45 transition-colors hover:text-gold">
                   English
                 </a>
-                <a href="#languages" className="font-tamil text-[0.8rem] text-bone/45 transition-colors hover:text-gold">
+                <a href="#languages" lang="ta" className="font-tamil text-[0.8rem] text-bone/45 transition-colors hover:text-gold">
                   தமிழ்
                 </a>
-                <a href="#languages" className="font-urdu text-[0.9rem] text-bone/45 transition-colors hover:text-gold">
+                <a href="#languages" lang="ur" className="font-urdu text-[0.9rem] text-bone/45 transition-colors hover:text-gold">
                   اردو
                 </a>
               </div>
@@ -197,14 +198,13 @@ export default function Footer() {
                 <br />
                 pages & in-between hours.
               </p>
-              <button
-                type="button"
-                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              <a
+                href="#home"
                 className="mt-6 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-white/35 transition-colors hover:border-orange/50 hover:text-orange"
                 aria-label="Back to top"
               >
                 <ArrowUp size={14} />
-              </button>
+              </a>
             </div>
           </div>
 

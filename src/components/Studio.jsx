@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
   Check,
@@ -18,7 +18,7 @@ import {
 import { LANGUAGES, VOICES } from '../lib/data'
 import { getStageIndex, simulateConversion, STAGES } from '../lib/conversionApi'
 import { formatBytes } from '../lib/utils'
-import useSpeech from '../hooks/useSpeech'
+import useAudioSample from '../hooks/useAudioSample'
 import Waveform from './Waveform'
 import { Reveal, SectionHeading } from './Reveal'
 
@@ -39,7 +39,7 @@ export default function Studio() {
   const reduce = useReducedMotion()
   const inputRef = useRef(null)
   const abortRef = useRef(null)
-  const speech = useSpeech()
+  const audio = useAudioSample()
 
   const [file, setFile] = useState(null)
   const [languageId, setLanguageId] = useState('english')
@@ -59,7 +59,7 @@ export default function Studio() {
   const busy = phase === 'converting'
   const complete = phase === 'complete'
   const stageIndex = getStageIndex(progress)
-  const previewing = speech.speaking && speech.speakingId === 'studio-preview'
+  const previewing = audio.playingId === 'studio-preview'
 
   useEffect(() => {
     return () => {
@@ -76,7 +76,7 @@ export default function Studio() {
 
   const resetConversion = () => {
     abortRef.current?.abort()
-    speech.stop()
+    audio.stop()
     setPhase('idle')
     setProgress(0)
     setResult(null)
@@ -95,7 +95,8 @@ export default function Studio() {
       return
     }
 
-    speech.stop()
+    audio.stop()
+    audio.setError('')
     setError('')
     setResult(null)
     setPhase('idle')
@@ -134,15 +135,30 @@ export default function Studio() {
     acceptFile(event.dataTransfer.files?.[0])
   }
 
-  const handleLanguage = (id) => {
-    const next = LANGUAGES.find((item) => item.id === id)
-    setLanguageId(id)
-    setVoiceId(VOICES[next.code][0].id)
-    setResult(null)
-    setPhase('idle')
-    setProgress(0)
-    speech.stop()
-  }
+  const stopSample = audio.stop
+
+  const handleLanguage = useCallback(
+    (id) => {
+      const next = LANGUAGES.find((item) => item.id === id)
+      if (!next) return
+      setLanguageId(id)
+      setVoiceId(VOICES[next.code][0].id)
+      setResult(null)
+      setPhase('idle')
+      setProgress(0)
+      stopSample()
+    },
+    [stopSample],
+  )
+
+  useEffect(() => {
+    const onSelectLanguage = (event) => {
+      if (!LANGUAGES.some((item) => item.id === event.detail)) return
+      handleLanguage(event.detail)
+    }
+    window.addEventListener('chaptera:select-language', onSelectLanguage)
+    return () => window.removeEventListener('chaptera:select-language', onSelectLanguage)
+  }, [handleLanguage])
 
   const handleConvert = async () => {
     if (!file) {
@@ -155,7 +171,7 @@ export default function Studio() {
     setResult(null)
     setPhase('converting')
     setProgress(0)
-    speech.stop()
+    audio.stop()
     abortRef.current?.abort()
     const controller = new AbortController()
     abortRef.current = controller
@@ -189,17 +205,7 @@ export default function Studio() {
   }
 
   const handlePreview = () => {
-    if (previewing) {
-      speech.stop()
-      return
-    }
-    speech.speak({
-      text: excerpt,
-      langCode: language.code,
-      rate: speed,
-      id: 'studio-preview',
-      onNotice: setError,
-    })
+    audio.toggle(voice.sampleAudio, 'studio-preview')
   }
 
   return (
@@ -362,7 +368,10 @@ export default function Studio() {
                         <div className="flex shrink-0 items-center gap-1.5">
                           <button
                             type="button"
-                            onClick={() => inputRef.current?.click()}
+                            onClick={() => {
+                              audio.stop()
+                              inputRef.current?.click()
+                            }}
                             disabled={busy}
                             className="px-2 py-1 text-[0.52rem] uppercase tracking-[0.12em] text-bone/40 transition-colors hover:text-gold disabled:pointer-events-none disabled:opacity-25"
                           >
@@ -371,6 +380,7 @@ export default function Studio() {
                           <button
                             type="button"
                             onClick={() => {
+                              audio.stop()
                               setFile(null)
                               setResult(null)
                               setPhase('idle')
@@ -447,41 +457,58 @@ export default function Studio() {
                     </span>
                   </div>
                   <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-                    {voiceOptions.map((option) => (
-                      <button
-                        key={option.id}
-                        type="button"
-                        className="voice-option flex items-center gap-3 p-3 text-left"
-                        data-active={voiceId === option.id}
-                        onClick={() => {
-                          setVoiceId(option.id)
-                          setResult(null)
-                          setPhase('idle')
-                          setProgress(0)
-                        }}
-                        disabled={busy}
-                        aria-pressed={voiceId === option.id}
-                      >
-                        <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full border border-orange/25 bg-gradient-to-br from-orange/15 to-transparent font-display text-[0.8rem] text-gold">
-                          {option.name[0]}
-                          <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-ink bg-orange" />
-                        </span>
-                        <span className="min-w-0">
-                          <span className="flex items-baseline gap-2">
-                            <span className="text-[0.78rem] font-medium text-bone">{option.name}</span>
-                            <span className="font-mono text-[0.42rem] uppercase tracking-[0.1em] text-white/30">{option.gender}</span>
-                          </span>
-                          <span className="mt-0.5 block truncate text-[0.58rem] text-smoke">{option.tone}</span>
-                        </span>
-                      </button>
-                    ))}
+                    {voiceOptions.map((option) => {
+                      const auditioning = audio.playingId === `voice-${option.id}`
+                      return (
+                        <div
+                          key={option.id}
+                          className="voice-option flex items-stretch"
+                          data-active={voiceId === option.id}
+                        >
+                          <button
+                            type="button"
+                            className="flex min-w-0 flex-1 items-center gap-3 p-3 text-left"
+                            onClick={() => {
+                              audio.stop()
+                              setVoiceId(option.id)
+                              setResult(null)
+                              setPhase('idle')
+                              setProgress(0)
+                            }}
+                            disabled={busy}
+                            aria-pressed={voiceId === option.id}
+                          >
+                            <span className="relative grid h-10 w-10 shrink-0 place-items-center rounded-full border border-orange/25 bg-gradient-to-br from-orange/15 to-transparent font-display text-[0.8rem] text-gold">
+                              {option.name[0]}
+                              <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full border border-ink bg-orange" />
+                            </span>
+                            <span className="min-w-0">
+                              <span className="flex items-baseline gap-2">
+                                <span className="text-[0.78rem] font-medium text-bone">{option.name}</span>
+                                <span className="font-mono text-[0.42rem] uppercase tracking-[0.1em] text-white/30">{option.gender}</span>
+                              </span>
+                              <span className="mt-0.5 block truncate text-[0.58rem] text-smoke">{option.tone}</span>
+                            </span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => audio.toggle(option.sampleAudio, `voice-${option.id}`)}
+                            disabled={busy}
+                            className="my-2 mr-2 grid w-8 shrink-0 place-items-center border border-white/10 text-white/35 transition-colors hover:border-gold/40 hover:text-gold disabled:pointer-events-none disabled:opacity-30"
+                            aria-label={auditioning ? `Pause ${option.name} voice sample` : `Hear ${option.name} voice sample`}
+                          >
+                            {auditioning ? <Pause size={12} fill="currentColor" /> : <Volume2 size={13} />}
+                          </button>
+                        </div>
+                      )
+                    })}
                   </div>
                   <p className="mt-3 text-[0.6rem] leading-5 text-white/30">{voice.signature}</p>
                 </div>
 
                 <div className="mt-7 border-t border-white/[0.08] pt-6">
                   <AnimatePresence>
-                    {error ? (
+                    {error || audio.error ? (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
@@ -489,7 +516,19 @@ export default function Studio() {
                         className="mb-4 overflow-hidden"
                         role="status"
                       >
-                        <p className="border-l border-orange bg-orange/[0.06] px-3 py-2 text-[0.65rem] leading-5 text-orange/90">{error}</p>
+                        <p className="border-l border-orange bg-orange/[0.06] px-3 py-2 text-[0.65rem] leading-5 text-orange/90">
+                          {error || audio.error}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setError('')
+                              audio.setError('')
+                            }}
+                            className="ml-3 underline underline-offset-2"
+                          >
+                            Dismiss
+                          </button>
+                        </p>
                       </motion.div>
                     ) : null}
                   </AnimatePresence>
@@ -507,7 +546,7 @@ export default function Studio() {
                   ) : (
                     <button type="button" onClick={handleConvert} className="btn btn-primary group w-full">
                       <Sparkles size={14} className="text-ink/70" />
-                      {complete ? 'Convert another' : 'Convert to audio'}
+                      {complete ? 'Convert again' : 'Convert to audio'}
                       <span className="btn__icon">
                         <ArrowIcon />
                       </span>
@@ -697,7 +736,7 @@ export default function Studio() {
                           {language.display} · {voice.name} · {speed.toFixed(2)}×
                         </p>
                         <p className="mt-0.5 truncate font-mono text-[0.42rem] uppercase tracking-[0.1em] text-white/25">
-                          Live browser voice · full render via API
+                          Neural voice preview · full render via API
                         </p>
                       </div>
                       <Volume2 size={14} className="shrink-0 text-white/25" />
@@ -712,9 +751,13 @@ export default function Studio() {
                       seed={5}
                     />
 
+                    <p className="mt-2 line-clamp-2 text-[0.56rem] italic leading-5 text-white/30">
+                      “{excerpt}”
+                    </p>
+
                     <div className="mt-4 flex flex-wrap items-center gap-2">
                       <a
-                        href="/audio/studio-demo.mp3"
+                        href={result.previewAudio}
                         download={result.downloadName}
                         className="inline-flex flex-1 items-center justify-center gap-2 border border-gold/25 bg-white/[0.03] px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-gold transition-colors hover:border-orange/60 hover:text-orange"
                       >
@@ -731,7 +774,7 @@ export default function Studio() {
                       </button>
                     </div>
                     <p className="mt-3 text-[0.52rem] leading-4 text-white/25">
-                      Download includes a pre-rendered English sample. Connect the API for a full-length, language-matched audiobook.
+                      Download includes a pre-rendered {language.label} voice sample in {voice.name}’s voice. Connect the API for the full-length audiobook.
                     </p>
                   </motion.div>
                 ) : null}
