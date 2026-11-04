@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUpRight, Menu, X } from 'lucide-react'
 import Logo from './Logo'
@@ -14,32 +14,48 @@ const LINKS = [
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
-  const [progress, setProgress] = useState(0)
+  const progressRef = useRef(null)
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
+    let frame = 0
     const onScroll = () => {
-      const y = window.scrollY
-      const max = document.documentElement.scrollHeight - window.innerHeight
-      setScrolled(y > 32)
-      setProgress(max > 0 ? y / max : 0)
+      if (frame) return
+      frame = requestAnimationFrame(() => {
+        frame = 0
+        const y = window.scrollY
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        setScrolled(y > 32)
+        if (progressRef.current) {
+          progressRef.current.style.transform = `scaleX(${max > 0 ? y / max : 0})`
+        }
+      })
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      cancelAnimationFrame(frame)
+    }
   }, [])
 
   useEffect(() => {
     if (!open) return undefined
+    const desktop = window.matchMedia('(min-width: 1280px)')
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false)
+    }
     const previous = document.body.style.overflow
     document.body.style.overflow = 'hidden'
     const onKey = (event) => {
       if (event.key === 'Escape') setOpen(false)
     }
     window.addEventListener('keydown', onKey)
+    desktop.addEventListener('change', closeOnDesktop)
     return () => {
       document.body.style.overflow = previous
       window.removeEventListener('keydown', onKey)
+      desktop.removeEventListener('change', closeOnDesktop)
     }
   }, [open])
 
@@ -98,8 +114,9 @@ export default function Nav() {
 
           <div className="absolute inset-x-0 bottom-0 h-px bg-bone/[0.04]">
             <div
+              ref={progressRef}
               className="h-full origin-left bg-gradient-to-r from-orange to-gold transition-transform duration-150"
-              style={{ transform: `scaleX(${progress})` }}
+              style={{ transform: 'scaleX(0)' }}
             />
           </div>
         </div>
@@ -113,6 +130,9 @@ export default function Nav() {
             animate={{ opacity: 1, clipPath: 'inset(0 0 0% 0)' }}
             exit={{ opacity: 0, clipPath: 'inset(0 0 100% 0)' }}
             transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile navigation"
           >
             <div className="pointer-events-none absolute inset-0 opacity-70">
               <div className="ambient-orb left-[-20%] top-[8%] h-[28rem] w-[28rem] bg-orange/20" />
@@ -131,7 +151,8 @@ export default function Nav() {
               </button>
             </div>
 
-            <nav aria-label="Mobile" className="container-x flex flex-1 flex-col justify-center pb-12">
+            <nav aria-label="Mobile" className="container-x flex min-h-0 flex-1 flex-col overflow-y-auto pb-8">
+              <div className="my-auto">
               {LINKS.map((link, index) => (
                 <motion.a
                   key={link.label}
@@ -140,7 +161,7 @@ export default function Nav() {
                   initial={{ opacity: 0, y: 22 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.16 + index * 0.06, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                  className="group flex items-baseline justify-between border-b border-bone/[0.08] py-5"
+                  className="group flex items-center justify-between border-b border-bone/[0.08] py-4"
                 >
                   <span className="flex items-baseline gap-4">
                     <span className="font-mono text-[0.55rem] text-orange/70">0{index + 1}</span>
@@ -157,18 +178,35 @@ export default function Nav() {
                 onClick={() => setOpen(false)}
                 initial={{ opacity: 0, y: 22 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.48, duration: 0.6 }}
-                className="btn btn-primary mt-10 w-full"
+                transition={{ delay: 0.44, duration: 0.6 }}
+                className="mt-6 flex min-h-[3.25rem] items-center justify-between gap-4 border border-bone/15 px-4 text-bone/90 transition-colors hover:border-gold/40 hover:text-gold"
+                aria-label="Upload a book in the studio"
+              >
+                <span className="flex flex-col items-start gap-1">
+                  <span className="text-[0.58rem] font-semibold uppercase tracking-[0.16em]">Upload book</span>
+                  <span className="font-mono text-[0.44rem] uppercase tracking-[0.13em] text-smoke">PDF · EPUB · TXT · DOCX</span>
+                </span>
+                <ArrowUpRight size={16} className="shrink-0 text-orange" />
+              </motion.a>
+
+              <motion.a
+                href="#studio"
+                onClick={() => setOpen(false)}
+                initial={{ opacity: 0, y: 22 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5, duration: 0.6 }}
+                className="btn btn-primary mt-5 w-full"
               >
                 Start your first audiobook
                 <span className="btn__icon">
                   <ArrowUpRight size={16} />
                 </span>
               </motion.a>
-              <div className="mt-6 flex items-center justify-between text-[0.58rem] uppercase tracking-[0.2em] text-smoke">
+              <div className="mt-5 flex items-center justify-between text-[0.58rem] uppercase tracking-[0.2em] text-smoke">
                 <span>English</span>
                 <span className="font-tamil">தமிழ்</span>
                 <span className="font-urdu text-sm">اردو</span>
+              </div>
               </div>
             </nav>
           </motion.div>

@@ -166,13 +166,13 @@ const VISUALS = {
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="how-it-works" className="relative overflow-hidden border-b border-bone/[0.06] section-pad">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute left-[-15%] top-[20%] h-[32rem] w-[32rem] rounded-full bg-orange/[0.045] blur-[120px]" />
         <div className="absolute right-[-10%] bottom-0 h-[24rem] w-[24rem] rounded-full bg-gold/[0.035] blur-[100px]" />
       </div>
       <div className="container-x relative">
-        <div className="grid grid-cols-12 items-end gap-8">
+        <div className="grid grid-cols-12 items-end gap-y-8 lg:gap-8">
           <SectionHeading
             className="col-span-12 lg:col-span-8"
             eyebrow="The experience / 01 — 03"
@@ -195,7 +195,7 @@ export default function HowItWorks() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-bone/[0.08] md:grid-cols-3 lg:mt-20">
+        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden border border-bone/[0.08] lg:mt-20 lg:grid-cols-3">
           {HOW_IT_WORKS.map((step, index) => {
             const Visual = VISUALS[step.glyph]
             return (
@@ -221,7 +221,7 @@ export default function HowItWorks() {
                       <h3 className="display mt-3 text-[clamp(1.55rem,2.4vw,2.1rem)] text-bone">
                         {step.title}
                       </h3>
-                      <p className="mt-4 max-w-sm text-[0.83rem] leading-6 text-smoke">{step.copy}</p>
+                      <p className="step-copy mt-4 max-w-sm text-[0.83rem] leading-6 text-smoke">{step.copy}</p>
                       <div className="mt-6 flex items-center justify-between border-t border-bone/[0.08] pt-4">
                         <div className="flex items-center gap-3">
                           {step.meta.map((item) => (

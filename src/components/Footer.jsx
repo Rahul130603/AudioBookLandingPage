@@ -117,7 +117,7 @@ export default function Footer() {
         </div>
 
         <div className="container-x relative">
-          <div className="flex flex-col justify-between gap-8 border-b border-bone/[0.07] py-12 md:flex-row md:items-center">
+          <div className="flex flex-col justify-between gap-8 border-b border-bone/[0.07] py-8 md:flex-row md:items-center">
             <div>
               <span className="eyebrow">The next chapter</span>
               <p className="mt-3 max-w-lg font-display text-[clamp(1.5rem,3vw,2.3rem)] font-medium tracking-[-0.045em] text-bone">
@@ -132,13 +132,13 @@ export default function Footer() {
             </a>
           </div>
 
-          <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+          <div className="grid grid-cols-1 gap-10 py-8 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
             <div className="lg:col-span-5">
               <Logo />
               <p className="mt-5 max-w-xs font-display text-[1.1rem] font-light leading-relaxed tracking-[-0.02em] text-bone/88">
                 Every Book Has a Voice.
               </p>
-              <p className="mt-4 max-w-xs text-[0.7rem] leading-6 text-bone/90">
+              <p className="footer-copy mt-4 max-w-xs text-[0.7rem] leading-6 text-bone/90">
                 A cinematic listening room for the stories you already love — and the ones still waiting to be heard.
               </p>
               <a
@@ -159,7 +159,7 @@ export default function Footer() {
                       key={link.label}
                       type="button"
                       onClick={() => setModal(link.action)}
-                      className="text-[0.7rem] text-bone/90 transition-colors hover:text-gold"
+                      className="footer-nav-link text-[0.7rem] text-bone/90 transition-colors hover:text-gold"
                     >
                       {link.label}
                     </button>
@@ -167,7 +167,7 @@ export default function Footer() {
                     <a
                       key={link.label}
                       href={link.href}
-                      className="text-[0.7rem] text-bone/90 transition-colors hover:text-gold"
+                      className="footer-nav-link text-[0.7rem] text-bone/90 transition-colors hover:text-gold"
                     >
                       {link.label}
                     </a>
@@ -179,7 +179,7 @@ export default function Footer() {
             <div className="lg:col-span-2">
               <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-bone/90">Languages</p>
               <div className="mt-5 flex flex-col items-start gap-3">
-                <a href="#languages" className="text-[0.7rem] text-bone/90 transition-colors hover:text-gold">
+                <a href="#languages" className="footer-nav-link text-[0.7rem] text-bone/90 transition-colors hover:text-gold">
                   English
                 </a>
                 <a href="#languages" lang="ta" className="font-tamil text-[0.8rem] text-bone/90 transition-colors hover:text-gold">
@@ -193,7 +193,7 @@ export default function Footer() {
 
             <div className="lg:col-span-2 lg:text-right">
               <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-bone/90">Chaptera</p>
-              <p className="mt-5 text-[0.7rem] leading-6 text-bone/90">
+              <p className="footer-copy mt-5 text-[0.7rem] leading-6 text-bone/90">
                 A studio for voices,
                 <br />
                 pages & in-between hours.

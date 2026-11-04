@@ -16,7 +16,7 @@ export default function FinalCTA() {
     offset: ['start end', 'center center'],
   })
 
-  const rawCover = useTransform(scrollYProgress, [0.05, 0.78], [-62, -1.5])
+  const rawCover = useTransform(scrollYProgress, [0.05, 0.65], [-42, 0])
   const coverRotation = useSpring(rawCover, { stiffness: 55, damping: 18, mass: 0.7 })
   const rawTilt = useTransform(scrollYProgress, [0, 1], [22, 7])
   const bookTilt = useSpring(rawTilt, { stiffness: 50, damping: 18 })
@@ -42,7 +42,7 @@ export default function FinalCTA() {
     <section
       id="begin"
       ref={sectionRef}
-      className="relative flex min-h-[100svh] items-center overflow-hidden border-b border-bone/[0.06] py-24 sm:py-32"
+      className="section-pad relative flex items-center overflow-hidden border-b border-bone/[0.06]"
     >
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_68%_45%,rgba(255,107,39,0.16),transparent_45%)]" />
@@ -51,50 +51,6 @@ export default function FinalCTA() {
         <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-ink to-transparent" />
       </div>
 
-      <div className="cta-book-wrap pointer-events-none absolute inset-y-0 right-[-8%] z-[1] flex w-[85%] items-center justify-end pr-4 opacity-[0.16] sm:right-[-10%] sm:w-[70%] sm:opacity-[0.2] lg:opacity-[0.26] xl:right-0 xl:w-[54%] xl:pr-6 xl:opacity-100">
-        <motion.div
-          className="relative h-[70vh] max-h-[46rem] w-full max-w-[36rem]"
-          style={{ opacity: reduce ? 0.75 : undefined }}
-        >
-          <div className="cta-book-glow" />
-          <div className="cta-book-stage">
-            <motion.div
-              className="cta-book"
-              style={{ rotateY: reduce ? -36 : bookTilt, rotateX: reduce ? 7 : 10, transformStyle: 'preserve-3d' }}
-            >
-              <div className="cta-book__back" />
-              <div className="cta-book__pages" />
-              <div className="cta-book__inside">
-                <div className="cta-page">
-                  <span className="cta-page__eyebrow">Chaptera / Every book has a voice</span>
-                  <span className="cta-page__title">
-                    LISTEN
-                    <br />
-                    <span>TO THE</span>
-                    <br />
-                    STORY.
-                  </span>
-                  <span className="cta-page__rule" />
-                  <p className="cta-page__copy">
-                    Your books do not have to end at the last page. Give them a voice, and they will follow you into the world.
-                  </p>
-                  <span className="cta-page__number">PAGE 001</span>
-                </div>
-              </div>
-              <div className="cta-book__spine" />
-              <motion.div className="cta-book__cover" style={{ rotateY: reduce ? -30 : coverRotation, transformOrigin: 'left center' }}>
-                <div className="cta-book__cover-face">
-                  <BookCover book={BOOK} mode="full" />
-                </div>
-                <div className="cta-book__cover-back">
-                  <span>Every book has a voice.</span>
-                  <span>CHAPTERA · 2026</span>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
 
       <motion.div
         className="pointer-events-none absolute inset-0 z-[2]"
@@ -118,8 +74,8 @@ export default function FinalCTA() {
         ))}
       </motion.div>
 
-      <div className="container-x relative z-10">
-        <div className="max-w-[62rem]">
+      <div className="container-x relative z-10 xl:grid xl:grid-cols-[minmax(0,1.8fr)_minmax(0,1fr)] xl:gap-x-12">
+        <div className="final-cta-copy max-w-[62rem]">
           <Reveal>
             <span className="eyebrow">The final page / The first listen</span>
           </Reveal>
@@ -132,12 +88,12 @@ export default function FinalCTA() {
             </h2>
           </Reveal>
           <Reveal delay={0.18}>
-            <p className="mt-8 max-w-md text-[0.88rem] leading-7 text-bone/90">
+            <p className="cta-copy mt-8 max-w-md text-[0.88rem] leading-7 text-bone/90">
               Turn the page you already love into a voice you will remember. Your first audiobook is waiting on the other side of this button.
             </p>
           </Reveal>
           <Reveal delay={0.26}>
-            <div className="mt-9 flex flex-wrap items-center gap-5">
+            <div className="final-cta-actions mt-9 flex flex-wrap items-center gap-5">
               <a href="#studio" className="btn btn-primary group">
                 Create your first audiobook
                 <span className="btn__icon">
@@ -151,6 +107,52 @@ export default function FinalCTA() {
             </div>
           </Reveal>
         </div>
+
+      <div className="cta-book-wrap pointer-events-none absolute inset-y-0 right-[-8%] z-[1] flex w-[85%] items-center justify-end pr-4 opacity-[0.16] sm:right-[-10%] sm:w-[70%] sm:opacity-[0.2] lg:opacity-[0.26] xl:relative xl:inset-auto xl:col-start-2 xl:row-start-1 xl:w-full xl:justify-center xl:p-0 xl:opacity-100">
+        <motion.div
+          className="relative h-[70vh] max-h-[46rem] w-full max-w-[36rem] xl:h-full"
+          style={{ opacity: reduce ? 0.75 : undefined }}
+        >
+          <div className="cta-book-glow" />
+          <div className="cta-book-stage">
+            <motion.div
+              className="cta-book"
+              style={{ rotateY: reduce ? 7 : bookTilt, rotateX: reduce ? 7 : 10 }}
+            >
+              <div className="cta-book__back" />
+              <div className="cta-book__pages" />
+              <div className="cta-book__inside">
+                <div className="cta-page">
+                  <span className="cta-page__eyebrow">Chaptera / Every book has a voice</span>
+                  <span className="cta-page__title">
+                    LISTEN
+                    <br />
+                    <span>TO THE</span>
+                    <br />
+                    STORY.
+                  </span>
+                  <span className="cta-page__rule" />
+                  <p className="cta-page__copy">
+                    Your books do not have to end at the last page. Give them a voice, and they will follow you into the world.
+                  </p>
+                  <span className="cta-page__number">PAGE 001</span>
+                </div>
+              </div>
+              <div className="cta-book__spine" />
+              <motion.div className="cta-book__cover" style={{ rotateY: reduce ? 0 : coverRotation }}>
+                <div className="cta-book__cover-face">
+                  <BookCover book={BOOK} mode="full" />
+                </div>
+                <div className="cta-book__cover-back">
+                  <span>Every book has a voice.</span>
+                  <span>CHAPTERA · 2026</span>
+                </div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </motion.div>
+      </div>
+
 
         <motion.div
           className="relative mt-16 max-w-[45rem] border-t border-bone/[0.08] pt-6 sm:mt-24"

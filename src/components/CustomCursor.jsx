@@ -18,12 +18,18 @@ export default function CustomCursor() {
     let ringX = x
     let ringY = y
     let raf
+    let zoom = 1
+
+    const syncZoom = () => {
+      zoom = Number(getComputedStyle(document.documentElement).zoom) || 1
+    }
+    syncZoom()
 
     const onMove = (event) => {
       x = event.clientX
       y = event.clientY
       if (dotRef.current) {
-        dotRef.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`
+        dotRef.current.style.transform = `translate3d(${x / zoom}px, ${y / zoom}px, 0) translate(-50%, -50%)`
       }
     }
 
@@ -38,18 +44,20 @@ export default function CustomCursor() {
       ringX += (x - ringX) * 0.14
       ringY += (y - ringY) * 0.14
       if (ringRef.current) {
-        ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`
+        ringRef.current.style.transform = `translate3d(${ringX / zoom}px, ${ringY / zoom}px, 0) translate(-50%, -50%)`
       }
       raf = requestAnimationFrame(loop)
     }
 
     window.addEventListener('pointermove', onMove, { passive: true })
     window.addEventListener('pointerover', onOver, { passive: true })
+    window.addEventListener('resize', syncZoom)
     raf = requestAnimationFrame(loop)
 
     return () => {
       window.removeEventListener('pointermove', onMove)
       window.removeEventListener('pointerover', onOver)
+      window.removeEventListener('resize', syncZoom)
       cancelAnimationFrame(raf)
       document.body.classList.remove('custom-cursor-active')
     }

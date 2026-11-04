@@ -174,7 +174,7 @@ const GLYPH_ICONS = {
 
 export default function Features() {
   return (
-    <section id="features" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="features" className="relative overflow-hidden border-b border-bone/[0.06] section-pad">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(255,107,39,0.075),transparent_38%)]" />
         <div className="grid-lines absolute inset-0 opacity-20" />

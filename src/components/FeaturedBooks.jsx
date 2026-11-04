@@ -11,7 +11,7 @@ function BookPreviewButton({ book, isPlaying, onToggle }) {
     <button
       type="button"
       onClick={onToggle}
-      className="inline-flex items-center gap-2 border border-bone/15 bg-ink/60 px-3 py-2 text-[0.49rem] font-medium uppercase tracking-[0.12em] text-bone/84 backdrop-blur-md transition-colors hover:border-gold/40 hover:text-gold"
+      className="book-preview inline-flex items-center gap-2 border border-bone/15 bg-ink/60 px-3 py-2 text-[0.49rem] font-medium uppercase tracking-[0.12em] text-bone/84 backdrop-blur-md transition-colors hover:border-gold/40 hover:text-gold"
       aria-label={isPlaying ? `Pause preview of ${book.title}` : `Hear a line from ${book.title}`}
     >
       {isPlaying ? <Pause size={11} fill="currentColor" /> : <Volume2 size={11} />}
@@ -71,7 +71,7 @@ function FeaturedBookCard({ book, index, audio }) {
           </div>
         </div>
 
-        <div className="absolute bottom-5 right-5 z-20 translate-y-0 opacity-100 transition-all duration-500 md:translate-y-2 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100">
+        <div className="book-preview-wrap absolute bottom-5 right-5 z-20 transition-all duration-500">
           <BookPreviewButton book={book} isPlaying={isPlaying} onToggle={togglePreview} />
         </div>
 
@@ -93,10 +93,10 @@ function FeaturedBookCard({ book, index, audio }) {
 
       <div className="flex items-start justify-between gap-3 px-3 pb-3 pt-6">
         <div className="min-w-0">
-          <h3 className="truncate font-display text-[1.08rem] font-medium tracking-[-0.03em] text-bone transition-colors group-hover:text-gold">
+          <h3 className="book-title truncate font-display text-[1.08rem] font-medium tracking-[-0.03em] text-bone transition-colors group-hover:text-gold">
             {book.title}
           </h3>
-          <p className="mt-1 truncate text-[0.61rem] text-bone/90">{book.author}</p>
+          <p className="book-author mt-1 truncate text-[0.61rem] text-bone/90">{book.author}</p>
         </div>
         <div className="shrink-0 text-right">
           <p className="font-mono text-[0.41rem] uppercase tracking-[0.13em] text-bone/60">0{index + 1}</p>
@@ -107,7 +107,7 @@ function FeaturedBookCard({ book, index, audio }) {
         <span style={{ background: book.accent }} className="h-1 w-1 rounded-full" />
         {book.langCode === 'EN' ? 'English' : book.language}
       </div>
-      <p className="min-h-[2.6rem] px-3 pb-4 text-[0.66rem] leading-5 text-bone/60">{book.blurb}</p>
+      <p className="book-blurb min-h-[2.6rem] px-3 pb-4 text-[0.66rem] leading-5 text-bone/60">{book.blurb}</p>
     </article>
   )
 }
@@ -164,7 +164,7 @@ export default function FeaturedBooks() {
   }
 
   return (
-    <section id="explore" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="explore" className="relative overflow-hidden border-b border-bone/[0.06] section-pad">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_20%_20%,rgba(255,177,92,0.045),transparent_45%)]" />
         <div className="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-ink via-ink/50 to-transparent" />
@@ -212,10 +212,10 @@ export default function FeaturedBooks() {
             aria-label="Featured audiobooks. Scroll horizontally or use the arrow buttons."
             tabIndex={0}
             style={{ cursor: 'grab' }}
-            className="book-rail fade-edges -mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5"
+            className="book-rail -mx-3 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-5"
           >
             {FEATURED_BOOKS.map((book, index) => (
-              <Reveal key={book.id} delay={index * 0.04} className="w-[78vw] shrink-0 sm:w-[20rem] lg:w-[21.5rem]">
+              <Reveal key={book.id} delay={index * 0.04} className="w-[78vw] shrink-0 md:w-[20rem] lg:w-[21.5rem]">
                 <FeaturedBookCard book={book} index={index} audio={audio} />
               </Reveal>
             ))}
@@ -261,7 +261,7 @@ export default function FeaturedBooks() {
               <Play size={9} className="text-orange/60" />
               Hover a book to hear a line in its native language.
             </p>
-            <a href="#studio" className="group inline-flex items-center gap-2 text-[0.54rem] font-semibold uppercase tracking-[0.15em] text-gold/75 transition-colors hover:text-orange">
+            <a href="#studio" className="shelf-link group inline-flex items-center gap-2 text-[0.54rem] font-semibold uppercase tracking-[0.15em] text-gold/75 transition-colors hover:text-orange">
               Bring your own book to the shelf
               <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
             </a>

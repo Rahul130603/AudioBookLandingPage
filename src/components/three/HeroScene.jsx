@@ -137,7 +137,7 @@ function TurningPage({ texture, backTexture, index, reducedMotion }) {
   )
 }
 
-function SoundBars({ reducedMotion }) {
+function SoundBars({ reducedMotion, lightTheme }) {
   const bars = useRef([])
   const group = useRef()
   const data = useMemo(
@@ -169,10 +169,10 @@ function SoundBars({ reducedMotion }) {
         <mesh key={i} position={[bar.x, 0, 0]} ref={(node) => (bars.current[i] = node)}>
           <boxGeometry args={[0.022, 1, 0.022]} />
           <meshBasicMaterial
-            color={i % 7 === 0 ? GOLD : ORANGE}
+            color={lightTheme ? (i % 7 === 0 ? '#985b20' : '#c34d16') : i % 7 === 0 ? GOLD : ORANGE}
             transparent
             opacity={0.34 + (i % 5) * 0.07}
-            blending={THREE.AdditiveBlending}
+            blending={lightTheme ? THREE.NormalBlending : THREE.AdditiveBlending}
             depthWrite={false}
           />
         </mesh>
@@ -181,7 +181,7 @@ function SoundBars({ reducedMotion }) {
   )
 }
 
-function SoundRings({ reducedMotion }) {
+function SoundRings({ reducedMotion, lightTheme }) {
   const group = useRef()
   useFrame((state) => {
     if (!group.current) return
@@ -192,7 +192,10 @@ function SoundRings({ reducedMotion }) {
     }
     group.current.children.forEach((ring, index) => {
       if (ring.material) {
-        ring.material.opacity = reducedMotion ? 0.16 : 0.12 + Math.abs(Math.sin(t * 0.45 + index * 1.4)) * 0.17
+        const pulse = Math.abs(Math.sin(t * 0.45 + index * 1.4))
+        ring.material.opacity = lightTheme
+          ? reducedMotion ? 0.35 : 0.28 + pulse * 0.17
+          : reducedMotion ? 0.16 : 0.12 + pulse * 0.17
       }
     })
   })
@@ -202,7 +205,7 @@ function SoundRings({ reducedMotion }) {
       {[2.45, 2.8, 3.15].map((radius, i) => (
         <mesh key={radius} rotation={[0, 0, i * 0.35]}>
           <torusGeometry args={[radius, 0.005, 4, 128, Math.PI * 1.15]} />
-          <meshBasicMaterial color={i === 1 ? GOLD : ORANGE} transparent opacity={0.2} blending={THREE.AdditiveBlending} depthWrite={false} />
+          <meshBasicMaterial color={lightTheme ? (i === 1 ? '#985b20' : '#c34d16') : i === 1 ? GOLD : ORANGE} transparent opacity={0.2} blending={lightTheme ? THREE.NormalBlending : THREE.AdditiveBlending} depthWrite={false} />
         </mesh>
       ))}
     </group>
@@ -338,13 +341,14 @@ function Book({ reducedMotion }) {
   )
 }
 
-function CameraRig({ reducedMotion }) {
+function CameraRig({ reducedMotion, mobile }) {
   const { camera, size } = useThree()
   useFrame((state, delta) => {
     const scroll = Math.min(1, window.scrollY / Math.max(1, window.innerHeight))
     const targetX = state.pointer.x * (reducedMotion ? 0 : 0.28)
     const targetY = 0.15 + state.pointer.y * (reducedMotion ? 0 : 0.18) - scroll * 0.2
-    const targetZ = (size.width < 768 ? 10.4 : size.width < 1100 ? 10.1 : 9.1) + scroll * 0.75
+    const distance = mobile ? 8 / Math.min(1, size.width / size.height) : size.width < 768 ? 8 : size.width < 1100 ? 10.1 : 9.1
+    const targetZ = distance + scroll * 0.75
     camera.position.x = THREE.MathUtils.damp(camera.position.x, targetX, 3, delta)
     camera.position.y = THREE.MathUtils.damp(camera.position.y, targetY, 3, delta)
     camera.position.z = THREE.MathUtils.damp(camera.position.z, targetZ, 2, delta)
@@ -353,7 +357,18 @@ function CameraRig({ reducedMotion }) {
   return null
 }
 
-function Scene({ reducedMotion }) {
+function Scene({ reducedMotion, mobile }) {
+  const { size } = useThree()
+  const isSmall = size.width < 768
+  const [lightTheme, setLightTheme] = useState(() => document.documentElement.dataset.theme !== 'dark')
+
+  useEffect(() => {
+    const root = document.documentElement
+    const observer = new MutationObserver(() => setLightTheme(root.dataset.theme !== 'dark'))
+    observer.observe(root, { attributes: true, attributeFilter: ['data-theme'] })
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <>
       <ambientLight intensity={0.64} />
@@ -362,8 +377,8 @@ function Scene({ reducedMotion }) {
         intensity={2.5}
         color="#ffdcc0"
         castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
+        shadow-mapSize-width={mobile ? 512 : 1024}
+        shadow-mapSize-height={mobile ? 512 : 1024}
         shadow-camera-near={0.1}
         shadow-camera-far={20}
         shadow-camera-left={-7}
@@ -375,7 +390,7 @@ function Scene({ reducedMotion }) {
       <pointLight position={[0, -2.2, 3.5]} intensity={7} distance={9} color="#ff8c45" />
       <pointLight position={[3.5, 2, -2]} intensity={5} distance={8} color="#ffd9ab" />
 
-      <CameraRig reducedMotion={reducedMotion} />
+      <CameraRig reducedMotion={reducedMotion} mobile={mobile} />
 
       {reducedMotion ? (
         <Book reducedMotion />
@@ -385,10 +400,10 @@ function Scene({ reducedMotion }) {
         </Float>
       )}
 
-      <SoundRings reducedMotion={reducedMotion} />
-      <SoundBars reducedMotion={reducedMotion} />
+      <SoundRings reducedMotion={reducedMotion} lightTheme={lightTheme} />
+      <SoundBars reducedMotion={reducedMotion} lightTheme={lightTheme} />
       <Sparkles
-        count={reducedMotion ? 20 : 85}
+        count={reducedMotion ? 16 : isSmall ? 36 : 85}
         scale={[8, 7, 5]}
         size={2.2}
         speed={reducedMotion ? 0 : 0.25}
@@ -403,7 +418,8 @@ function Scene({ reducedMotion }) {
         blur={3.2}
         far={4}
         color="#5a3a20"
-        frames={reducedMotion ? 1 : Infinity}
+        resolution={mobile ? 128 : 256}
+        frames={1}
       />
       <AdaptiveDpr pixelated />
       <Preload all />
@@ -411,11 +427,11 @@ function Scene({ reducedMotion }) {
   )
 }
 
-export default function HeroScene({ reducedMotion = false, active = true }) {
+export default function HeroScene({ reducedMotion = false, active = true, mobile = false }) {
   return (
     <Canvas
       aria-hidden="true"
-      dpr={[1, 1.65]}
+      dpr={[1, mobile ? 1.25 : 1.5]}
       shadows
       camera={{ position: [0, 0.15, 9.1], fov: 38, near: 0.1, far: 60 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
@@ -423,7 +439,7 @@ export default function HeroScene({ reducedMotion = false, active = true }) {
       frameloop={active ? 'always' : 'never'}
     >
       <Suspense fallback={null}>
-        <Scene reducedMotion={reducedMotion} />
+          <Scene reducedMotion={reducedMotion} mobile={mobile} />
       </Suspense>
     </Canvas>
   )

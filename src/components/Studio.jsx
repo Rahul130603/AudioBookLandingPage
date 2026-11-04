@@ -209,7 +209,7 @@ export default function Studio() {
   }
 
   return (
-    <section id="studio" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="studio" className="relative overflow-hidden border-b border-bone/[0.06] section-pad">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(255,107,39,0.07),transparent_45%)]" />
         <div className="ambient-orb left-[-12%] top-[30%] h-[32rem] w-[32rem] bg-orange/[0.06]" />
@@ -217,7 +217,7 @@ export default function Studio() {
       </div>
 
       <div className="container-x relative">
-        <div className="grid grid-cols-12 items-end gap-8">
+        <div className="grid grid-cols-12 items-end gap-y-8 lg:gap-8">
           <SectionHeading
             className="col-span-12 lg:col-span-8"
             eyebrow="The conversion studio / API ready"
@@ -246,7 +246,7 @@ export default function Studio() {
           </Reveal>
         </div>
 
-        <div className="mt-14 grid grid-cols-12 gap-5 lg:mt-20">
+        <div className="mt-14 grid grid-cols-12 gap-y-5 lg:gap-5 lg:mt-20">
           <Reveal className="col-span-12 lg:col-span-7">
             <div className="glass-panel relative h-full">
               <span className="panel-corner panel-corner--tl" />
@@ -317,7 +317,7 @@ export default function Studio() {
                         <p className="font-display text-[1.15rem] font-medium tracking-[-0.02em] text-bone">
                           Drop your manuscript into the light
                         </p>
-                        <p className="mt-2 max-w-sm text-[0.76rem] leading-6 text-smoke">
+                        <p className="upload-help mt-2 max-w-sm text-[0.76rem] leading-6 text-smoke">
                           Drag a book here, or browse your shelf. Up to 50 MB. Your file never leaves this demo.
                         </p>
                         <span className="mt-6 inline-flex items-center gap-2 border-b border-gold/40 pb-1 text-[0.56rem] font-semibold uppercase tracking-[0.16em] text-gold transition-colors group-hover/zone:border-orange group-hover/zone:text-orange">
@@ -405,7 +405,20 @@ export default function Studio() {
                       <span className="font-mono text-[0.49rem] uppercase tracking-[0.2em] text-bone/88">02 / Language</span>
                       <span className="font-mono text-[0.43rem] uppercase tracking-[0.12em] text-bone/38">3 available</span>
                     </div>
-                    <div className="segmented w-full">
+                    <select
+                      aria-label="Language"
+                      className="min-h-11 w-full border border-bone/15 bg-coal px-3 text-base text-bone disabled:opacity-50 md:hidden"
+                      value={languageId}
+                      onChange={(event) => handleLanguage(event.target.value)}
+                      disabled={busy}
+                    >
+                      {LANGUAGES.map((item) => (
+                        <option key={item.id} value={item.id} lang={item.code}>
+                          {item.display}
+                        </option>
+                      ))}
+                    </select>
+                    <div className="segmented !hidden w-full md:!inline-flex">
                       {LANGUAGES.map((item) => (
                         <button
                           key={item.id}
@@ -628,27 +641,13 @@ export default function Studio() {
                       transition={{ duration: busy ? 2 : 6, repeat: Infinity, ease: 'easeInOut' }}
                     >
                       <div className="conversion-book">
-                        <div className="conversion-book__inner">
-                          <span className="font-display text-[0.45rem] uppercase tracking-[0.22em] text-cream/35">
-                            Chaptera
-                          </span>
-                          <div>
-                            <span
-                              className={`block text-center text-[2.2rem] leading-none text-cream ${
-                                language.code === 'ta' ? 'font-tamil text-[1.8rem]' : language.code === 'ur' ? 'font-urdu text-[2rem] leading-[1.8]' : 'font-display font-semibold'
-                              }`}
-                            >
-                              {language.display}
-                            </span>
-                            <span className="mt-3 block h-px w-8 mx-auto bg-orange/70" />
-                            <span className="mt-2 block text-center font-mono text-[0.4rem] uppercase tracking-[0.2em] text-cream/30">
-                              {complete ? 'Ready' : busy ? 'Listening' : 'Unopened'}
-                            </span>
-                          </div>
-                          <span className="text-center font-mono text-[0.38rem] uppercase tracking-[0.18em] text-cream/20">
-                            {voice.name} · {speed.toFixed(2)}×
-                          </span>
-                        </div>
+                        <img
+                          src="/assets/books/studio-silent-meridian.png"
+                          alt="The Silent Meridian audiobook cover by Arun Krishnan"
+                          className="absolute inset-0 h-full w-full rounded-[1px_4px_4px_1px] object-contain"
+                          loading="lazy"
+                          draggable={false}
+                        />
                         {busy ? (
                           <div className="absolute inset-0 flex items-center justify-center gap-[3px] bg-[#0b0806]/55 backdrop-blur-[1px]">
                             {Array.from({ length: 11 }).map((_, i) => (
@@ -759,7 +758,7 @@ export default function Studio() {
                       <a
                         href={result.previewAudio}
                         download={result.downloadName}
-                        className="inline-flex flex-1 items-center justify-center gap-2 border border-gold/25 bg-bone/[0.03] px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-gold transition-colors hover:border-orange/60 hover:text-orange"
+                        className="studio-download inline-flex flex-1 items-center justify-center gap-2 border border-gold/25 bg-bone/[0.03] px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-gold transition-colors hover:border-orange/60 hover:text-orange"
                       >
                         <Download size={12} />
                         Download demo
@@ -767,7 +766,7 @@ export default function Studio() {
                       <button
                         type="button"
                         onClick={resetConversion}
-                        className="inline-flex items-center justify-center gap-2 border border-bone/10 px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-bone/90 transition-colors hover:border-bone/25 hover:text-bone"
+                        className="studio-reset inline-flex items-center justify-center gap-2 border border-bone/10 px-3 py-2.5 text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-bone/90 transition-colors hover:border-bone/25 hover:text-bone"
                       >
                         <RotateCcw size={12} />
                         Reset

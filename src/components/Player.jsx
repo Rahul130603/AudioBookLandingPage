@@ -307,7 +307,7 @@ export default function Player() {
   }
 
   return (
-    <section id="player" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="player" className="relative overflow-hidden border-b border-bone/[0.06] section-pad">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_30%,rgba(255,107,39,0.08),transparent_48%)]" />
         <div className="ambient-orb right-[-15%] top-[20%] h-[38rem] w-[38rem] bg-orange/[0.06]" />
@@ -573,12 +573,12 @@ export default function Player() {
                 <span className="w-9 shrink-0 text-right font-mono text-[0.55rem] text-bone/84">{formatTime(duration)}</span>
               </div>
 
-              <div className="mt-4 grid grid-cols-1 items-center gap-5 sm:grid-cols-3">
+              <div className="player-controls-grid mt-4 grid grid-cols-1 items-center gap-5 sm:grid-cols-3">
                 <div className="flex items-center justify-center gap-3 sm:justify-start">
                   <button
                     type="button"
                     onClick={() => setMuted((value) => !value)}
-                    className="text-bone/88 transition-colors hover:text-gold"
+                    className="player-mute text-bone/88 transition-colors hover:text-gold"
                     aria-label={muted ? 'Unmute' : 'Mute'}
                   >
                     {muted || volume === 0 ? <VolumeX size={16} /> : <Volume2 size={16} />}
@@ -623,7 +623,7 @@ export default function Player() {
                   <SkipButton direction="forward" label="Forward 15 seconds" onClick={() => skip(15)} />
                 </div>
 
-                <div className="flex items-center justify-center gap-3 sm:justify-end">
+                <div className="player-speed-row flex items-center justify-center gap-3 sm:justify-end">
                   <div className="segmented">
                     {SPEEDS.map((speed) => (
                       <button
@@ -641,7 +641,7 @@ export default function Player() {
                   <button
                     type="button"
                     onClick={saveBookmark}
-                    className="group flex h-9 items-center gap-2 border border-bone/10 px-3 text-[0.46rem] font-medium uppercase tracking-[0.11em] text-bone/60 transition-colors hover:border-gold/35 hover:text-gold"
+                    className="player-bookmark group flex h-9 items-center gap-2 border border-bone/10 px-3 text-[0.46rem] font-medium uppercase tracking-[0.11em] text-bone/60 transition-colors hover:border-gold/35 hover:text-gold"
                     aria-label="Bookmark current position"
                   >
                     <Bookmark size={11} />

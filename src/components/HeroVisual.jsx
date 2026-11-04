@@ -44,7 +44,7 @@ function StaticBook() {
   )
 }
 
-export default function HeroVisual() {
+export default function HeroVisual({ mobile = false }) {
   const reduce = useReducedMotion()
   const hostRef = useRef(null)
   const [canRender, setCanRender] = useState(false)
@@ -73,7 +73,7 @@ export default function HeroVisual() {
     )
     observer.observe(node)
     return () => observer.disconnect()
-  }, [])
+  }, [canRender])
 
   if (!canRender) return <StaticBook />
 
@@ -81,7 +81,7 @@ export default function HeroVisual() {
     <div ref={hostRef} className="h-full w-full">
       <SceneBoundary fallback={<StaticBook />}>
         <Suspense fallback={<StaticBook />}>
-          <HeroScene reducedMotion={Boolean(reduce)} active={inView} />
+          <HeroScene reducedMotion={Boolean(reduce)} active={inView} mobile={mobile} />
         </Suspense>
       </SceneBoundary>
     </div>

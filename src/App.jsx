@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react'
-import Lenis from 'lenis'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useReducedMotion } from 'framer-motion'
@@ -25,22 +24,6 @@ export default function App() {
   useEffect(() => {
     if (reduce) return undefined
 
-    const lenis = new Lenis({
-      duration: 1.15,
-      smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1.4,
-      lerp: 0.09,
-    })
-
-    const update = (time) => {
-      lenis.raf(time * 1000)
-    }
-
-    lenis.on('scroll', ScrollTrigger.update)
-    gsap.ticker.add(update)
-    gsap.ticker.lagSmoothing(0)
-
     const onAnchorClick = (event) => {
       const anchor = event.target.closest('a[href^="#"]')
       if (!anchor) return
@@ -49,7 +32,11 @@ export default function App() {
       const target = document.querySelector(hash)
       if (!target) return
       event.preventDefault()
-      lenis.scrollTo(target, { offset: -76, duration: 1.35 })
+      const headerHeight = document.querySelector('header')?.getBoundingClientRect().height ?? 76
+      window.scrollTo({
+        top: window.scrollY + target.getBoundingClientRect().top - headerHeight,
+        behavior: 'smooth',
+      })
       window.history.pushState(null, '', hash)
     }
 
@@ -57,8 +44,6 @@ export default function App() {
 
     return () => {
       document.removeEventListener('click', onAnchorClick)
-      gsap.ticker.remove(update)
-      lenis.destroy()
     }
   }, [reduce])
 

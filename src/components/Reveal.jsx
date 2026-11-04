@@ -19,7 +19,7 @@ export function Reveal({ children, delay = 0, y = 26, className = '', once = tru
 export function SectionHeading({ eyebrow, title, copy, align = 'left', className = '', titleClassName = '' }) {
   return (
     <div
-      className={`${align === 'center' ? 'mx-auto text-center' : ''} ${className}`}
+      className={`min-w-0 ${align === 'center' ? 'mx-auto text-center' : ''} ${className}`}
     >
       <Reveal>
         <span className={`eyebrow ${align === 'center' ? 'justify-center' : ''}`}>{eyebrow}</span>
@@ -33,7 +33,7 @@ export function SectionHeading({ eyebrow, title, copy, align = 'left', className
       </Reveal>
       {copy ? (
         <Reveal delay={0.16}>
-          <p className={`mt-6 max-w-xl text-[0.95rem] leading-7 text-smoke ${align === 'center' ? 'mx-auto' : ''}`}>
+          <p className={`section-copy mt-6 max-w-xl text-[0.95rem] leading-7 text-smoke ${align === 'center' ? 'mx-auto' : ''}`}>
             {copy}
           </p>
         </Reveal>

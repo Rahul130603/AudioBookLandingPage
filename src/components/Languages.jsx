@@ -16,7 +16,7 @@ function LanguageCard({ language, index, active, setActive, audio }) {
 
   return (
     <article
-      className="language-card group"
+      className="language-card group flex flex-col"
       onMouseEnter={() => setActive(language.id)}
       onFocus={() => setActive(language.id)}
     >
@@ -36,7 +36,7 @@ function LanguageCard({ language, index, active, setActive, audio }) {
           <button
             type="button"
             onClick={handleListen}
-            className="group/voice inline-flex items-center gap-2 border-b border-bone/15 pb-1 text-[0.48rem] font-medium uppercase tracking-[0.16em] text-bone/90 transition-colors hover:border-orange hover:text-gold"
+            className="language-listen group/voice inline-flex items-center gap-2 border-b border-bone/15 pb-1 text-[0.48rem] font-medium uppercase tracking-[0.16em] text-bone/90 transition-colors hover:border-orange hover:text-gold"
             aria-label={isPlaying ? `Stop ${language.display} voice sample` : `Hear a line in ${language.display}`}
           >
             {isPlaying ? <Pause size={9} fill="currentColor" /> : <Volume2 size={11} />}
@@ -58,7 +58,7 @@ function LanguageCard({ language, index, active, setActive, audio }) {
         {language.script}
       </span>
 
-      <div className="relative z-[2] flex h-full flex-col px-5 pb-6 pt-20 sm:px-6">
+      <div className="relative z-[2] flex flex-1 flex-col px-5 pb-6 pt-20 sm:px-6">
         <div className="flex items-start justify-between" dir="ltr">
           <span className="font-mono text-[0.47rem] uppercase tracking-[0.2em] text-bone/90">
             0{index + 1} / 03
@@ -105,7 +105,7 @@ function LanguageCard({ language, index, active, setActive, audio }) {
           <p
             dir={language.directions}
             lang={language.code}
-            className={`max-w-[24rem] text-[0.84rem] leading-7 text-bone/90 ${
+            className={`language-copy max-w-[24rem] text-[0.84rem] leading-7 text-bone/90 ${
               language.directions === 'rtl' ? 'ml-auto text-right font-urdu leading-[2.4]' : language.code === 'ta' ? 'font-tamil leading-8' : ''
             }`}
           >
@@ -120,7 +120,7 @@ function LanguageCard({ language, index, active, setActive, audio }) {
               onClick={() => {
                 window.dispatchEvent(new CustomEvent('chaptera:select-language', { detail: language.id }))
               }}
-              className="group/link inline-flex shrink-0 items-center gap-2 text-[0.52rem] font-semibold uppercase tracking-[0.15em] text-gold/80 transition-colors hover:text-orange"
+              className="language-use group/link inline-flex shrink-0 items-center gap-2 text-[0.52rem] font-semibold uppercase tracking-[0.15em] text-gold/80 transition-colors hover:text-orange"
               aria-label={`Create an audiobook in ${language.label}`}
             >
               Use voice
@@ -138,7 +138,7 @@ export default function Languages() {
   const audio = useAudioSample()
 
   return (
-    <section id="languages" className="relative overflow-hidden border-b border-bone/[0.06] py-[clamp(6rem,10vw,10rem)]">
+    <section id="languages" className="relative overflow-hidden border-b border-bone/[0.06] section-pad">
       <div className="pointer-events-none absolute inset-0">
         <div className="ambient-orb right-[-10%] top-[12%] h-[35rem] w-[35rem] bg-orange/[0.06]" />
         <div className="absolute left-1/2 top-1/2 h-[45rem] w-[45rem] -translate-x-1/2 -translate-y-1/2 rounded-full border border-bone/[0.035]" />
@@ -159,9 +159,9 @@ export default function Languages() {
           copy="A story is never only its words. It is the cadence of the voice that carries them. Choose a language, and let the pages sound like home."
         />
 
-        <div className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-3 lg:mt-20">
+        <div className="mt-14 grid auto-rows-fr grid-cols-1 gap-4 lg:mt-20 lg:grid-cols-3">
           {LANGUAGES.map((language, index) => (
-            <Reveal key={language.id} delay={index * 0.08}>
+            <Reveal key={language.id} delay={index * 0.08} className="grid min-w-0">
               <LanguageCard
                 language={language}
                 index={index}
