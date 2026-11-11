@@ -346,7 +346,7 @@ export default function Player() {
                 </span>
                 <span className="hidden h-3 w-px bg-bone/10 sm:block" />
                 <span className="hidden font-mono text-[0.44rem] uppercase tracking-[0.14em] text-bone/38 sm:block">
-                  Chaptera original · 2026
+                  AudioFlow original · 2026
                 </span>
               </div>
 
@@ -417,7 +417,7 @@ export default function Player() {
                   </div>
 
                   <span className="absolute left-1/2 top-[3%] -translate-x-1/2 whitespace-nowrap font-mono text-[0.4rem] uppercase tracking-[0.28em] text-bone/60">
-                    A Chaptera audio experience
+                    A AudioFlow audio experience
                   </span>
                   <span className="absolute bottom-[2.5%] left-1/2 flex -translate-x-1/2 items-center gap-2 whitespace-nowrap border border-bone/10 bg-ink/70 px-2.5 py-1 font-mono text-[0.38rem] uppercase tracking-[0.18em] text-bone/84 backdrop-blur-md">
                     <span className={`h-1 w-1 rounded-full ${playing ? 'bg-orange' : 'bg-bone/20'}`} />
@@ -680,7 +680,7 @@ export default function Player() {
               <span className="h-1 w-1 rounded-full bg-orange/70" />
               Full playback supported: seek, skip, speed, volume, chapters, and local bookmarks.
             </p>
-            <p className="font-mono uppercase tracking-[0.15em]">Rendered with Chaptera Voice Engine — demo edition</p>
+            <p className="font-mono uppercase tracking-[0.15em]">Rendered with AudioFlow Voice Engine — demo edition</p>
           </div>
         </Reveal>
       </div>

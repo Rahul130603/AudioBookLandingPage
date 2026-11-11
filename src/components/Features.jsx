@@ -29,7 +29,7 @@ function LanguagesGlyph() {
       <span className="lang-orbit lang-orbit--2" />
       <span className="lang-node lang-node--en">EN</span>
       <span className="lang-node lang-node--ta font-tamil">த</span>
-      <span className="lang-node lang-node--ur font-urdu">ا</span>
+      <span className="lang-node lang-node--ur font-urdu">ع</span>
       <span className="lang-center">
         <Languages size={25} strokeWidth={1} />
       </span>
@@ -183,7 +183,7 @@ export default function Features() {
       <div className="container-x relative">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <SectionHeading
-            eyebrow="Why Chaptera / Seven quiet advantages"
+            eyebrow="Why AudioFlow / Seven quiet advantages"
             title={
               <>
                 Built for the hours
@@ -194,7 +194,7 @@ export default function Features() {
           />
           <Reveal delay={0.15}>
             <p className="max-w-sm border-l border-bone/10 pl-5 text-sm leading-7 text-smoke">
-              We built Chaptera around a simple belief: a great book should never be limited by the shape of its pages.
+              We built AudioFlow around a simple belief: a great book should never be limited by the shape of its pages.
             </p>
           </Reveal>
         </div>
@@ -238,7 +238,7 @@ export default function Features() {
             <div className="flex items-center gap-6 font-mono text-[0.44rem] uppercase tracking-[0.15em] text-bone/38">
               <span>EN</span>
               <span className="font-tamil normal-case text-[0.58rem]">தமிழ்</span>
-              <span className="font-urdu normal-case text-[0.62rem]">اردو</span>
+              <span className="font-urdu normal-case text-[0.62rem]">العربية</span>
             </div>
           </div>
         </Reveal>

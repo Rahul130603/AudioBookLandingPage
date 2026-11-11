@@ -4,6 +4,7 @@ import gsap from 'gsap'
 import { ArrowDown, ArrowUpRight, Play } from 'lucide-react'
 import HeroVisual from './HeroVisual'
 import Waveform from './Waveform'
+import { audiobookAppUrl, studioHref } from '../lib/studioLink'
 
 const MOBILE_HERO_QUERY = '(max-width: 767px)'
 
@@ -81,7 +82,7 @@ export default function Hero() {
         Upload, convert, and listen in{' '}
         <span className="text-bone">English</span>,{' '}
         <span className="font-tamil text-bone" lang="ta">Tamil</span>, and{' '}
-        <span className="font-urdu text-[1.05rem] leading-loose text-bone" lang="ur">Urdu</span>.
+        <span className="font-urdu text-[1.05rem] leading-loose text-bone" lang="ar">Arabic</span>.
       </p>
     </div>
   )
@@ -94,8 +95,8 @@ export default function Hero() {
           <Play size={15} fill="currentColor" strokeWidth={0} />
         </span>
       </a>
-      <a href="#studio" data-hero-cta className="btn btn-ghost group">
-        Upload your book
+      <a href={studioHref} data-hero-cta className="btn btn-ghost group">
+        {audiobookAppUrl ? 'Open Audiobook Studio' : 'Upload your book'}
         <span className="btn__icon">
           <ArrowUpRight size={16} strokeWidth={1.8} />
         </span>
@@ -114,7 +115,7 @@ export default function Hero() {
             <div className="flex items-baseline gap-4 text-[0.7rem] font-medium tracking-wide text-bone/88">
               <span>EN</span>
               <span className="font-tamil text-[0.78rem]">தமிழ்</span>
-              <span className="font-urdu text-[0.84rem]">اردو</span>
+              <span className="font-urdu text-[0.84rem]">العربية</span>
             </div>
           </div>
           <div className="hero-meta hidden sm:block">

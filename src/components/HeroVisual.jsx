@@ -16,7 +16,7 @@ class SceneBoundary extends Component {
   }
 
   componentDidCatch(error) {
-    console.warn('Chaptera 3D scene could not start:', error)
+    console.warn('AudioFlow 3D scene could not start:', error)
   }
 
   render() {

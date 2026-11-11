@@ -3301,7 +3301,7 @@ html[data-theme='light'] .text-bone\/45 {
   }
 
   .footer-word {
-    font-size: 17.5vw;
+    font-size: 14.5vw;
   }
 }
 
@@ -3360,7 +3360,7 @@ html[data-theme='light'] .text-bone\/45 {
 }
 
 @media (max-width: 1023px) {
-  header [aria-label="Chaptera home"] {
+  header [aria-label="AudioFlow home"] {
     min-height: 2.75rem;
   }
 

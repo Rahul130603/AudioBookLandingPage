@@ -12,7 +12,7 @@ export default function Marquee() {
             <span
               className={`whitespace-nowrap text-[0.58rem] font-medium uppercase tracking-[0.26em] text-bone/88 ${
                 item === 'தமிழ்' ? 'font-tamil text-[0.74rem] tracking-[0.08em]' : ''
-              } ${item === 'اردو' ? 'font-urdu text-[0.8rem] tracking-normal' : ''}`}
+              } ${item === 'العربية' || item === 'اردو' ? 'font-urdu text-[0.8rem] tracking-normal' : ''}`}
             >
               {item}
             </span>

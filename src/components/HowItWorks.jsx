@@ -186,7 +186,7 @@ export default function HowItWorks() {
           />
           <Reveal delay={0.2} className="col-span-12 lg:col-span-4 lg:pb-2">
             <p className="max-w-sm border-l border-bone/10 pl-5 text-sm leading-7 text-smoke lg:ml-auto">
-              A manuscript is not just text. It is pace, silence, and breath. Chaptera listens for all three, then gives them back to you.
+              A manuscript is not just text. It is pace, silence, and breath. AudioFlow listens for all three, then gives them back to you.
             </p>
             <div className="mt-6 flex items-center gap-3 font-mono text-[0.5rem] uppercase tracking-[0.23em] text-bone/84 lg:justify-end">
               <Sparkles size={11} className="text-orange/70" />
@@ -229,7 +229,7 @@ export default function HowItWorks() {
                               key={item}
                               className={`text-[0.48rem] font-medium uppercase tracking-[0.15em] text-bone/88 ${
                                 item === 'தமிழ்' ? 'font-tamil text-[0.6rem]' : ''
-                              } ${item === 'اردو' ? 'font-urdu text-[0.66rem]' : ''}`}
+                              } ${item === 'العربية' || item === 'اردو' ? 'font-urdu text-[0.66rem]' : ''}`}
                             >
                               {item}
                             </span>

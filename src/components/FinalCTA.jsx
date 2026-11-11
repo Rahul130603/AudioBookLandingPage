@@ -5,6 +5,7 @@ import { FEATURED_BOOKS } from '../lib/data'
 import BookCover from './BookCover'
 import Waveform from './Waveform'
 import { Reveal } from './Reveal'
+import { studioHref } from '../lib/studioLink'
 
 const BOOK = FEATURED_BOOKS[0]
 
@@ -94,7 +95,7 @@ export default function FinalCTA() {
           </Reveal>
           <Reveal delay={0.26}>
             <div className="final-cta-actions mt-9 flex flex-wrap items-center gap-5">
-              <a href="#studio" className="btn btn-primary group">
+              <a href={studioHref} className="btn btn-primary group">
                 Create your first audiobook
                 <span className="btn__icon">
                   <ArrowUpRight size={16} strokeWidth={1.8} />
@@ -123,7 +124,7 @@ export default function FinalCTA() {
               <div className="cta-book__pages" />
               <div className="cta-book__inside">
                 <div className="cta-page">
-                  <span className="cta-page__eyebrow">Chaptera / Every book has a voice</span>
+                  <span className="cta-page__eyebrow">AudioFlow / Every book has a voice</span>
                   <span className="cta-page__title">
                     LISTEN
                     <br />
@@ -145,7 +146,7 @@ export default function FinalCTA() {
                 </div>
                 <div className="cta-book__cover-back">
                   <span>Every book has a voice.</span>
-                  <span>CHAPTERA · 2026</span>
+                  <span>AUDIOFLOW · 2026</span>
                 </div>
               </motion.div>
             </motion.div>
@@ -167,7 +168,7 @@ export default function FinalCTA() {
           <div className="mt-4 flex items-end gap-5">
             <Waveform bars={72} height="3.2rem" playing={!reduce} color="rgba(255,107,39,.8)" seed={8} className="flex-1 justify-start" />
             <span className="hidden shrink-0 font-mono text-[0.44rem] uppercase tracking-[0.15em] text-bone/38 sm:block">
-              Chaptera / 001
+              AudioFlow / 001
             </span>
           </div>
         </motion.div>

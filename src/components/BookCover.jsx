@@ -62,7 +62,7 @@ export default function BookCover({ book, className = '', mode = 'custom' }) {
             className="font-display font-semibold uppercase"
             style={{ fontSize: '3.1cqw', letterSpacing: '0.3em', color: book.ink, opacity: 0.75 }}
           >
-            Chaptera
+            AudioFlow
           </span>
           <span
             className="font-mono uppercase"

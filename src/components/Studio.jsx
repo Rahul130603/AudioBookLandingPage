@@ -156,7 +156,7 @@ export default function Studio() {
 
   const handleConvert = async () => {
     if (!file) {
-      setError('Add your manuscript first, then Chaptera can give it a voice.')
+      setError('Add your manuscript first, then AudioFlow can give it a voice.')
       inputRef.current?.focus()
       return
     }
@@ -431,7 +431,7 @@ export default function Studio() {
                           onClick={() => handleLanguage(item.id)}
                           aria-pressed={languageId === item.id}
                           className={`flex-1 justify-center !px-1.5 ${
-                            item.code === 'ta' ? '!font-tamil !normal-case' : item.code === 'ur' ? '!font-urdu !normal-case !text-[0.78rem]' : ''
+                            item.code === 'ta' ? '!font-tamil !normal-case' : (item.code === 'ar' || item.code === 'ur') ? '!font-urdu !normal-case !text-[0.78rem]' : ''
                           }`}
                           disabled={busy}
                         >

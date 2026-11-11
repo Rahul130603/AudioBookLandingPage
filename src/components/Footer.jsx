@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowUp, ArrowUpRight, X } from 'lucide-react'
 import Logo from './Logo'
+import { studioHref } from '../lib/studioLink'
 
 const LINKS = [
   { label: 'Home', href: '#home' },
   { label: 'Explore', href: '#explore' },
-  { label: 'Upload Book', href: '#studio' },
+  { label: 'Upload Book', href: studioHref },
   { label: 'Features', href: '#features' },
   { label: 'About', action: 'about' },
   { label: 'Contact', href: 'mailto:hello@chaptera.audio' },
@@ -15,12 +16,12 @@ const LINKS = [
 
 const MODAL_CONTENT = {
   about: {
-    eyebrow: 'About Chaptera',
+    eyebrow: 'About AudioFlow',
     title: 'Every book deserves a voice.',
     body: [
-      'Chaptera is a cinematic audiobook studio for the books already on your shelf. Upload a manuscript, choose a language and a voice, and step into the story with your ears.',
+      'AudioFlow is a cinematic audiobook studio for the books already on your shelf. Upload a manuscript, choose a language and a voice, and step into the story with your ears.',
       'This build is a working frontend experience. Uploads and conversion are staged for a production API, while the listening room plays real narrated chapters and remembers your place on this device.',
-      'Designed and built for readers in English, Tamil, and Urdu.',
+      'Designed and built for readers in English, Tamil, and Arabic.',
     ],
   },
   privacy: {
@@ -29,7 +30,7 @@ const MODAL_CONTENT = {
     body: [
       'This demo does not upload, transmit, or store your manuscript on a server. Files are read locally in your browser only for the duration of the preview.',
       'Bookmarks are saved in your browser’s local storage and never leave this device. Clearing your browser storage removes them.',
-      'When the Chaptera conversion API is connected, files will be processed over an encrypted connection and removed after rendering. A full production policy will be published before launch.',
+      'When the AudioFlow conversion API is connected, files will be processed over an encrypted connection and removed after rendering. A full production policy will be published before launch.',
       'Questions? Write to hello@chaptera.audio.',
     ],
   },
@@ -95,7 +96,7 @@ function InfoModal({ type, onClose }) {
           ))}
         </div>
         <button type="button" onClick={onClose} className="btn btn-ghost btn-sm mt-8">
-          Back to Chaptera
+          Back to AudioFlow
           <span className="btn__icon">
             <ArrowUpRight size={14} />
           </span>
@@ -124,7 +125,7 @@ export default function Footer() {
                 Turn a page into a voice.
               </p>
             </div>
-            <a href="#studio" className="group inline-flex items-center gap-3 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-gold transition-colors hover:text-orange">
+            <a href={studioHref} className="group inline-flex items-center gap-3 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-gold transition-colors hover:text-orange">
               Open the studio
               <span className="grid h-10 w-10 place-items-center rounded-full border border-gold/25 transition-all duration-500 group-hover:rotate-45 group-hover:border-orange">
                 <ArrowUpRight size={15} />
@@ -185,14 +186,14 @@ export default function Footer() {
                 <a href="#languages" lang="ta" className="font-tamil text-[0.8rem] text-bone/90 transition-colors hover:text-gold">
                   தமிழ்
                 </a>
-                <a href="#languages" lang="ur" className="font-urdu text-[0.9rem] text-bone/90 transition-colors hover:text-gold">
-                  اردو
+                <a href="#languages" lang="ar" className="font-urdu text-[0.9rem] text-bone/90 transition-colors hover:text-gold">
+                  العربية
                 </a>
               </div>
             </div>
 
             <div className="lg:col-span-2 lg:text-right">
-              <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-bone/90">Chaptera</p>
+              <p className="font-mono text-[0.46rem] uppercase tracking-[0.22em] text-bone/90">AudioFlow</p>
               <p className="footer-copy mt-5 text-[0.7rem] leading-6 text-bone/90">
                 A studio for voices,
                 <br />
@@ -209,11 +210,11 @@ export default function Footer() {
           </div>
 
           <div className="footer-word pointer-events-none select-none pb-2 text-center" aria-hidden="true">
-            CHAPTERA<span style={{ color: '#FF6B27', WebkitTextStroke: '0' }}>.</span>
+            AUDIOFLOW<span style={{ color: '#FF6B27', WebkitTextStroke: '0' }}>.</span>
           </div>
 
           <div className="flex flex-col justify-between gap-3 border-t border-bone/[0.07] py-5 text-[0.55rem] text-bone/38 sm:flex-row sm:items-center">
-            <p>© 2026 Chaptera Studio. All stories belong to their authors.</p>
+            <p>© 2026 AudioFlow Studio. All stories belong to their authors.</p>
             <div className="flex items-center gap-5">
               <button type="button" onClick={() => setModal('privacy')} className="transition-colors hover:text-gold">
                 Privacy

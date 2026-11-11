@@ -5,6 +5,7 @@ import { FEATURED_BOOKS } from '../lib/data'
 import useAudioSample from '../hooks/useAudioSample'
 import BookCover from './BookCover'
 import { Reveal, SectionHeading } from './Reveal'
+import { studioHref } from '../lib/studioLink'
 
 function BookPreviewButton({ book, isPlaying, onToggle }) {
   return (
@@ -261,7 +262,7 @@ export default function FeaturedBooks() {
               <Play size={9} className="text-orange/60" />
               Hover a book to hear a line in its native language.
             </p>
-            <a href="#studio" className="shelf-link group inline-flex items-center gap-2 text-[0.54rem] font-semibold uppercase tracking-[0.15em] text-gold/75 transition-colors hover:text-orange">
+            <a href={studioHref} className="shelf-link group inline-flex items-center gap-2 text-[0.54rem] font-semibold uppercase tracking-[0.15em] text-gold/75 transition-colors hover:text-orange">
               Bring your own book to the shelf
               <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1" />
             </a>
