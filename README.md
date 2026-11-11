@@ -1,114 +1,122 @@
-# Chaptera
+# AudioFlow
 
 **Every Book Has a Voice.**
 
-Chaptera is a cinematic, 3D audiobook experience built with React, Vite, Tailwind CSS, Three.js, React Three Fiber, GSAP, Framer Motion, and Lucide. It pairs a premium editorial interface with a working local audiobook player and a conversion studio that is ready to connect to a real text-to-speech backend.
+AudioFlow is a responsive audiobook landing page built with React, Vite, Tailwind CSS, Three.js, GSAP, and Framer Motion. A cinematic 3D book, language previews, an interactive listening room, and an animated bookshelf introduce the audiobook experience.
 
-![Chaptera hero](docs/chaptera-hero.jpg)
+This repository contains the landing page and its existing demo narration API. The separate audiobook dashboard and software are maintained outside this repository.
 
-The header moon/sun control switches between the warm ivory atmosphere and the original dark cinematic mood. The choice is saved in the browser.
+## Current design
 
-![Chaptera dark mode](docs/chaptera-dark.jpg)
+### Dark theme
 
-![Chaptera premium book shelf](docs/chaptera-books.jpg)
+The page opens in dark mode with AudioFlow branding, orange accents, and a 3D book hero.
 
-Premium cover artwork is self-hosted in `public/assets/books` and mapped to the 3D hero, featured shelf, language cards, workflow visuals, and listening room.
+![AudioFlow landing page in dark mode](docs/audioflow-dark.jpg)
+
+### Light theme
+
+The header theme button switches to warm ivory. Your preference is saved in the browser.
+
+![AudioFlow landing page in light mode](docs/audioflow-hero.jpg)
+
+### Languages
+
+The current interface presents English, Tamil, and Arabic with native scripts and voice selection.
+
+![AudioFlow language cards](docs/audioflow-languages.jpg)
+
+### Featured bookshelf
+
+Illustrated covers, perspective effects, and local audio previews.
+
+![AudioFlow featured bookshelf](docs/audioflow-books.jpg)
+
+### Studio preview
+
+Document upload, voice selection, and reading-speed controls. Document conversion requires the narration API described below.
+
+![AudioFlow Studio interface](docs/audioflow-studio.jpg)
+
+### Listening room
+
+Chapter selection, play/pause, seeking, volume, playback speed, and bookmarks saved in the browser.
+
+![AudioFlow listening room](docs/audioflow-player.jpg)
+
+### Closing section
+
+![AudioFlow footer](docs/audioflow-footer.jpg)
 
 ## Run locally
 
+Use Node.js 22.13 or later.
+
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-Open the URL printed by Vite (normally `http://localhost:5173`).
+Open `http://127.0.0.1:5173`, or the address printed by Vite.
+
+To build and preview:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## What is included
+## Connect the separate audiobook software
 
-- **Cinematic 3D hero** — a procedural hardcover book with cover textures, page flips, shadows, ember particles, orbital sound rings, and mouse/scroll camera movement.
-- **Three-part storytelling section** — custom 3D CSS scenes for upload, voice synthesis, and listening, with mouse tilt and scroll reveals.
-- **Language experience** — English, Tamil, and Urdu cards with native typography, RTL Urdu, animated waveforms, and real neural voice samples.
-- **Conversion studio** — drag-and-drop upload, format validation, language and male/female voice selection, reading-speed control, animated conversion stages, a neural voice preview, and a working sample download.
-- **Audiobook player** — real chapter audio, play/pause, ±15 seconds, volume, five playback speeds, chapter navigation, bookmarks stored locally, circular audio analyser, and progress controls.
-- **3D featured shelf** — horizontally scrollable/draggable book covers with perspective tilt, hover glow, and a spoken line for every title.
-- **Why Chaptera** — seven animated 3D feature vignettes instead of stock icon cards.
-- **Scroll-closing finale** — the cover closes as the section enters view, particles dissolve, and a glowing waveform remains.
-- **Responsive and accessible** — mobile layouts, keyboard-operable controls, reduced-motion alternatives, focus styles, an optional custom cursor, and a skip link.
+Set `VITE_AUDIOBOOK_APP_URL` before building to point the Studio navigation and upload calls to action to your separately deployed software:
 
-## Audio
+```env
+VITE_AUDIOBOOK_APP_URL=https://your-audiobook-app.example/#audiobook
+```
 
-All voice assets are pre-rendered local MP3s in `public/audio` so the demo works without external services:
+During Vite development, these links default to `http://localhost:3000/#audiobook`. Production builds without this setting scroll to the embedded `#studio` section. The separate audiobook software is not included in this repository.
 
-- `chapter-01.mp3` – `chapter-04.mp3`: English audiobook demo narrated by Aria.
-- `samples/language-*.mp3`: English, Tamil, and Urdu language-card samples.
-- `samples/voice-*.mp3`: six voice auditions.
-- `samples/book-*.mp3`: previews for the featured shelf.
+## Demo audio and narration
 
-They were generated with Microsoft Edge neural voices using `scripts/generate-neural-voices.py`. The script is optional; the checked-in audio is enough to run the site. The narration text is original demo content written for Chaptera.
+The listening room, bookshelf previews, and voice auditions use checked-in MP3 files under `public/audio`. Sample playback works without Azure credentials.
 
-## Conversion API and Azure setup
+The interface now displays Arabic, but the Arabic-labelled previews still reuse the older Urdu MP3 assets. The bundled Node API maps English, Tamil, and the original Urdu narrators; it does not yet map the new Arabic narrator IDs. Arabic document conversion requires a compatible external audiobook service or a future API update.
 
-The Studio extracts PDF, TXT, DOCX, and EPUB text in the browser. Clicking Convert sends up to 5,000 characters to the Node server at `/api/convert`. The server calls Azure Speech and returns an MP3 in the selected narrator voice. Play and Download MP3 use this same audio file.
+For supported English and Tamil voices, the embedded Studio extracts PDF, TXT, DOCX, or EPUB text and posts up to 5,000 characters to `/api/convert`. The Node API calls Azure Speech and returns MP3 audio.
 
-The original sample voice mappings are preserved.
+Configure these server environment variables to use that API:
 
-- Aria uses `en-US-AriaNeural`.
-- Atlas uses `en-US-BrianNeural`.
-- Kavya uses `ta-IN-PallaviNeural`.
-- Arun uses `ta-IN-ValluvarNeural`.
-- Noor uses `ur-PK-UzmaNeural`.
-- Rayan uses `ur-PK-AsadNeural`.
+```env
+AZURE_SPEECH_KEY=your-speech-resource-key
+AZURE_SPEECH_REGION=your-speech-resource-region
+```
 
-Create an Azure Speech resource using the [Microsoft setup guide](https://learn.microsoft.com/en-us/azure/ai-services/speech-service/get-started-text-to-speech?pivots=programming-language-rest). Open the resource's **Keys and Endpoint** page and keep its key and region for the server configuration.
+Then run:
 
-### Render deployment
+```bash
+npm run build
+npm start
+```
 
-1. Create a **Web Service**, connect this repository, and select `main`.
-2. Set the build command to `npm ci && npm run build`.
-3. Set the start command to `npm start`.
-4. Under Environment, set `AZURE_SPEECH_KEY` to the resource key and `AZURE_SPEECH_REGION` to its region identifier, such as `eastus`.
-5. Deploy and open the Web Service URL. Upload a short document, choose a narrator, convert, then play or download the MP3.
+Open `http://localhost:10000`. The server serves the built page and API together and uses `PORT` when provided. Vite development proxies `/api` to port 10000.
 
-The Node service serves both the built frontend and the API on Render's `PORT`, bound to `0.0.0.0`. Static Site hosting can display the page but cannot execute the narration API.
+Keep credentials in the server environment. The Node entry point does not load a `.env` file automatically. Static hosting supports the page and samples; embedded document conversion needs the Node API. The demo API permits two simultaneous conversions and 30 requests per hour per server process. Scanned PDFs need OCR before conversion.
 
-Keep the Azure key in server environment variables. Browser code uses the same-origin API and never receives the key. Extracted text is sent to Azure only when Convert is clicked. The service stores neither manuscript text nor generated audio on disk.
-
-Generation is limited to two simultaneous requests and 30 requests per hour across each running server process. These are demo limits, and Azure usage is charged or metered under your Speech resource plan. A restart resets the in-memory hourly limit. Scanned PDFs require OCR before upload.
-
-### Local narration
-
-Set `AZURE_SPEECH_KEY` and `AZURE_SPEECH_REGION` in the terminal environment, then run `npm run build` followed by `npm start`. Open `http://localhost:10000`. For frontend editing, keep this backend running on port 10000 and run `npm run dev` in a second terminal. Vite forwards `/api` requests to that local backend.
-
-## Structure
+## Project structure
 
 ```text
 src/
-  components/
-    three/HeroScene.jsx      procedural 3D book scene
-    Hero.jsx                 hero layout and entrance timeline
-    Studio.jsx               upload and conversion interface
-    Player.jsx               audiobook player and bookmark state
-    FeaturedBooks.jsx        draggable 3D shelf
-    Features.jsx             animated feature glyphs
-    FinalCTA.jsx             scroll-driven closing book
-    ...
-  hooks/
-    useAudioSample.js        shared one-at-a-time preview audio
-  lib/
-    data.js                  books, voices, languages, chapters
-    conversionApi.js         API-ready conversion adapter
-  index.css                  cinematic design system and responsive motion
-public/audio/                local neural demo audio
-scripts/                     optional asset-generation utilities
+  components/          landing sections, 3D hero, Studio, and player
+  hooks/               shared audio preview logic
+  lib/                 content, document extraction, API, and Studio links
+  index.css            themes, responsive layout, and animation styles
+public/
+  audio/               chapter audio and preview samples
+  assets/books/        self-hosted cover artwork
+  audioflow-mark.svg   AudioFlow brand mark
+server/                existing Node narration API and production server
+docs/                  current README screenshots
+scripts/               optional voice asset generation
 ```
 
-## Notes
-
-- Document extraction runs in the browser. Conversion sends extracted text to Azure Speech through the Node backend.
-- Narrator audition buttons play pre-rendered samples. Converted document playback uses the generated Azure MP3.
-- Bookmarks are stored in `localStorage` under `chaptera:bookmark:v1`.
+The page includes mobile layouts, keyboard controls, focus styles, a skip link, and reduced-motion support. Some internal asset names and browser storage keys retain the earlier Chaptera name for compatibility.
